@@ -1,0 +1,25 @@
+[{
+  "_id": {
+    "$oid": "5f7f17402476eb3870cfbca5"
+  },
+  "url": null,
+  "year": {
+    "$date": "2020-01-01T00:00:00Z"
+  },
+  "en_title": null,
+  "en_paragraph": null,
+  "id_title": null,
+  "id_paragraph": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+  "is_posted": false,
+  "start_post": null,
+  "end_post": null,
+  "tropical_cyclone_id": {
+    "$oid": "5f7f0bfa9ba90a2a38a03e3c"
+  },
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-08T13:42:24.859Z"
+  },
+  "__v": 0
+}]

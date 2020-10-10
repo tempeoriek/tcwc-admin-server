@@ -1,0 +1,31 @@
+[{
+  "_id": {
+    "$oid": "5f7f181677a06831549e5ae3"
+  },
+  "name": "About Cyclone",
+  "year": {
+    "$date": "2020-01-01T00:00:00Z"
+  },
+  "author": "Prof. M. Agung",
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-08T13:45:58.837Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f7f193260e3a62b74e202e2"
+  },
+  "name": "About Cyclone 2",
+  "year": {
+    "$date": "2020-01-01T00:00:00Z"
+  },
+  "author": "Prof. M. Agung",
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-08T13:50:42.232Z"
+  },
+  "__v": 0
+}]

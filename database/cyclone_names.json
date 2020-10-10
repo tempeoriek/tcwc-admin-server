@@ -1,0 +1,66 @@
+[{
+  "_id": {
+    "$oid": "5f7effb30a3c9b1c4c971a2a"
+  },
+  "list_a": "Cemara",
+  "list_b": "Rambutan",
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-08T12:01:55.224Z"
+  },
+  "__v": 0,
+  "cyclone_name_description_id": null
+},{
+  "_id": {
+    "$oid": "5f7effd6382ca82a30019eee"
+  },
+  "list_a": "Anggrek",
+  "list_b": "Melati",
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-08T12:02:30.392Z"
+  },
+  "__v": 0,
+  "cyclone_name_description_id": null
+},{
+  "_id": {
+    "$oid": "5f7effe025269e33d409ae6a"
+  },
+  "list_a": "Matahari",
+  "list_b": "Mawar",
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-08T12:02:40.315Z"
+  },
+  "__v": 0,
+  "cyclone_name_description_id": null
+},{
+  "_id": {
+    "$oid": "5f7effe98dec453adc2389d8"
+  },
+  "list_a": "Anggur",
+  "list_b": "Mangga",
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-08T12:02:49.012Z"
+  },
+  "__v": 0,
+  "cyclone_name_description_id": null
+},{
+  "_id": {
+    "$oid": "5f7f0112442a2c1e801ac0bc"
+  },
+  "list_a": "Bakung",
+  "list_b": "Melon",
+  "cyclone_name_description_id": null,
+  "modified_at": null,
+  "is_delete": true,
+  "created_at": {
+    "$date": "2020-10-08T12:07:46.409Z"
+  },
+  "__v": 0
+}]

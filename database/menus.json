@@ -1,0 +1,129 @@
+[{
+  "_id": {
+    "$oid": "5f7fea84ce76a739cce04f9a"
+  },
+  "name": "Tropical Cyclone",
+  "route": "tropicalcyclone",
+  "order": 1,
+  "is_admin": false,
+  "is_super_admin": true,
+  "modified_at": null,
+  "is_delete": false,
+  "sub_menu": [],
+  "created_at": {
+    "$date": "2020-10-09T04:43:48.492Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f7fead571e1850b04c44255"
+  },
+  "name": "Tropical Cyclone Outlook",
+  "route": "cycloneoutlook",
+  "order": 2,
+  "is_admin": false,
+  "is_super_admin": false,
+  "modified_at": null,
+  "is_delete": false,
+  "sub_menu": [],
+  "created_at": {
+    "$date": "2020-10-09T04:45:09.647Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f7feaeab222902ba409b8a6"
+  },
+  "name": "Tropical Cyclone Names",
+  "route": "cyclonename",
+  "order": 3,
+  "is_admin": false,
+  "is_super_admin": false,
+  "modified_at": null,
+  "is_delete": false,
+  "sub_menu": [],
+  "created_at": {
+    "$date": "2020-10-09T04:45:30.610Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f7feb0561b6de25ec7cfa89"
+  },
+  "name": "After Event Report",
+  "route": "report",
+  "order": 4,
+  "is_admin": false,
+  "is_super_admin": false,
+  "modified_at": null,
+  "is_delete": false,
+  "sub_menu": [],
+  "created_at": {
+    "$date": "2020-10-09T04:45:57.786Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f7feb163de4ee31a4d103d5"
+  },
+  "name": "Annual Report",
+  "route": "annual_report",
+  "order": 5,
+  "is_admin": false,
+  "is_super_admin": false,
+  "modified_at": null,
+  "is_delete": false,
+  "sub_menu": [],
+  "created_at": {
+    "$date": "2020-10-09T04:46:14.696Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f7feb2d8fbd67218cb933e7"
+  },
+  "name": "Publication",
+  "route": "publication",
+  "order": 6,
+  "is_admin": false,
+  "is_super_admin": false,
+  "modified_at": null,
+  "is_delete": false,
+  "sub_menu": [],
+  "created_at": {
+    "$date": "2020-10-09T04:46:37.065Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f7fef5f6798741a6cb10c94"
+  },
+  "name": "Learn About Tropical Cyclone",
+  "route": "about",
+  "order": 7,
+  "is_admin": false,
+  "is_super_admin": false,
+  "modified_at": null,
+  "is_delete": false,
+  "sub_menu": [],
+  "created_at": {
+    "$date": "2020-10-09T05:04:31.070Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f7fef8ae2248b2778d016ef"
+  },
+  "name": "Cyclogenesis Checksheet",
+  "route": "cyclogenesis",
+  "order": 8,
+  "is_admin": false,
+  "is_super_admin": false,
+  "modified_at": null,
+  "is_delete": false,
+  "sub_menu": [],
+  "created_at": {
+    "$date": "2020-10-09T05:05:14.569Z"
+  },
+  "__v": 0
+}]

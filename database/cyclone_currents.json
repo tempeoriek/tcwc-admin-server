@@ -1,0 +1,47 @@
+[{
+  "_id": {
+    "$oid": "5f7f0ab5bb538f317c67d702"
+  },
+  "latitude": 1,
+  "longitude": 1,
+  "wind_speed": null,
+  "max_wind_speed": 1,
+  "pressure": 1,
+  "datetime": {
+    "$date": "2020-10-08T12:48:53.201Z"
+  },
+  "category": null,
+  "is_current": false,
+  "tropical_cyclone_id": {
+    "$oid": "5f7f0bcb19d00e3770570a62"
+  },
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-08T12:48:53.219Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f7f0abf6ba7650d78a58253"
+  },
+  "latitude": 2,
+  "longitude": 2,
+  "wind_speed": null,
+  "max_wind_speed": 2,
+  "pressure": 2,
+  "datetime": {
+    "$date": "2020-10-08T12:49:03.415Z"
+  },
+  "category": null,
+  "is_current": false,
+  "tropical_cyclone_id": {
+    "$oid": "5f7f0bfa9ba90a2a38a03e3c"
+  },
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-08T12:49:03.440Z"
+  },
+  "__v": 0
+}]

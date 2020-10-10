@@ -1,0 +1,49 @@
+[{
+  "_id": {
+    "$oid": "5f7f0bcb19d00e3770570a62"
+  },
+  "area": "Jakarta",
+  "name": "TC Bawang",
+  "description": null,
+  "is_active": true,
+  "year": {
+    "$date": "2020-01-01T00:00:00Z"
+  },
+  "techincal_bulletin": true,
+  "public_info_bulletin": true,
+  "ocean_gale_storm_warn": true,
+  "track_impact": true,
+  "coastal_zone": true,
+  "extreme_weather": true,
+  "gale_warning": true,
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-08T12:53:31.227Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f7f0bfa9ba90a2a38a03e3c"
+  },
+  "area": "Bandung",
+  "name": "TC Melati",
+  "description": null,
+  "is_active": false,
+  "year": {
+    "$date": "2019-01-01T00:00:00Z"
+  },
+  "techincal_bulletin": true,
+  "public_info_bulletin": true,
+  "ocean_gale_storm_warn": true,
+  "track_impact": true,
+  "coastal_zone": true,
+  "extreme_weather": true,
+  "gale_warning": true,
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-08T12:54:18.564Z"
+  },
+  "__v": 0
+}]

@@ -1,0 +1,25 @@
+{
+  "name": "tcwc-bmkg-server",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "axios": "^0.20.0",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "express": "^4.16.4",
+    "flatry": "^1.0.12",
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.31",
+    "mongoose": "^5.10.8",
+    "mongoose-float": "^1.0.4",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.4",
+    "passport": "^0.4.1",
+    "qs": "^6.9.4"
+  }
+}
