@@ -8,5 +8,6 @@ module.exports = function (global) {
     global.momenttz = require('moment-timezone');
     global.axios = require('axios');
     global.qs = require('qs');
+    global.crypto = require('crypto');
     global.response = require('./response');
 }

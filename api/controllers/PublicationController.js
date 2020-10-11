@@ -2,16 +2,33 @@ const Model = require('../models/publication');
 
 PublicationController = {
   getAllData: async function (req, res) {
-    let err, data;
-    [err, data] = await flatry( Model.find({ is_delete: false }));
+    let err, find, fields = [], data = [];
+    [err, find] = await flatry( Model.find({ is_delete: false }, `name year author`));
     if (err) {
       console.log(err.stack);
-      response.error(400, `Error when find data in getAllData publication`, res, err);
+      response.error(400, `Error when find data in getAllData cycloneoutlook`, res, err);
     }
     
-    if (data.length > 0) {
-      response.ok(data, res, `success get all data`);
-    } else if (data.length == 0) {
+    if (find.length > 0) {
+      fields.push(
+        { key: 'name', label: 'Publication Name', sortable: true },
+        { key: 'year', label: 'Year', sortable: true },
+        { key: 'author', label: 'Author', sortable: true}, 
+        { key: 'actions', label: 'Actions' }
+      );
+
+      for (let i = 0; i < find.length; i++) {
+        let temp = find[i];
+        data.push({
+          _id: temp._id,
+          name: (temp.name) ? temp.name: `-`,
+          year: (temp.year) ? temp.year: `-`,
+          author: (temp.author) ? temp.author: `-`,
+        })
+      }
+
+      response.ok(data, res, `success get all data`, fields);
+    } else if (find.length == 0) {
       response.success(data, res, `success get all data but data is empty`);
     }
   },

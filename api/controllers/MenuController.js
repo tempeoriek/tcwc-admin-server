@@ -2,16 +2,37 @@ const Model = require('../models/menu');
 
 MenuController = {
   getAllData: async function (req, res) {
-    let err, data;
-    [err, data] = await flatry( Model.find({ is_delete: false }));
+    let err, find, fields = [], data = [];
+    [err, find] = await flatry( Model.find({ is_delete: false }, `name route order is_admin is_super_admin`));
     if (err) {
       console.log(err.stack);
-      response.error(400, `Error when find data in getAllData Menu`, res, err);
+      response.error(400, `Error when find data in getAllData tropicalcyclone`, res, err);
     }
     
-    if (data.length > 0) {
-      response.ok(data, res, `success get all data`);
-    } else if (data.length == 0) {
+    if (find.length > 0) {
+      fields.push(
+        { key: 'name', label: 'Menu Name', sortable: true},
+        { key: 'route', label: 'Route', sortable: true},
+        { key: 'order', label: 'Order', sortable: true},
+        { key: 'is_admin', label: 'Admin Access', sortable: true, formatter: true, sortByFormatted: true, filterByFormatted: true},
+        { key: 'is_super_admin', label: 'Super Admin Access', sortable: true, formatter: true, sortByFormatted: true, filterByFormatted: true},
+        { key: 'actions', label: 'Actions' }
+      );
+
+      for (let i = 0; i < find.length; i++) {
+        let temp = find[i];
+        data.push({
+          _id: temp._id,
+          name: (temp.name) ? temp.name : `-`,
+          route: (temp.route) ? temp.route : `-`,
+          order: (temp.order) ? temp.order : `-`,
+          is_admin: (temp.is_admin) ? temp.is_admin : `-`,
+          is_super_admin: (temp.is_super_admin) ? temp.is_super_admin : `-`,
+        })
+      }
+      
+      response.ok(data, res, `success get all data`, fields);
+    } else if (find.length == 0) {
       response.success(data, res, `success get all data but data is empty`);
     }
   },

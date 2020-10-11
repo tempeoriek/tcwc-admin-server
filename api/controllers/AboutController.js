@@ -2,16 +2,33 @@ const Model = require('../models/about');
 
 AboutController = {
   getAllData: async function (req, res) {
-    let err, data;
-    [err, data] = await flatry( Model.find({ is_delete: false }));
+    let err, find, fields = [], data = [];
+    [err, find] = await flatry( Model.find({ is_delete: false }, `id_title is_posted start_post`));
     if (err) {
       console.log(err.stack);
-      response.error(400, `Error when find data in getAllData about`, res, err);
+      response.error(400, `Error when find data in getAllData cycloneoutlook`, res, err);
     }
     
-    if (data.length > 0) {
-      response.ok(data, res, `success get all data`);
-    } else if (data.length == 0) {
+    if (find.length > 0) {
+      fields.push(
+        { key: 'id_title', label: 'Topic Name', sortable: true },
+        { key: 'start_post', label: 'Date Posted', sortable: true },
+        { key: 'is_posted', label: 'Status', sortable: true, formatter: true, sortByFormatted: true, filterByFormatted: true}, 
+        { key: 'actions', label: 'Actions' }
+      );
+
+      for (let i = 0; i < find.length; i++) {
+        let temp = find[i];
+        data.push({
+          _id: temp._id,
+          id_title: (temp.id_title) ? temp.id_title : `-`,
+          start_post: (temp.start_post) ? temp.start_post : `-`,
+          is_posted: (temp.is_posted) ? temp.is_posted : `-`,
+        })
+      }
+
+      response.ok(data, res, `success get all data`, fields);
+    } else if (find.length == 0) {
       response.success(data, res, `success get all data but data is empty`);
     }
   },

@@ -22,10 +22,10 @@ TropicalcycloneController = {
         let temp = find[i];
         data.push({
           _id: temp._id,
-          name: temp.name,
-          year: moment(temp.year).format(`YYYY`),
-          area: temp.area,
-          is_active: temp.is_active,
+          name: (temp.name) ? temp.name : `-`,
+          year: (temp.year) ? temp.year : `-`,
+          area: (temp.area) ? temp.area : `-`,
+          is_active: (temp.is_active) ? temp.is_active : `-`,
         })
       }
       
@@ -36,8 +36,6 @@ TropicalcycloneController = {
   },
 
   getData: async function (req, res) {
-    console.log(req.body)
-    console.log(req.params)
     let err, data, { id } = req.params;
     [err, data] = await flatry( Model.findOne({ is_delete: false, _id: id }));
     if (err) {

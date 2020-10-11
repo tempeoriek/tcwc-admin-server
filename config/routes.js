@@ -40,4 +40,7 @@ module.exports = function (app) {
 
   let Menu = require('../api/routes/Menu');
   app.use('/Menu', Menu);
+
+  let Authentication = require('../api/routes/Authentication');
+  app.use('/Authentication', Authentication);
 }

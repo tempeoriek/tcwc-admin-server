@@ -3,23 +3,40 @@ const Model = require('../models/after_event_report'),
 
 AftereventreportController = {
   getAllData: async function (req, res) {
-    let err, data;
-    [err, data] = await flatry( Model.find({ is_delete: false }).populate('tropical_cyclone_id'));
+    let err, find, fields = [], data = [];
+    [err, find] = await flatry( Model.find({ is_delete: false }, `year id_paragraph`).populate(`tropical_cyclone_id`, [`name`]));
     if (err) {
       console.log(err.stack);
-      response.error(400, `Error when find data in getAllData aftereventreport`, res, err);
+      response.error(400, `Error when find data in getAllData cycloneoutlook`, res, err);
     }
     
-    if (data.length > 0) {
-      response.ok(data, res, `success get all data`);
-    } else if (data.length == 0) {
+    if (find.length > 0) {
+      fields.push(
+        { key: 'name', label: 'TC Name', sortable: true },
+        { key: 'year', label: 'Year', sortable: true },
+        { key: 'id_paragraph', label: 'Description', sortable: true}, 
+        { key: 'actions', label: 'Actions' }
+      );
+
+      for (let i = 0; i < find.length; i++) {
+        let temp = find[i];
+        data.push({
+          _id: temp._id,
+          name: (temp.tropical_cyclone_id.name) ? temp.tropical_cyclone_id.name: `-`,
+          year: (temp.year) ? temp.year: `-`,
+          id_paragraph: (temp.id_paragraph) ? temp.id_paragraph: `-`,
+        })
+      }
+
+      response.ok(data, res, `success get all data`, fields);
+    } else if (find.length == 0) {
       response.success(data, res, `success get all data but data is empty`);
     }
   },
 
   getData: async function (req, res) {
     let err, data, { id } = req.params;
-    [err, data] = await flatry( Model.findOne({ is_delete: false, _id: id }).populate('tropical_cyclone_id'));
+    [err, data] = await flatry( Model.findOne({ is_delete: false, _id: id }).populate('tropical_cyclone_id', [`name`]));
     if (err) {
       console.log(err.stack);
       response.error(400, `Error when findOne data in getdata aftereventreport`, res, err);
