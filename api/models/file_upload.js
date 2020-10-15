@@ -35,6 +35,10 @@ let file_upload_schema = new Schema({
     type: Schema.Types.ObjectId,
     ref: `about`
   },
+  cyclogenesis_checksheet_id: {
+    type: Schema.Types.ObjectId,
+    ref: `cyclogenesis_checksheet`
+  },
   publication_id: {
     type: Schema.Types.ObjectId,
     ref: `publication`

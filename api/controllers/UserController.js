@@ -51,13 +51,11 @@ UserController = {
   },
 
   createData: async function (req, res) {
-    if (Object.entries(req.body).length == 0) {
-    // if (Object.entries(req.body).length > 0) {
+    if (Object.entries(req.body).length > 0) {
 
       let err, finduser, 
-      { password, /* confirm_password, */ username } = req.body;
-      let data = { username : `admin`, password : `admin`, is_view: false, is_admin: false, is_super_admin: true };
-      let confirm_password = `admin`;
+      { password, confirm_password, username } = req.body;
+      let data = { username, password, is_view, is_admin, is_super_admin};
     
       if (data.password !== confirm_password) {
         response.error(400, `Password do not match.`, res);

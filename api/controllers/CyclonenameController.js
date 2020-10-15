@@ -32,7 +32,7 @@ CyclonenameController = {
 
   getData: async function (req, res) {
     let err, data, { id } = req.params;
-    [err, data] = await flatry( Model.findOne({ is_delete: false, _id: id }));
+    [err, data] = await flatry( Model.findOne({ is_delete: false, _id: id }).populate(`cyclone_description_id`));
     if (err) {
       console.log(err.stack);
       response.error(400, `Error when findOne data in getdata cyclonename`, res, err);
@@ -47,8 +47,8 @@ CyclonenameController = {
 
   createData: async function (req, res) {
     if (Object.entries(req.body).length > 0) {
-      let { list_a, list_b } = req.body, err, data;
-      let new_data = { list_a, list_b };
+      let { list_a, list_b, cyclone_description_id } = req.body, err, data;
+      let new_data = { list_a, list_b, cyclone_description_id };
 
       [err, data] = await flatry( Model.create( new_data ));
       if (err) {
@@ -64,8 +64,8 @@ CyclonenameController = {
 
   updateData: async function (req, res) {
     if (Object.entries(req.body).length > 0 && Object.entries(req.params).length > 0) {
-      let { list_a, list_b } = req.body, { id } = req.params;
-      let new_data = { list_a, list_b }, err, data, 
+      let { list_a, list_b, cyclone_description_id } = req.body, { id } = req.params;
+      let new_data = { list_a, list_b, cyclone_description_id }, err, data, 
       filter = { _id: id, is_delete: false };
       
       [err, data] = await flatry( Model.findOneAndUpdate( filter, new_data, {new: true}));

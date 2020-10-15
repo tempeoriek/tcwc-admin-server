@@ -11,14 +11,20 @@ module.exports = function (app) {
   let Cyclogenesischecksheet = require('../api/routes/Cyclogenesischecksheet');
   app.use('/Cyclogenesischecksheet', Cyclogenesischecksheet);
 
+  let Cyclogenesischecksheetdate = require('../api/routes/Cyclogenesischecksheetdate');
+  app.use('/Cyclogenesischecksheetdate', Cyclogenesischecksheetdate);
+
+  let Dateform = require('../api/routes/Dateform');
+  app.use('/Dateform', Dateform);
+
   let Cyclonecurrent = require('../api/routes/Cyclonecurrent');
   app.use('/Cyclonecurrent', Cyclonecurrent);
 
   let Cyclonename = require('../api/routes/Cyclonename');
   app.use('/Cyclonename', Cyclonename);
 
-  let Cyclonenamedescription = require('../api/routes/Cyclonenamedescription');
-  app.use('/Cyclonenamedescription', Cyclonenamedescription);
+  let Cyclonedescription = require('../api/routes/Cyclonedescription');
+  app.use('/Cyclonedescription', Cyclonedescription);
 
   let Cycloneoutlook = require('../api/routes/Cycloneoutlook');
   app.use('/Cycloneoutlook', Cycloneoutlook);

@@ -1,18 +1,18 @@
 let Schema = mongoose.Schema;
 
-let cyclone_name_schema = new Schema({
-  list_a: {
+let date_form_schema = new Schema({
+  date: {
+    type: Date,
+    default: null
+  },
+  time: {
     type: String,
     default: null
   },
-  list_b: {
-    type: String,
-    default: null
-  },
-  
-  cyclone_description_id: {
+
+  cyclogenesis_checksheet_date_id: {
     type: Schema.Types.ObjectId,
-    ref: `cyclone_description`,
+    ref: `cyclogenesis_checksheet_date`, 
     default: null
   },
 
@@ -31,6 +31,6 @@ let cyclone_name_schema = new Schema({
   }
 });
 
-let cyclone_name = mongoose.model("cyclone_name", cyclone_name_schema);
+let date_form = mongoose.model("date_form", date_form_schema);
 
-module.exports = cyclone_name;
+module.exports = date_form;

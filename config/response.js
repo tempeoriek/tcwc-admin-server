@@ -21,6 +21,14 @@ Response_data = {
 		res.json(data);
 		res.end();
 	},
+	back: (code, values, message) => {
+		let data = {
+			status: code,
+			data: values,
+			message,
+		}
+		return data;
+	},
 	error: (errcode, message, res, err) => {
 		let data = {
 			success: false,

@@ -1,6 +1,6 @@
-const Model = require('../models/cyclone_name_description');
+const Model = require('../models/cyclone_description');
 
-CylonenamedescriptionController = {
+CylonedescriptionController = {
   getAllData: async function (req, res) {
     let err, find, fields = [], data = [];
     [err, find] = await flatry( Model.find({ is_delete: false }, `description`));
@@ -99,5 +99,5 @@ CylonenamedescriptionController = {
   },
 };
 
-module.exports = CylonenamedescriptionController;
+module.exports = CylonedescriptionController;
 

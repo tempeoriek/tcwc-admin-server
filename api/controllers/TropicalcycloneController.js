@@ -1,4 +1,6 @@
-const Model = require('../models/tropical_cyclone');
+const Model = require('../models/tropical_cyclone'),
+  UploadController = require('./UploadController'),
+  file_path = `tropicalcyclone`;
 
 TropicalcycloneController = {
   getAllData: async function (req, res) {
@@ -37,13 +39,27 @@ TropicalcycloneController = {
 
   getData: async function (req, res) {
     let err, data, { id } = req.params;
-    [err, data] = await flatry( Model.findOne({ is_delete: false, _id: id }));
+    [err, data] = await flatry( Model.findOne({ is_delete: false, _id: id }, { strict: false }));
     if (err) {
       console.log(err.stack);
       response.error(400, `Error when findOne data in getdata tropicalcyclone`, res, err);
     }
 
+    //UPLOAD FILE
+    let upload = await UploadController.getFile(file_path, id)
+    if (upload.status == 400 && !upload.data) {
+      response.error(400, `Error when upload data in createData tropicalcyclone`, res, err);
+    }
+    
     if (data) {
+      //UPLOAD FILE
+      data = {
+        content: data,
+        file_name: (upload.data.name) ? upload.data.name : null,
+        file_path: (upload.data.path) ? upload.data.path : null,
+        file_type: (upload.data.type) ? upload.data.type : null
+      }
+
       response.ok(data, res, `success get all data`);
     } else {
       response.success(data, res, `success get all data but data is empty`);
@@ -59,6 +75,14 @@ TropicalcycloneController = {
       if (err) {
         console.log(err.stack);
         response.error(400, `Error when create data in createData tropicalcyclone`, res, err);
+      }
+
+      //UPLOAD FILE
+      if (req.files && data && file_path) {
+        let upload = await UploadController.uploadData(req.files.files, file_path, data._id, `create`)
+        if (upload.status == 400) {
+          response.error(400, `Error when upload data in createData tropicalcyclone`, res, err);
+        }
       }
 
       response.ok(data, res, `success create data`);
@@ -79,6 +103,14 @@ TropicalcycloneController = {
         response.error(400, `Error when findoneandupdate data in updatedata tropicalcyclone`, res, err);
       }
 
+      //UPLOAD FILE
+      if (req.files && data && file_path) {
+        let upload = await UploadController.uploadData(req.files.files, file_path, data._id, `update`)
+        if (upload.status == 400) {
+          response.error(400, `Error when upload data in createData tropicalcyclone`, res, err);
+        }
+      }
+
       response.ok(data, res, `success update data`);
     } else {
       response.error(400, `Data not completed`, res);
@@ -94,8 +126,16 @@ TropicalcycloneController = {
       
       [err, data] = await flatry( Model.findOneAndUpdate( filter, new_data, {new: true}));
       if (err) {
-        console.log(err.stackE);
+        console.log(err.stack);
         response.error(400, `Error when findOneAndUpdate data in deleteData tropicalcyclone`, res, err);
+      }
+
+      //UPLOAD FILE
+      if (data) {
+        let upload = await UploadController.deleteFile(data._id, file_path)
+        if (upload.status == 400) {
+          response.error(400, `Error when upload data in createData tropicalcyclone`, res, err);
+        }
       }
 
       response.ok(data, res, `success delete data`);

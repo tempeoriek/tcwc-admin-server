@@ -5,6 +5,7 @@ cors = require('cors'),
 morgan = require('morgan'),
 mongoose = require('mongoose'),
 config = require('./database'),
+fileUpload = require('express-fileupload'),
 app = express();
 
 app.use(express.static('files'))
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
+app.use(fileUpload());
 app.options('*', cors());
 mongoose.set('useFindAndModify', false);
 mongoose.set('useUnifiedTopology', true);
