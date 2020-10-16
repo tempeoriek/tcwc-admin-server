@@ -1,0 +1,17 @@
+[{
+  "_id": {
+    "$oid": "5f82ded53bc1ac2188f555df"
+  },
+  "username": "admin",
+  "password": "$2a$10$Mv2xvPYYnE5r3xWvbBScV.wlKigA9xyz6p8IAhyRTgp.mR965Vita",
+  "is_view": false,
+  "is_admin": false,
+  "is_super_admin": true,
+  "attempt_login": 0,
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-11T10:30:45.308Z"
+  },
+  "__v": 0
+}]

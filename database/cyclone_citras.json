@@ -1,0 +1,23 @@
+[{
+  "_id": {
+    "$oid": "5f89428253fabe2ba40233d5"
+  },
+  "name": "TC Melati",
+  "modified_at": null,
+  "is_delete": true,
+  "created_at": {
+    "$date": "2020-10-16T06:49:38.669Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f8943c353fabe2ba40233d7"
+  },
+  "name": "TC Melati",
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-16T06:54:59.238Z"
+  },
+  "__v": 0
+}]

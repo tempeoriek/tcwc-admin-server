@@ -11,6 +11,8 @@ UploadController = {
       annual_report_id: (path == `annualreport`) ? model_id : null,
       after_event_report_id: (path == `aftereventreport`) ? model_id : null,
       about_id: (path == `about`) ? model_id : null,
+      cyclogenesis_checksheet_id: (path == `cyclogenesischecksheet`) ? model_id : null,
+      cyclone_citra_id: (path == `cyclonecitra`) ? model_id : null,
       publication_id: (path == `publication`) ? model_id : null
     }, err, data;
 
@@ -35,6 +37,7 @@ UploadController = {
       (path == `aftereventreport`) ? {after_event_report_id: model_id, is_delete: false} :
       (path == `about`) ? {about_id: model_id, is_delete: false} :
       (path == `cyclogenesischecksheet`) ? {cyclogenesis_checksheet_id: model_id, is_delete: false} :
+      (path == `cyclonecitra`) ? {cyclone_citra_id: model_id, is_delete: false} :
       (path == `publication`) ? {publication_id: model_id, is_delete: false} : null;
 
       [err, data] = await flatry( Model.findOneAndUpdate( old, new_data ));
@@ -51,6 +54,7 @@ UploadController = {
       (path == `aftereventreport`) ? {after_event_report_id: model_id, is_delete: false} :
       (path == `about`) ? {about_id: model_id, is_delete: false} :
       (path == `cyclogenesischecksheet`) ? {cyclogenesis_checksheet_id: model_id, is_delete: false} :
+      (path == `cyclonecitra`) ? {cyclone_citra_id: model_id, is_delete: false} :
       (path == `publication`) ? {publication_id: model_id, is_delete: false} : null;
 
     let [err, data] = await flatry( Model.findOne( old, `name type path` ));
@@ -66,6 +70,7 @@ UploadController = {
       (path == `aftereventreport`) ? {after_event_report_id: model_id, is_delete: false} :
       (path == `about`) ? {about_id: model_id, is_delete: false} :
       (path == `cyclogenesischecksheet`) ? {cyclogenesis_checksheet_id: model_id, is_delete: false} :
+      (path == `cyclonecitra`) ? {cyclone_citra_id: model_id, is_delete: false} :
       (path == `publication`) ? {publication_id: model_id, is_delete: false} : null;
 
     [err] = await flatry( Model.updateMany( old, { is_delete: true } ));

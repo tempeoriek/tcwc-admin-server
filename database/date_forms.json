@@ -1,0 +1,103 @@
+[{
+  "_id": {
+    "$oid": "5f88318678f9a828547c8d94"
+  },
+  "date": {
+    "$date": "2020-10-15T00:00:00Z"
+  },
+  "time": "00Z",
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-15T11:24:54.138Z"
+  },
+  "__v": 0,
+  "cyclogenesis_checksheet_date_id": {
+    "$oid": "5f8838aaecd15c361475729f"
+  }
+},{
+  "_id": {
+    "$oid": "5f8831a178f9a828547c8d95"
+  },
+  "date": {
+    "$date": "2020-10-15T00:00:00Z"
+  },
+  "time": "06Z",
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-15T11:25:21.230Z"
+  },
+  "__v": 0,
+  "cyclogenesis_checksheet_date_id": {
+    "$oid": "5f8838aaecd15c361475729f"
+  }
+},{
+  "_id": {
+    "$oid": "5f88324f8da52b2d2448f321"
+  },
+  "date": {
+    "$date": "2020-10-15T00:00:00Z"
+  },
+  "time": "12Z",
+  "cyclogenesis_checksheet_date_id": {
+    "$oid": "5f8838aaecd15c361475729f"
+  },
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-15T11:28:15.983Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f88325a8da52b2d2448f322"
+  },
+  "date": {
+    "$date": "2020-10-16T00:00:00Z"
+  },
+  "time": "00Z",
+  "cyclogenesis_checksheet_date_id": {
+    "$oid": "5f8838aaecd15c361475729f"
+  },
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-15T11:28:26.371Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f88325f8da52b2d2448f323"
+  },
+  "date": {
+    "$date": "2020-10-16T00:00:00Z"
+  },
+  "time": "06Z",
+  "cyclogenesis_checksheet_date_id": {
+    "$oid": "5f8838aaecd15c361475729f"
+  },
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-15T11:28:31.505Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f8832638da52b2d2448f324"
+  },
+  "date": {
+    "$date": "2020-10-16T00:00:00Z"
+  },
+  "time": "12Z",
+  "cyclogenesis_checksheet_date_id": {
+    "$oid": "5f8838aaecd15c361475729f"
+  },
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-15T11:28:35.592Z"
+  },
+  "__v": 0
+}]

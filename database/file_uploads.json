@@ -1,0 +1,116 @@
+[{
+  "_id": {
+    "$oid": "5f87f9d9dad7011e2434935b"
+  },
+  "name": "Screenshot (19).png",
+  "path": "/files/tropicalcyclone/Screenshot (19).png",
+  "type": "image/png",
+  "size": 624366,
+  "modified_at": null,
+  "is_delete": true,
+  "tropical_cyclone_id": {
+    "$oid": "5f87f9d9dad7011e2434935a"
+  },
+  "annual_report_id": null,
+  "after_event_report_id": null,
+  "about_id": null,
+  "publication_id": null,
+  "created_at": {
+    "$date": "2020-10-15T07:27:21.610Z"
+  },
+  "__v": 0,
+  "cyclogenesis_checksheet_id": null,
+  "cyclone_citra_id": null
+},{
+  "_id": {
+    "$oid": "5f8814d322b4bc2ae4626425"
+  },
+  "name": "Screenshot (19).png",
+  "path": "/files/tropicalcyclone/Screenshot (19).png",
+  "type": "image/png",
+  "size": 624366,
+  "modified_at": null,
+  "is_delete": false,
+  "tropical_cyclone_id": {
+    "$oid": "5f8814d322b4bc2ae4626424"
+  },
+  "annual_report_id": null,
+  "after_event_report_id": null,
+  "about_id": null,
+  "publication_id": null,
+  "created_at": {
+    "$date": "2020-10-15T09:22:27.680Z"
+  },
+  "__v": 0,
+  "cyclogenesis_checksheet_id": null,
+  "cyclone_citra_id": null
+},{
+  "_id": {
+    "$oid": "5f893c4092c6a410405134cc"
+  },
+  "name": "Screenshot (20).png",
+  "path": "/files/cyclogenesischecksheet/Screenshot (20).png",
+  "type": "image/png",
+  "size": 522589,
+  "modified_at": null,
+  "is_delete": false,
+  "tropical_cyclone_id": null,
+  "annual_report_id": null,
+  "after_event_report_id": null,
+  "about_id": null,
+  "publication_id": null,
+  "created_at": {
+    "$date": "2020-10-16T06:22:56.472Z"
+  },
+  "__v": 0,
+  "cyclogenesis_checksheet_id": {
+    "$oid": "5f893c4092c6a410405134cb"
+  },
+  "cyclone_citra_id": null
+},{
+  "_id": {
+    "$oid": "5f89428253fabe2ba40233d6"
+  },
+  "name": "download.png",
+  "path": "/files/cyclonecitra/download.png",
+  "type": "image/png",
+  "size": 127387,
+  "modified_at": null,
+  "is_delete": true,
+  "tropical_cyclone_id": null,
+  "annual_report_id": null,
+  "after_event_report_id": null,
+  "about_id": null,
+  "cyclogenesis_checksheet_id": null,
+  "cyclone_citra_id": {
+    "$oid": "5f89428253fabe2ba40233d5"
+  },
+  "publication_id": null,
+  "created_at": {
+    "$date": "2020-10-16T06:49:38.839Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f8943c353fabe2ba40233d8"
+  },
+  "name": "logo_strapi.png",
+  "path": "/files/cyclonecitra/logo_strapi.png",
+  "type": "image/png",
+  "size": 268721,
+  "modified_at": null,
+  "is_delete": false,
+  "tropical_cyclone_id": null,
+  "annual_report_id": null,
+  "after_event_report_id": null,
+  "about_id": null,
+  "cyclogenesis_checksheet_id": null,
+  "cyclone_citra_id": {
+    "$oid": "5f8943c353fabe2ba40233d7"
+  },
+  "publication_id": null,
+  "created_at": {
+    "$date": "2020-10-16T06:54:59.315Z"
+  },
+  "__v": 0
+}]

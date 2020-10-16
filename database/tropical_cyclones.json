@@ -1,29 +1,5 @@
 [{
   "_id": {
-    "$oid": "5f7f0bcb19d00e3770570a62"
-  },
-  "area": "Jakarta",
-  "name": "TC Bawang",
-  "description": null,
-  "is_active": true,
-  "year": {
-    "$date": "2020-01-01T00:00:00Z"
-  },
-  "techincal_bulletin": true,
-  "public_info_bulletin": true,
-  "ocean_gale_storm_warn": true,
-  "track_impact": true,
-  "coastal_zone": true,
-  "extreme_weather": true,
-  "gale_warning": true,
-  "modified_at": null,
-  "is_delete": false,
-  "created_at": {
-    "$date": "2020-10-08T12:53:31.227Z"
-  },
-  "__v": 0
-},{
-  "_id": {
     "$oid": "5f7f0bfa9ba90a2a38a03e3c"
   },
   "area": "Bandung",
@@ -44,6 +20,54 @@
   "is_delete": false,
   "created_at": {
     "$date": "2020-10-08T12:54:18.564Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f87f9d9dad7011e2434935a"
+  },
+  "area": "Pontianak",
+  "name": "Durian",
+  "description": null,
+  "is_active": true,
+  "year": {
+    "$date": "2020-01-01T00:00:00Z"
+  },
+  "techincal_bulletin": true,
+  "public_info_bulletin": false,
+  "ocean_gale_storm_warn": false,
+  "track_impact": true,
+  "coastal_zone": true,
+  "extreme_weather": false,
+  "gale_warning": true,
+  "modified_at": null,
+  "is_delete": true,
+  "created_at": {
+    "$date": "2020-10-15T07:27:21.502Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f8814d322b4bc2ae4626424"
+  },
+  "area": "Ambon",
+  "name": "Melati",
+  "description": null,
+  "is_active": true,
+  "year": {
+    "$date": "2020-01-01T00:00:00Z"
+  },
+  "techincal_bulletin": true,
+  "public_info_bulletin": false,
+  "ocean_gale_storm_warn": false,
+  "track_impact": true,
+  "coastal_zone": true,
+  "extreme_weather": false,
+  "gale_warning": true,
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-15T09:22:27.620Z"
   },
   "__v": 0
 }]

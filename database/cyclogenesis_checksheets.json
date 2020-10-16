@@ -1,0 +1,103 @@
+[{
+  "_id": {
+    "$oid": "5f893c4092c6a410405134cb"
+  },
+  "cyclogenesis_checksheet_date_id": {
+    "$oid": "5f8838aaecd15c361475729f"
+  },
+  "kode_bibit": "T001",
+  "latitude": 1.1,
+  "longitude": 1.1,
+  "suspect_area_1": {
+    "$oid": "5f88318678f9a828547c8d94"
+  },
+  "suspect_area_2": {
+    "$oid": "5f88318678f9a828547c8d94"
+  },
+  "suspect_area_3": {
+    "$oid": "5f88318678f9a828547c8d94"
+  },
+  "location_suspect_area": "Test",
+  "bec_current_a": {
+    "$oid": "5f88324f8da52b2d2448f321"
+  },
+  "bec_current_b": {
+    "$oid": "5f88324f8da52b2d2448f321"
+  },
+  "bec_current_c": {
+    "$oid": "5f88324f8da52b2d2448f321"
+  },
+  "bec_current_d": {
+    "$oid": "5f8831a178f9a828547c8d95"
+  },
+  "bec_current_e": {
+    "$oid": "5f8831a178f9a828547c8d95"
+  },
+  "bec_current_f": {
+    "$oid": "5f8831a178f9a828547c8d95"
+  },
+  "bec_current_g": {
+    "$oid": "5f8831a178f9a828547c8d95"
+  },
+  "bec_current_h": {
+    "$oid": "5f8831a178f9a828547c8d95"
+  },
+  "bec_current_i": {
+    "$oid": "5f88325a8da52b2d2448f322"
+  },
+  "bec_current_j": {
+    "$oid": "5f88325a8da52b2d2448f322"
+  },
+  "bec_trend_k": {
+    "$oid": "5f88325a8da52b2d2448f322"
+  },
+  "bec_trend_l": {
+    "$oid": "5f88325a8da52b2d2448f322"
+  },
+  "bec_trend_m": {
+    "$oid": "5f88325f8da52b2d2448f323"
+  },
+  "bec_trend_n": {
+    "$oid": "5f88325f8da52b2d2448f323"
+  },
+  "bec_trend_o": {
+    "$oid": "5f88325f8da52b2d2448f323"
+  },
+  "bec_trend_p": {
+    "$oid": "5f88325f8da52b2d2448f323"
+  },
+  "development_circulation_1": {
+    "$oid": "5f88325f8da52b2d2448f323"
+  },
+  "development_circulation_2": {
+    "$oid": "5f8832638da52b2d2448f324"
+  },
+  "development_circulation_3": {
+    "$oid": "5f8832638da52b2d2448f324"
+  },
+  "development_circulation_4": {
+    "$oid": "5f8832638da52b2d2448f324"
+  },
+  "development_circulation_5": {
+    "$oid": "5f8832638da52b2d2448f324"
+  },
+  "ddc_6": {
+    "$oid": "5f88318678f9a828547c8d94"
+  },
+  "ddc_7": {
+    "$oid": "5f88318678f9a828547c8d94"
+  },
+  "ddc_8": {
+    "$oid": "5f88318678f9a828547c8d94"
+  },
+  "result": "result",
+  "modified_at": null,
+  "is_delete": false,
+  "datetime": {
+    "$date": "2020-10-16T00:00:00Z"
+  },
+  "created_at": {
+    "$date": "2020-10-16T06:22:56.208Z"
+  },
+  "__v": 0
+}]
