@@ -2,12 +2,12 @@ let Schema = mongoose.Schema,
   Float = require('mongoose-float').loadType(mongoose);
 
 let cyclogenesis_checksheet_schema = new Schema({
-  date_form_id: {
+  cyclogenesis_checksheet_date_id: {
     type: Schema.Types.ObjectId,
-    ref: `date_form`, 
+    ref: `cyclogenesis_checksheet_date`, 
     default: null
   },
-  kode_bitit : {
+  kode_bibit : {
     type: String,
     default: null
   },
@@ -28,15 +28,18 @@ let cyclogenesis_checksheet_schema = new Schema({
   
   //SUSPECT AREA
   suspect_area_1: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   },
   suspect_area_2: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
   suspect_area_3: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
   location_suspect_area: {
@@ -46,109 +49,133 @@ let cyclogenesis_checksheet_schema = new Schema({
 
   //BEC
   bec_current_a: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
   bec_current_b: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
   bec_current_c: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
   bec_current_d: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
   bec_current_e: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
   bec_current_f: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
   bec_current_g: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
   bec_current_h: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
   bec_current_i: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
   bec_current_j: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
   bec_trend_k: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
   bec_trend_l: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
   bec_trend_m: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
   bec_trend_n: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
   bec_trend_o: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
   bec_trend_p: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
 
   //DEVELOPMENT CIRCULATION
   development_circulation_1: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
   development_circulation_2: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
   development_circulation_3: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
   development_circulation_4: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
   development_circulation_5: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
 
   //DDC
   ddc_6: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
   ddc_7: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
   ddc_8: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: `date_form`, 
     default: null
   }, 
 
   result: {
     type: String,
-    default: null
+    default: false
   },
 
   /* config */
