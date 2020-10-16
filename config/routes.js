@@ -20,6 +20,9 @@ module.exports = function (app) {
   let Cyclonecurrent = require('../api/routes/Cyclonecurrent');
   app.use('/Cyclonecurrent', Cyclonecurrent);
 
+  let Cyclonecitra = require('../api/routes/Cyclonecitra');
+  app.use('/Cyclonecitra', Cyclonecitra);
+
   let Cyclonename = require('../api/routes/Cyclonename');
   app.use('/Cyclonename', Cyclonename);
 

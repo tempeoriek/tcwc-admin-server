@@ -39,6 +39,10 @@ let file_upload_schema = new Schema({
     type: Schema.Types.ObjectId,
     ref: `cyclogenesis_checksheet`
   },
+  cyclone_citra_id: {
+    type: Schema.Types.ObjectId,
+    ref: `cyclone_citra`
+  },
   publication_id: {
     type: Schema.Types.ObjectId,
     ref: `publication`
