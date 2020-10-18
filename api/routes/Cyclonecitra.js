@@ -1,6 +1,8 @@
 const router = express.Router(),
 Cyclonecitra = require('../controllers/CyclonecitraController');
 
+router.post('/filter', Cyclonecitra.filterData);
+
 router.get('/', Cyclonecitra.getAllData);
 router.get('/:id', Cyclonecitra.getData);
 router.post('/', Cyclonecitra.createData);

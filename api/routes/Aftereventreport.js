@@ -1,6 +1,7 @@
 const router = express.Router(),
 Aftereventreport = require('../controllers/AftereventreportController');
 
+router.post('/filter', Aftereventreport.filterData);
 router.get('/get_tropical', Aftereventreport.getTropicalCylone);
 
 router.get('/', Aftereventreport.getAllData);

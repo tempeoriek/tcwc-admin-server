@@ -1,7 +1,15 @@
 let Schema = mongoose.Schema;
 
 let publication_schema = new Schema({
-  name: {
+  id_title: {
+    type: String,
+    default: null
+  },
+  en_title: {
+    type: String,
+    default: null
+  },
+  path: {
     type: String,
     default: null
   },

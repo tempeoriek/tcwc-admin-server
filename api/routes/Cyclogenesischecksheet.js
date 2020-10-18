@@ -1,6 +1,8 @@
 const router = express.Router(),
 Cyclogenesischecksheet = require('../controllers/CyclogenesischecksheetController');
 
+router.post('/filter', Cyclogenesischecksheet.filterData);
+
 router.get('/', Cyclogenesischecksheet.getAllData);
 router.get('/:id', Cyclogenesischecksheet.getData);
 router.post('/', Cyclogenesischecksheet.createData);

@@ -1,7 +1,7 @@
 const Model = require('../models/cyclogenesis_checksheet_date');
  DateformController = require('./DateformController');
 
-CyclogenesischecksheetdateController = {
+CyclogenesischecksheetdateController = { 
   getAllData: async function (req, res) {
     let err, find, fields = [], data = [];
     [err, find] = await flatry( Model.find({ is_delete: false }, `dates`));

@@ -1,6 +1,8 @@
 const router = express.Router(),
 Annualreport = require('../controllers/AnnualreportController');
 
+router.post('/filter', Annualreport.filterData);
+
 router.get('/', Annualreport.getAllData);
 router.get('/:id', Annualreport.getData);
 router.post('/', Annualreport.createData);

@@ -39,6 +39,10 @@ let cyclone_current_schema = new Schema({
     type: Boolean,
     default: false
   },
+  is_posted: {
+    type: Boolean,
+    default: false
+  },
 
   /* relations */
   tropical_cyclone_id: {

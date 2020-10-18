@@ -1,6 +1,19 @@
 const Model = require('../models/annual_report');
 
 AnnualreportController = {
+  filterData: async function (req, res) {
+    let err, data, { filter, sort } = req.body;
+    let find_data = (filter) ? filter : {is_delete: false},
+    sort_data = (sort) ? sort : { "created_at": 1 };
+    [err, data] = await flatry( Model.find( find_data, 'year' ).sort(sort_data));
+    if (err) {
+      console.log(err.stack);
+      response.error(400, `Error when filter data in tropicalcyclone`, res, err);
+    }
+
+    response.ok(data, res, `success get filter data`);
+  },
+  
   getAllData: async function (req, res) {
     let err, find, fields = [], data = [];
     [err, find] = await flatry( Model.find({ is_delete: false }, `id_title year is_posted`));
@@ -22,7 +35,9 @@ AnnualreportController = {
         data.push({
           _id: temp._id,
           id_title: (temp.id_title) ? temp.id_title : `-`,
+          en_title: (temp.en_title) ? temp.en_title : `-`,
           year: (temp.year) ? temp.year : `-`,
+          path: (temp.path) ? temp.path : `-`,
           is_posted: (temp.is_posted) ? temp.is_posted : `-`,
         })
       }
@@ -50,8 +65,8 @@ AnnualreportController = {
 
   createData: async function (req, res) {
     if (Object.entries(req.body).length > 0) {
-      let { id_title, year } = req.body, err, data;
-      let new_data = { id_title, year };
+      let { id_title, en_title, year, path } = req.body, err, data;
+      let new_data = { id_title, en_title, year, path };
 
       [err, data] = await flatry( Model.create( new_data ));
       if (err) {
@@ -67,8 +82,8 @@ AnnualreportController = {
 
   updateData: async function (req, res) {
     if (Object.entries(req.body).length > 0 && Object.entries(req.params).length > 0) {
-      let { id_title, year } = req.body, { id } = req.params;
-      let new_data = { id_title, year }, err, data, 
+      let { id_title, en_title, year, path } = req.body, { id } = req.params;
+      let new_data = { id_title, en_title, year, path }, err, data, 
       filter = { _id: id, is_delete: false };
       
       [err, data] = await flatry( Model.findOneAndUpdate( filter, new_data, {new: true}));

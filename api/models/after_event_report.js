@@ -1,7 +1,7 @@
 let Schema = mongoose.Schema;
 
 let after_event_report_schema = new Schema({
-  url: {
+  path: {
     type: String,
     default: null
   },

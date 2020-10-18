@@ -17,6 +17,10 @@ let about_schema = new Schema({
     type: String,
     default: false
   },
+  path: {
+    type: String,
+    default: false
+  },
   is_posted: {
     type: Boolean,
     default: false

@@ -1,9 +1,22 @@
 const Model = require('../models/cyclone_name');
 
 CyclonenameController = {
+  filterData: async function (req, res) {
+    let err, data, { filter, sort } = req.body;
+    let find_data = (filter) ? filter : {is_delete: false},
+    sort_data = (sort) ? sort : { "created_at": 1 };
+    [err, data] = await flatry( Model.find( find_data, 'year' ).sort(sort_data));
+    if (err) {
+      console.log(err.stack);
+      response.error(400, `Error when filter data in tropicalcyclone`, res, err);
+    }
+
+    response.ok(data, res, `success get filter data`);
+  },
+
   getAllData: async function (req, res) {
     let err, find, fields = [], data = [];
-    [err, find] = await flatry( Model.find({ is_delete: false }, `list_a list_b _id`));
+    [err, find] = await flatry( Model.find({ is_delete: false }, `list_a list_b`).populate(`cyclone_description_id`, [`description`]));
     if (err) {
       console.log(err.stack);
       response.error(400, `Error when find data in getAllData cyclonename`, res, err);
@@ -16,12 +29,14 @@ CyclonenameController = {
         { key: 'actions', label: 'Actions' }
       );
 
+      console.log(find)
       for (let i = 0; i < find.length; i++) {
         let temp = find[i];
         data.push({
           _id: temp._id,
           list_a: temp.list_a,
           list_b: temp.list_b,
+          description: temp.cyclone_description_id.description
         })
       }
       response.ok(data, res, `success get all data`, fields);

@@ -1,9 +1,22 @@
 const Model = require('../models/publication');
 
 PublicationController = {
+  filterData: async function (req, res) {
+    let err, data, { filter, sort } = req.body;
+    let find_data = (filter) ? filter : {is_delete: false},
+    sort_data = (sort) ? sort : { "created_at": 1 };
+    [err, data] = await flatry( Model.find( find_data, 'year' ).sort(sort_data));
+    if (err) {
+      console.log(err.stack);
+      response.error(400, `Error when filter data in tropicalcyclone`, res, err);
+    }
+
+    response.ok(data, res, `success get filter data`);
+  },
+  
   getAllData: async function (req, res) {
     let err, find, fields = [], data = [];
-    [err, find] = await flatry( Model.find({ is_delete: false }, `name year author`));
+    [err, find] = await flatry( Model.find({ is_delete: false }, `id_title en_title path year author`));
     if (err) {
       console.log(err.stack);
       response.error(400, `Error when find data in getAllData cycloneoutlook`, res, err);
@@ -11,7 +24,7 @@ PublicationController = {
     
     if (find.length > 0) {
       fields.push(
-        { key: 'name', label: 'Publication Name', sortable: true },
+        { key: 'id_title', label: 'Publication Name', sortable: true },
         { key: 'year', label: 'Year', sortable: true },
         { key: 'author', label: 'Author', sortable: true}, 
         { key: 'actions', label: 'Actions' }
@@ -21,7 +34,9 @@ PublicationController = {
         let temp = find[i];
         data.push({
           _id: temp._id,
-          name: (temp.name) ? temp.name: `-`,
+          id_title: (temp.id_title) ? temp.id_title: `-`,
+          en_title: (temp.en_title) ? temp.en_title: `-`,
+          path: (temp.path) ? temp.path: `-`,
           year: (temp.year) ? temp.year: `-`,
           author: (temp.author) ? temp.author: `-`,
         })
@@ -50,8 +65,8 @@ PublicationController = {
 
   createData: async function (req, res) {
     if (Object.entries(req.body).length > 0) {
-      let { name, year, author } = req.body, err, data;
-      let new_data = { name, year, author };
+      let { id_title, en_title, path, year, author } = req.body, err, data;
+      let new_data = { id_title, en_title, path, year, author };
 
       [err, data] = await flatry( Model.create( new_data ));
       if (err) {
@@ -67,8 +82,8 @@ PublicationController = {
 
   updateData: async function (req, res) {
     if (Object.entries(req.body).length > 0 && Object.entries(req.params).length > 0) {
-      let { name, year, author } = req.body, { id } = req.params;
-      let new_data = { name, year, author }, err, data, 
+      let { id_title, en_title, path, year, author } = req.body, { id } = req.params;
+      let new_data = { id_title, en_title, path, year, author }, err, data, 
       filter = { _id: id, is_delete: false };
       
       [err, data] = await flatry( Model.findOneAndUpdate( filter, new_data, {new: true}));

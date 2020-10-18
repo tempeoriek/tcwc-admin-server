@@ -1,6 +1,8 @@
 const router = express.Router(),
 About = require('../controllers/AboutController');
 
+router.post('/filter', About.filterData);
+
 router.get('/', About.getAllData);
 router.get('/:id', About.getData);
 router.post('/', About.createData);

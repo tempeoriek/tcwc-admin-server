@@ -1,6 +1,19 @@
 const Model = require('../models/about');
 
 AboutController = {
+  filterData: async function (req, res) {
+    let err, data, { filter, sort } = req.body;
+    let find_data = (filter) ? filter : {is_delete: false},
+    sort_data = (sort) ? sort : { "created_at": 1 };
+    [err, data] = await flatry( Model.find( find_data, 'year' ).sort(sort_data));
+    if (err) {
+      console.log(err.stack);
+      response.error(400, `Error when filter data in tropicalcyclone`, res, err);
+    }
+
+    response.ok(data, res, `success get filter data`);
+  },
+  
   getAllData: async function (req, res) {
     let err, find, fields = [], data = [];
     [err, find] = await flatry( Model.find({ is_delete: false }, `id_title is_posted start_post`));
@@ -22,6 +35,8 @@ AboutController = {
         data.push({
           _id: temp._id,
           id_title: (temp.id_title) ? temp.id_title : `-`,
+          en_title: (temp.en_title) ? temp.en_title : `-`,
+          path: (temp.path) ? temp.path : `-`,
           start_post: (temp.start_post) ? temp.start_post : `-`,
           is_posted: (temp.is_posted) ? temp.is_posted : `-`,
         })
@@ -50,8 +65,8 @@ AboutController = {
 
   createData: async function (req, res) {
     if (Object.entries(req.body).length > 0) {
-      let { id_title, id_paragraph, en_title, en_paragraph, is_posted } = req.body, err, data;
-      let new_data = { id_title, id_paragraph, en_title, en_paragraph, is_posted };
+      let { id_title, id_paragraph, en_title, en_paragraph, is_posted, path } = req.body, err, data;
+      let new_data = { id_title, id_paragraph, en_title, en_paragraph, is_posted, path };
 
       [err, data] = await flatry( Model.create( new_data ));
       if (err) {
@@ -67,8 +82,8 @@ AboutController = {
 
   updateData: async function (req, res) {
     if (Object.entries(req.body).length > 0 && Object.entries(req.params).length > 0) {
-      let { id_title, id_paragraph, en_title, en_paragraph, is_posted } = req.body, { id } = req.params;
-      let new_data = { id_title, id_paragraph, en_title, en_paragraph, is_posted }, err, data, 
+      let { id_title, id_paragraph, en_title, en_paragraph, is_posted, path } = req.body, { id } = req.params;
+      let new_data = { id_title, id_paragraph, en_title, en_paragraph, is_posted, path }, err, data, 
       filter = { _id: id, is_delete: false };
       
       [err, data] = await flatry( Model.findOneAndUpdate( filter, new_data, {new: true}));

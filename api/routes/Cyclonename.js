@@ -1,6 +1,8 @@
 const router = express.Router(),
 Cyclonename = require('../controllers/CyclonenameController');
 
+router.post('/filter', Cyclonename.filterData);
+
 router.get('/', Cyclonename.getAllData);
 router.get('/:id', Cyclonename.getData);
 router.post('/', Cyclonename.createData);
