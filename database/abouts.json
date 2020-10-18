@@ -1,35 +1,37 @@
 [{
   "_id": {
-    "$oid": "5f7f1a0a7ecfca0b10c0a59f"
+    "$oid": "5f8c2575bfc43c25b0830d27"
   },
-  "en_title": "Tropical Cyclone",
+  "en_title": "Siklon Tropis 1",
   "en_paragraph": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
-  "id_title": "Siklon Tropis",
+  "id_title": "Tropical Cyclone 1",
   "id_paragraph": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
-  "is_posted": true,
+  "path": "about1",
+  "is_posted": false,
   "start_post": null,
   "end_post": null,
   "modified_at": null,
   "is_delete": false,
   "created_at": {
-    "$date": "2020-10-08T13:54:18.605Z"
+    "$date": "2020-10-18T11:22:29.066Z"
   },
   "__v": 0
 },{
   "_id": {
-    "$oid": "5f7f1a148f81133328f7d5c3"
+    "$oid": "5f8c2581bfc43c25b0830d28"
   },
-  "en_title": "Tropical Cyclone 2",
+  "en_title": "Siklon Tropis 2",
   "en_paragraph": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
-  "id_title": "Siklon Tropis 2",
+  "id_title": "Tropical Cyclone 2",
   "id_paragraph": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
-  "is_posted": true,
+  "path": "about2",
+  "is_posted": false,
   "start_post": null,
   "end_post": null,
   "modified_at": null,
-  "is_delete": true,
+  "is_delete": false,
   "created_at": {
-    "$date": "2020-10-08T13:54:28.769Z"
+    "$date": "2020-10-18T11:22:41.412Z"
   },
   "__v": 0
 }]

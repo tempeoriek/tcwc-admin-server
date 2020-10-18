@@ -1,31 +1,52 @@
 [{
   "_id": {
-    "$oid": "5f7f181677a06831549e5ae3"
+    "$oid": "5f8c2270d8ddf52cfc5d04be"
   },
-  "name": "About Cyclone",
+  "id_title": "About Cyclone 3",
+  "en_title": "About Cyclone 3",
+  "path": "about3",
   "year": {
-    "$date": "2020-01-01T00:00:00Z"
+    "$date": "2020-01-01T00:00:02.020Z"
   },
-  "author": "Prof. M. Agung",
+  "author": "Prof. Andrey",
   "modified_at": null,
   "is_delete": false,
   "created_at": {
-    "$date": "2020-10-08T13:45:58.837Z"
+    "$date": "2020-10-18T11:09:36.551Z"
   },
   "__v": 0
 },{
   "_id": {
-    "$oid": "5f7f193260e3a62b74e202e2"
+    "$oid": "5f8c29cbbfc43c25b0830d29"
   },
-  "name": "About Cyclone 2",
+  "id_title": "About Cyclone 2",
+  "en_title": "About Cyclone 2",
+  "path": "about2",
   "year": {
-    "$date": "2020-01-01T00:00:00Z"
+    "$date": "2019-01-01T00:00:02.020Z"
   },
-  "author": "Prof. M. Agung",
+  "author": "Prof. Andrey",
   "modified_at": null,
   "is_delete": false,
   "created_at": {
-    "$date": "2020-10-08T13:50:42.232Z"
+    "$date": "2020-10-18T11:40:59.003Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f8c29d8bfc43c25b0830d2a"
+  },
+  "id_title": "About Cyclone 1",
+  "en_title": "About Cyclone 1",
+  "path": "about1",
+  "year": {
+    "$date": "2018-01-01T00:00:00Z"
+  },
+  "author": "Prof. Andrey",
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-18T11:41:12.832Z"
   },
   "__v": 0
 }]

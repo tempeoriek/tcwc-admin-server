@@ -55,7 +55,7 @@
   "description": null,
   "is_active": true,
   "year": {
-    "$date": "2020-01-01T00:00:00Z"
+    "$date": "2015-01-01T00:00:00Z"
   },
   "techincal_bulletin": true,
   "public_info_bulletin": false,
@@ -68,6 +68,126 @@
   "is_delete": false,
   "created_at": {
     "$date": "2020-10-15T09:22:27.620Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f8957ac42a36831c8dcff3f"
+  },
+  "area": "Jakarta",
+  "name": "TC Bagelan",
+  "description": null,
+  "is_active": true,
+  "year": {
+    "$date": "2018-01-01T00:00:02.018Z"
+  },
+  "techincal_bulletin": false,
+  "public_info_bulletin": false,
+  "ocean_gale_storm_warn": false,
+  "track_impact": false,
+  "coastal_zone": true,
+  "extreme_weather": true,
+  "gale_warning": true,
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-16T08:19:56.773Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f8957bb42a36831c8dcff40"
+  },
+  "area": "Bandung",
+  "name": "TC Merak",
+  "description": null,
+  "is_active": true,
+  "year": {
+    "$date": "2016-01-01T00:00:02.016Z"
+  },
+  "techincal_bulletin": false,
+  "public_info_bulletin": false,
+  "ocean_gale_storm_warn": false,
+  "track_impact": false,
+  "coastal_zone": true,
+  "extreme_weather": true,
+  "gale_warning": true,
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-16T08:20:11.405Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f8957c242a36831c8dcff41"
+  },
+  "area": "Bandung",
+  "name": "TC Halim",
+  "description": null,
+  "is_active": true,
+  "year": {
+    "$date": "2017-01-01T00:00:02.020Z"
+  },
+  "techincal_bulletin": false,
+  "public_info_bulletin": false,
+  "ocean_gale_storm_warn": false,
+  "track_impact": false,
+  "coastal_zone": true,
+  "extreme_weather": true,
+  "gale_warning": true,
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-16T08:20:18.523Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f8957cf42a36831c8dcff42"
+  },
+  "area": "Aceh",
+  "name": "TC Noil",
+  "description": null,
+  "is_active": true,
+  "year": {
+    "$date": "2020-01-01T00:00:02.019Z"
+  },
+  "techincal_bulletin": false,
+  "public_info_bulletin": false,
+  "ocean_gale_storm_warn": false,
+  "track_impact": false,
+  "coastal_zone": true,
+  "extreme_weather": true,
+  "gale_warning": true,
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-16T08:20:31.291Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f8957d842a36831c8dcff43"
+  },
+  "area": "Ambon",
+  "name": "TC Kiri",
+  "description": null,
+  "is_active": true,
+  "year": {
+    "$date": "2019-01-01T00:00:02.018Z"
+  },
+  "techincal_bulletin": false,
+  "public_info_bulletin": false,
+  "ocean_gale_storm_warn": false,
+  "track_impact": false,
+  "coastal_zone": true,
+  "extreme_weather": true,
+  "gale_warning": true,
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-16T08:20:40.618Z"
   },
   "__v": 0
 }]
