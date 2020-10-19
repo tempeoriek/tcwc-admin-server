@@ -31,18 +31,6 @@ let cyclone_current_schema = new Schema({
     default: null,
     required: true
   },
-  category: {
-    type: String,
-    default: null
-  },
-  is_current: {
-    type: Boolean,
-    default: false
-  },
-  is_posted: {
-    type: Boolean,
-    default: false
-  },
 
   /* relations */
   tropical_cyclone_id: {

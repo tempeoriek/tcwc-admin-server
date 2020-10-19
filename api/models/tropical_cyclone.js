@@ -53,6 +53,19 @@ let tropical_cyclone_schema = new Schema({
     default: false
   },
 
+  category: {
+    type: String,
+    default: null
+  },
+  is_current: {
+    type: Boolean,
+    default: false
+  },
+  is_posted: {
+    type: Boolean,
+    default: false
+  },
+
   /* config */
   created_at: {
     type: Date,

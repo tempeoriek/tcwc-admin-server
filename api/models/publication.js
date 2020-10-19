@@ -9,6 +9,14 @@ let publication_schema = new Schema({
     type: String,
     default: null
   },
+  id_paragraph: {
+    type: String,
+    default: null
+  },
+  en_paragraph: {
+    type: String,
+    default: null
+  },
   path: {
     type: String,
     default: null

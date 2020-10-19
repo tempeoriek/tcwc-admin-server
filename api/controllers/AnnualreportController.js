@@ -16,7 +16,7 @@ AnnualreportController = {
   
   getAllData: async function (req, res) {
     let err, find, fields = [], data = [];
-    [err, find] = await flatry( Model.find({ is_delete: false }, `id_title year is_posted`));
+    [err, find] = await flatry( Model.find({ is_delete: false }, `id_title en_title en_paragraph id_paragraph path year is_posted`));
     if (err) {
       console.log(err.stack);
       response.error(400, `Error when find data in getAllData tropicalcyclone`, res, err);
@@ -36,8 +36,10 @@ AnnualreportController = {
           _id: temp._id,
           id_title: (temp.id_title) ? temp.id_title : `-`,
           en_title: (temp.en_title) ? temp.en_title : `-`,
-          year: (temp.year) ? temp.year : `-`,
+          id_paragraph: (temp.id_paragraph) ? temp.id_paragraph : `-`,
+          en_paragraph: (temp.en_paragraph) ? temp.en_paragraph : `-`,
           path: (temp.path) ? temp.path : `-`,
+          year: (temp.year) ? temp.year : `-`,
           is_posted: (temp.is_posted) ? temp.is_posted : `-`,
         })
       }

@@ -16,7 +16,7 @@ AboutController = {
   
   getAllData: async function (req, res) {
     let err, find, fields = [], data = [];
-    [err, find] = await flatry( Model.find({ is_delete: false }, `id_title is_posted start_post`));
+    [err, find] = await flatry( Model.find({ is_delete: false }, `id_title en_title en_paragraph id_paragraph path is_posted start_post`));
     if (err) {
       console.log(err.stack);
       response.error(400, `Error when find data in getAllData cycloneoutlook`, res, err);
@@ -36,6 +36,8 @@ AboutController = {
           _id: temp._id,
           id_title: (temp.id_title) ? temp.id_title : `-`,
           en_title: (temp.en_title) ? temp.en_title : `-`,
+          id_paragraph: (temp.id_paragraph) ? temp.id_paragraph : `-`,
+          en_paragraph: (temp.en_paragraph) ? temp.en_paragraph : `-`,
           path: (temp.path) ? temp.path : `-`,
           start_post: (temp.start_post) ? temp.start_post : `-`,
           is_posted: (temp.is_posted) ? temp.is_posted : `-`,
