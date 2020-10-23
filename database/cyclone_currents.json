@@ -8,14 +8,14 @@
   "max_wind_speed": 1,
   "pressure": 1,
   "datetime": {
-    "$date": "2020-10-08T12:48:53.201Z"
+    "$date": "2020-10-09T12:48:53.201Z"
   },
-  "category": null,
-  "is_current": false,
   "tropical_cyclone_id": {
-    "$oid": "5f7f0bcb19d00e3770570a62"
+    "$oid": "5f8957cf42a36831c8dcff42"
   },
-  "modified_at": null,
+  "modified_at": {
+    "$date": "2020-10-08T12:48:53.219Z"
+  },
   "is_delete": false,
   "created_at": {
     "$date": "2020-10-08T12:48:53.219Z"
@@ -33,15 +33,38 @@
   "datetime": {
     "$date": "2020-10-08T12:49:03.415Z"
   },
-  "category": null,
-  "is_current": false,
   "tropical_cyclone_id": {
     "$oid": "5f7f0bfa9ba90a2a38a03e3c"
   },
-  "modified_at": null,
+  "modified_at": {
+    "$date": "2020-10-08T12:49:03.440Z"
+  },
   "is_delete": false,
   "created_at": {
     "$date": "2020-10-08T12:49:03.440Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f9262aa8b8bd32fb45bc601"
+  },
+  "latitude": 1.12391923123123,
+  "longitude": 2.9891232312,
+  "wind_speed": null,
+  "max_wind_speed": 29.912333234324,
+  "pressure": 2.122332,
+  "datetime": {
+    "$date": "2020-10-18T00:00:00Z"
+  },
+  "tropical_cyclone_id": {
+    "$oid": "5f8814d322b4bc2ae4626424"
+  },
+  "modified_at": {
+    "$date": "2020-10-23T04:57:14.723Z"
+  },
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-23T04:57:14.723Z"
   },
   "__v": 0
 }]
