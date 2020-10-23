@@ -61,10 +61,6 @@ let tropical_cyclone_schema = new Schema({
     type: Boolean,
     default: false
   },
-  is_posted: {
-    type: Boolean,
-    default: false
-  },
 
   /* config */
   created_at: {
@@ -73,7 +69,7 @@ let tropical_cyclone_schema = new Schema({
   },
   modified_at: {
     type: Date,
-    default: null
+    default: Date.now
   },
   is_delete: {
     type: Boolean,

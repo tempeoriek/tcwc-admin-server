@@ -1,5 +1,5 @@
 let Schema = mongoose.Schema,
-Float = require('mongoose-float').loadType(mongoose);
+Float = require('mongoose-float').loadType(mongoose, 20);
 
 let cyclone_current_schema = new Schema({
   latitude: {
@@ -46,7 +46,7 @@ let cyclone_current_schema = new Schema({
   },
   modified_at: {
     type: Date,
-    default: null
+    default: Date.now
   },
   is_delete: {
     type: Boolean,

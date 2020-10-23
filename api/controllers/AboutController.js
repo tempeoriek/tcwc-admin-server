@@ -1,19 +1,6 @@
 const Model = require('../models/about');
 
 AboutController = {
-  filterData: async function (req, res) {
-    let err, data, { filter, sort } = req.body;
-    let find_data = (filter) ? filter : {is_delete: false},
-    sort_data = (sort) ? sort : { "created_at": 1 };
-    [err, data] = await flatry( Model.find( find_data, 'year' ).sort(sort_data));
-    if (err) {
-      console.log(err.stack);
-      response.error(400, `Error when filter data in tropicalcyclone`, res, err);
-    }
-
-    response.ok(data, res, `success get filter data`);
-  },
-  
   getAllData: async function (req, res) {
     let err, find, fields = [], data = [];
     [err, find] = await flatry( Model.find({ is_delete: false }, `id_title en_title en_paragraph id_paragraph path is_posted start_post`));

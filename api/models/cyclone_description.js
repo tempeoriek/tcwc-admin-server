@@ -5,6 +5,10 @@ let cyclone_description_schema = new Schema({
     type: String,
     default: null
   },
+  description_en: {
+    type: String,
+    default: null
+  },
  
   /* config */
   created_at: {

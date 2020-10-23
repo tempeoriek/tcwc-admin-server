@@ -3,7 +3,7 @@ const Model = require('../models/cyclone_description');
 CylonedescriptionController = {
   getAllData: async function (req, res) {
     let err, find, fields = [], data = [];
-    [err, find] = await flatry( Model.find({ is_delete: false }, `description`));
+    [err, find] = await flatry( Model.find({ is_delete: false }, `description description_en`));
     if (err) {
       console.log(err.stack);
       response.error(400, `Error when find data in getAllData tropicalcyclone`, res, err);
@@ -11,7 +11,8 @@ CylonedescriptionController = {
     
     if (find.length > 0) {
       fields.push(
-        { key: 'description', label: 'description', sortable: true},
+        { key: 'description', label: 'Description (ID)', sortable: true},
+        { key: 'description_en', label: 'Description (EN)', sortable: true},
         { key: 'actions', label: 'Actions' }
       );
 
@@ -20,6 +21,7 @@ CylonedescriptionController = {
         data.push({
           _id: temp._id,
           description: (temp.description) ? temp.description : `-`,
+          description_en: (temp.description_en) ? temp.description_en : `-`,
         })
       }
       
@@ -46,8 +48,8 @@ CylonedescriptionController = {
 
   createData: async function (req, res) {
     if (Object.entries(req.body).length > 0) {
-      let { description } = req.body, err, data;
-      let new_data = { description};
+      let { description, description_en } = req.body, err, data;
+      let new_data = { description, description_en};
 
       [err, data] = await flatry( Model.create( new_data ));
       if (err) {
@@ -63,8 +65,8 @@ CylonedescriptionController = {
 
   updateData: async function (req, res) {
     if (Object.entries(req.body).length > 0 && Object.entries(req.params).length > 0) {
-      let { description } = req.body, { id } = req.params;
-      let new_data = { description }, err, data, 
+      let { description, description_en } = req.body, { id } = req.params;
+      let new_data = { description, description_en }, err, data, 
       filter = { _id: id, is_delete: false };
       
       [err, data] = await flatry( Model.findOneAndUpdate( filter, new_data, {new: true}));

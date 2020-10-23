@@ -1,21 +1,43 @@
 const Model = require('../models/tropical_cyclone'),
   UploadController = require('./UploadController'),
+  ApiController = require('./ApiController'),
   file_path = `tropicalcyclone`;
 
 TropicalcycloneController = {
-  filterData: async function (req, res) {
-    let err, data, { filter, sort } = req.body;
-    let find_data = (filter) ? filter : {is_delete: false},
-    sort_data = (sort) ? sort : { "created_at": 1 };
-    [err, data] = await flatry( Model.find( find_data, 'year' ).sort(sort_data));
+  approve: async function (req, res) {
+    if (Object.entries(req.body).length > 0) {
+      let { is_super_admin, is_admin , _id } = req.body;
+      
+      if (is_super_admin || is_admin) {
+        let old = { _id, is_delete: false }, new_data = { is_current : true, modified_at: moment.utc().format(`YYYY-MM-DDTHH:mm:ss.SSSZ`) }, 
+          err, data, options = {new: true};
+
+        [err, data] = await flatry( Model.findOneAndUpdate( old, new_data, options ));
+        if (err) {
+          console.log(err.stack);
+          response.error(400, `Error when filter data in tropicalcyclone`, res, err);
+        }
+
+        response.ok(data, res, `success get update is current in tropicalcyclone`);
+      } else {
+        response.error(400, `Sorry, only admin could approve tropical cyclone view`, res);
+      }
+    } else {
+      response.error(400, `Data not completed`, res);
+    }
+  },
+
+  remove: async function (req, res) {
+    let old = { is_delete: false }, new_data = { is_current : false }, err;
+    [err] = await flatry( Model.updateMany( old, new_data ));
     if (err) {
       console.log(err.stack);
       response.error(400, `Error when filter data in tropicalcyclone`, res, err);
     }
 
-    response.ok(data, res, `success get filter data`);
+    response.ok(null, res, `success get update is current in tropicalcyclone`);
   },
-  
+
   getAllData: async function (req, res) {
     let err, find, fields = [], data = [];
     [err, find] = await flatry( Model.find({ is_delete: false }, `name year area is_active _id`));
@@ -107,7 +129,7 @@ TropicalcycloneController = {
   updateData: async function (req, res) {
     if (Object.entries(req.body).length > 0 && Object.entries(req.params).length > 0) {
       let { name, year, area, is_active, max_wind_speed, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning } = req.body, { id } = req.params;
-      let new_data = { name, year, area, is_active, max_wind_speed, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning }, err, data, 
+    let new_data = {name, year, area, is_active, max_wind_speed, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning }, err, data, 
       filter = { _id: id, is_delete: false };
       
       [err, data] = await flatry( Model.findOneAndUpdate( filter, new_data, {new: true}));

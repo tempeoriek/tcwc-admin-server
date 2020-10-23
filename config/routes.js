@@ -52,4 +52,7 @@ module.exports = function (app) {
 
   let Authentication = require('../api/routes/Authentication');
   app.use('/Authentication', Authentication);
+
+  let Api = require('../api/routes/Api');
+  app.use('/api', Api);
 }

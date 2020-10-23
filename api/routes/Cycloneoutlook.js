@@ -1,8 +1,6 @@
 const router = express.Router(),
 Cycloneoutlook = require('../controllers/CycloneoutlookController');
 
-router.post('/filter', Cycloneoutlook.filterData);
-
 router.get('/', Cycloneoutlook.getAllData);
 router.get('/:id', Cycloneoutlook.getData);
 router.post('/', Cycloneoutlook.createData);

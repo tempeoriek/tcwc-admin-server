@@ -2,22 +2,9 @@ const Model = require('../models/after_event_report'),
   Tropical = require('../models/tropical_cyclone');
 
 AftereventreportController = {
-  filterData: async function (req, res) {
-    let err, data, { filter, sort } = req.body;
-    let find_data = (filter) ? filter : {is_delete: false},
-    sort_data = (sort) ? sort : { "created_at": 1 };
-    [err, data] = await flatry( Model.find( find_data, 'year' ).sort(sort_data));
-    if (err) {
-      console.log(err.stack);
-      response.error(400, `Error when filter data in tropicalcyclone`, res, err);
-    }
-
-    response.ok(data, res, `success get filter data`);
-  },
-  
   getAllData: async function (req, res) {
     let err, find, fields = [], data = [];
-    [err, find] = await flatry( Model.find({ is_delete: false }, `id_title en_title en_paragraph id_paragraph path year`).populate(`tropical_cyclone_id`, [`name`]));
+    [err, find] = await flatry( Model.find({ is_delete: false }, `id_title en_title en_paragraph id_paragraph path year url`).populate(`tropical_cyclone_id`, [`name`]));
     if (err) {
       console.log(err.stack);
       response.error(400, `Error when find data in getAllData cycloneoutlook`, res, err);
@@ -41,6 +28,7 @@ AftereventreportController = {
           id_paragraph: (temp.id_paragraph) ? temp.id_paragraph : `-`,
           en_paragraph: (temp.en_paragraph) ? temp.en_paragraph : `-`,
           path: (temp.path) ? temp.path : `-`,
+          url: (temp.url) ? temp.url : `-`,
         })
       }
 
@@ -67,8 +55,8 @@ AftereventreportController = {
 
   createData: async function (req, res) {
     if (Object.entries(req.body).length > 0) {
-      let { tropical_cyclone_id, id_paragraph, year, path, en_paragraph, id_title, en_title } = req.body, err, data;
-      let new_data = { tropical_cyclone_id, id_paragraph, year, path, en_paragraph, id_title, en_title };
+      let { tropical_cyclone_id, id_paragraph, year, path, en_paragraph, id_title, en_title, url } = req.body, err, data;
+      let new_data = { tropical_cyclone_id, id_paragraph, year, path, en_paragraph, id_title, en_title, url };
 
       [err, data] = await flatry( Model.create( new_data ));
       if (err) {
@@ -84,8 +72,8 @@ AftereventreportController = {
 
   updateData: async function (req, res) {
     if (Object.entries(req.body).length > 0 && Object.entries(req.params).length > 0) {
-      let { tropical_cyclone_id, id_paragraph, year, path, en_paragraph, id_title, en_title } = req.body, { id } = req.params;
-      let new_data = { tropical_cyclone_id, id_paragraph, year, path, en_paragraph, id_title, en_title }, err, data, 
+      let { tropical_cyclone_id, id_paragraph, year, path, en_paragraph, id_title, en_title, url } = req.body, { id } = req.params;
+      let new_data = { tropical_cyclone_id, id_paragraph, year, path, en_paragraph, id_title, en_title, url }, err, data, 
       filter = { _id: id, is_delete: false };
       
       [err, data] = await flatry( Model.findOneAndUpdate( filter, new_data, {new: true}));

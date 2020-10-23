@@ -5,6 +5,10 @@ let annual_report_schema = new Schema({
     type: String,
     default: null
   },
+  url: {
+    type: String,
+    default: null
+  },
   year: {
     type: Date,
     default: null,
