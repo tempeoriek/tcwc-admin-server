@@ -24,7 +24,7 @@ AboutController = {
       (models == `Cyclonename`) ? Cyclonename : 
       (models == `Cycloneoutlook`) ? Cycloneoutlook : Publication;
 
-    [err, data] = await flatry( Model.find(find_data, `year created_at`).sort(sort_data));
+    [err, data] = await flatry( Model.find(find_data).sort(sort_data));
     if (err) {
       console.log(err.stack);
       response.error(400, `Error when filter data`, res, err);
