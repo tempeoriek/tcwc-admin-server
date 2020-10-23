@@ -12,8 +12,7 @@ AuthenticationController = {
 
   login: async function (req, res) {
     let err, user, data = {};
-    // let { password, username } = req.body;
-    let { password, username } = req.query;
+    let { password, username } = req.body;
 
     [err, user] = await flatry( User.findOne({ username, is_delete: false }) );
     if (err) {
@@ -118,8 +117,7 @@ AuthenticationController = {
     let now = momenttz.tz("Asia/Jakarta").format('DD MMM YYYY HH:mm:ss'),
     ip_address = req.header('x-forwarded-for') || req.connection.remoteAddress,
     err, find_login,
-    // { _id } = req.body;
-    { _id } = req.query;
+    { _id } = req.body;
     
     [err, find_login] = await flatry( LoginTracker.find({ user_id: _id, ip_address }).limit(1).sort({ created_at: 'desc' }) );
     if (err) {
