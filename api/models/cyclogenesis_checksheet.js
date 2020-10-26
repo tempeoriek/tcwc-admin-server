@@ -1,5 +1,5 @@
 let Schema = mongoose.Schema,
-  Float = require('mongoose-float').loadType(mongoose);
+  Float = require('mongoose-float').loadType(mongoose, 20);
 
 let cyclogenesis_checksheet_schema = new Schema({
   cyclogenesis_checksheet_date_id: {

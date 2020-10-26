@@ -1,13 +1,15 @@
 [{
   "_id": {
-    "$oid": "5f893c4092c6a410405134cb"
+    "$oid": "5f968d00fe39372994fe44ac"
   },
   "cyclogenesis_checksheet_date_id": {
     "$oid": "5f8838aaecd15c361475729f"
   },
   "kode_bibit": "T001",
-  "latitude": 1.1,
-  "longitude": 1.1,
+  "latitude": "70°30.5 S",
+  "longitude": "164°45.25 E",
+  "latitude_dd": -70.5083333333,
+  "longitude_dd": 164.7541666667,
   "suspect_area_1": {
     "$oid": "5f88318678f9a828547c8d94"
   },
@@ -97,7 +99,7 @@
     "$date": "2020-10-16T00:00:00Z"
   },
   "created_at": {
-    "$date": "2020-10-16T06:22:56.208Z"
+    "$date": "2020-10-26T08:46:56.326Z"
   },
   "__v": 0
 }]
