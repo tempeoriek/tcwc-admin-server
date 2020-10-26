@@ -10,7 +10,7 @@ let annual_report_schema = new Schema({
     default: null
   },
   year: {
-    type: Date,
+    type: String,
     default: null,
     required: true
   },

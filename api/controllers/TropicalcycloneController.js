@@ -39,8 +39,8 @@ TropicalcycloneController = {
   },
 
   getAllData: async function (req, res) {
-    let err, find, fields = [], data = [];
-    [err, find] = await flatry( Model.find({ is_delete: false }, `name year area is_active _id`));
+    let err, find, fields = [], data = [], sort_data = { created_at: -1 };
+    [err, find] = await flatry( Model.find({ is_delete: false }, `name year area is_active _id`).sort( sort_data ));
     if (err) {
       console.log(err.stack);
       response.error(400, `Error when find data in getAllData tropicalcyclone`, res, err);
@@ -105,6 +105,11 @@ TropicalcycloneController = {
     if (Object.entries(req.body).length > 0) {
       let { name, year, area, is_active, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning } = req.body, err, data;
       let new_data = { name, year, area, is_active, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning };
+      
+      let redundant = await ApiController.redundant(Model, "name", name);
+      if (redundant.status == 201) {
+        response.error(400, `Tropical cyclone name cannot be the same`, res, `Tropical cyclone name cannot be the same`);
+      }
 
       [err, data] = await flatry( Model.create( new_data ));
       if (err) {
@@ -129,8 +134,13 @@ TropicalcycloneController = {
   updateData: async function (req, res) {
     if (Object.entries(req.body).length > 0 && Object.entries(req.params).length > 0) {
       let { name, year, area, is_active, max_wind_speed, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning } = req.body, { id } = req.params;
-    let new_data = {name, year, area, is_active, max_wind_speed, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning }, err, data, 
-      filter = { _id: id, is_delete: false };
+      let new_data = {name, year, area, is_active, max_wind_speed, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning }, err, data, 
+        filter = { _id: id, is_delete: false };
+      
+      let redundant = await ApiController.redundant(Model, "name", name);
+      if (redundant.status == 201) {
+        response.error(400, `Tropical cyclone name cannot be the same`, res, `Tropical cyclone name cannot be the same`);
+      }
       
       [err, data] = await flatry( Model.findOneAndUpdate( filter, new_data, {new: true}));
       if (err) {

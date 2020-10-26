@@ -1,5 +1,5 @@
-const Model = require('../models/cyclone_current');
-const Tropical = require('../models/tropical_cyclone');
+const Model = require('../models/cyclone_current'),
+  Tropical = require('../models/tropical_cyclone');
 
 CyclonecurrentController = {
   getAllData: async function (req, res) {
@@ -95,6 +95,32 @@ CyclonecurrentController = {
     }
     
     if (data.length > 0) {
+      response.ok(data, res, `success get all data`);
+    } else if (data.length == 0) {
+      response.success(data, res, `success get all data but data is empty`);
+    }
+  },
+
+  countByYear: async function (req, res) {
+    let err, data;
+    [err, data] = await flatry( Model.find({ is_delete: false }, "_id").populate('tropical_cyclone_id', ['year']));
+    if (err) {
+      console.log(err.stack);
+      response.error(400, `Error when find data in getTropicalCylone cyclonecurrent`, res, err);
+    }
+    
+    if (data.length > 0) {
+      let temp_year = {};
+      for (let i = 0 ; i < data.length ; i++) {
+        let temp = data[i];
+
+        if (i == 0 || temp_year[temp.tropical_cyclone_id.year] == undefined) {
+          temp_year[temp.tropical_cyclone_id.year] = [];
+        }
+        
+        temp_year[temp.tropical_cyclone_id.year]++;
+      }
+      data = temp_year
       response.ok(data, res, `success get all data`);
     } else if (data.length == 0) {
       response.success(data, res, `success get all data but data is empty`);

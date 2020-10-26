@@ -26,7 +26,7 @@ let publication_schema = new Schema({
     default: null
   },
   year: {
-    type: Date,
+    type: String,
     default: null
   },
   author: {
