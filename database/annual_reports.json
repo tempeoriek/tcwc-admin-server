@@ -3,9 +3,7 @@
     "$oid": "5f8c24bc1a2c53116c6fad25"
   },
   "path": "annual2019",
-  "year": {
-    "$date": "2019-01-01T00:00:00Z"
-  },
+  "year": "2019",
   "en_title": "Annual Report 2019",
   "en_paragraph": null,
   "id_title": "Annual Report 2019",
@@ -24,9 +22,7 @@
     "$oid": "5f8c24c91a2c53116c6fad26"
   },
   "path": "annual2020",
-  "year": {
-    "$date": "2020-01-01T00:00:00Z"
-  },
+  "year": "2020",
   "en_title": "Annual Report 2020",
   "en_paragraph": null,
   "id_title": "Annual Report 2020",

@@ -6,9 +6,7 @@
   "name": "TC Melati",
   "description": null,
   "is_active": false,
-  "year": {
-    "$date": "2019-01-01T00:00:00Z"
-  },
+  "year": "2019",
   "techincal_bulletin": true,
   "public_info_bulletin": true,
   "ocean_gale_storm_warn": true,
@@ -33,9 +31,7 @@
   "name": "Durian",
   "description": null,
   "is_active": true,
-  "year": {
-    "$date": "2020-01-01T00:00:00Z"
-  },
+  "year": "2019",
   "techincal_bulletin": true,
   "public_info_bulletin": false,
   "ocean_gale_storm_warn": false,
@@ -60,9 +56,7 @@
   "name": "Melati",
   "description": null,
   "is_active": true,
-  "year": {
-    "$date": "2015-01-01T00:00:00Z"
-  },
+  "year": "2019",
   "techincal_bulletin": true,
   "public_info_bulletin": false,
   "ocean_gale_storm_warn": false,
@@ -87,9 +81,7 @@
   "name": "TC Bagelan",
   "description": null,
   "is_active": true,
-  "year": {
-    "$date": "2018-01-01T00:00:02.018Z"
-  },
+  "year": "2018",
   "techincal_bulletin": false,
   "public_info_bulletin": false,
   "ocean_gale_storm_warn": false,
@@ -114,9 +106,7 @@
   "name": "TC Merak",
   "description": null,
   "is_active": true,
-  "year": {
-    "$date": "2016-01-01T00:00:02.016Z"
-  },
+  "year": "2016",
   "techincal_bulletin": false,
   "public_info_bulletin": false,
   "ocean_gale_storm_warn": false,
@@ -141,9 +131,7 @@
   "name": "TC Halim",
   "description": null,
   "is_active": true,
-  "year": {
-    "$date": "2017-01-01T00:00:02.020Z"
-  },
+  "year": "2017",
   "techincal_bulletin": false,
   "public_info_bulletin": false,
   "ocean_gale_storm_warn": false,
@@ -168,9 +156,7 @@
   "name": "TC Noil",
   "description": null,
   "is_active": true,
-  "year": {
-    "$date": "2020-01-01T00:00:02.019Z"
-  },
+  "year": "2020",
   "techincal_bulletin": false,
   "public_info_bulletin": false,
   "ocean_gale_storm_warn": false,
@@ -195,9 +181,7 @@
   "name": "TC Kiri",
   "description": null,
   "is_active": true,
-  "year": {
-    "$date": "2019-01-01T00:00:02.018Z"
-  },
+  "year": "2019",
   "techincal_bulletin": false,
   "public_info_bulletin": false,
   "ocean_gale_storm_warn": false,

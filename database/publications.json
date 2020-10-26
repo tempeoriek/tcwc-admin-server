@@ -5,9 +5,7 @@
   "id_title": "About Cyclone 3",
   "en_title": "About Cyclone 3",
   "path": "about3",
-  "year": {
-    "$date": "2020-01-01T00:00:02.020Z"
-  },
+  "year": "2020",
   "author": "Prof. Andrey",
   "modified_at": null,
   "is_delete": false,
@@ -22,9 +20,7 @@
   "id_title": "About Cyclone 2",
   "en_title": "About Cyclone 2",
   "path": "about2",
-  "year": {
-    "$date": "2019-01-01T00:00:02.020Z"
-  },
+  "year": "2019",
   "author": "Prof. Andrey",
   "modified_at": null,
   "is_delete": false,
@@ -39,14 +35,27 @@
   "id_title": "About Cyclone 1",
   "en_title": "About Cyclone 1",
   "path": "about1",
-  "year": {
-    "$date": "2018-01-01T00:00:00Z"
-  },
+  "year": "2018",
   "author": "Prof. Andrey",
   "modified_at": null,
   "is_delete": false,
   "created_at": {
     "$date": "2020-10-18T11:41:12.832Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f8d37ef6bfa423054ed36fb"
+  },
+  "id_title": "Tentang Siklon 4",
+  "en_title": "About Cyclone 4",
+  "path": "publication4",
+  "year": "2020",
+  "author": "Prof. Bon",
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-10-19T06:53:35.562Z"
   },
   "__v": 0
 }]
