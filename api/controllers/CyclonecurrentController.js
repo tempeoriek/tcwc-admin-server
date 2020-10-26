@@ -1,4 +1,5 @@
 const Model = require('../models/cyclone_current'),
+  ApiController = require('./ApiController'),
   Tropical = require('../models/tropical_cyclone');
 
 CyclonecurrentController = {
@@ -35,8 +36,10 @@ CyclonecurrentController = {
   createData: async function (req, res) {
     if (Object.entries(req.body).length > 0) {
       let { datetime, latitude, longitude, pressure, max_wind_speed, tropical_cyclone_id } = req.body, err, data;
-      let new_data = { datetime, latitude, longitude, pressure, max_wind_speed, tropical_cyclone_id };
-
+      // latitude = `70°30'30" S`;
+      // longitude = `164°45'15" E`;
+      let convert = await ApiController.convert(latitude, longitude);
+      let new_data = { datetime, pressure, max_wind_speed, tropical_cyclone_id, latitude, longitude, latitude_dd: convert.data.lat, longitude_dd: convert.data.lng };
       [err, data] = await flatry( Model.create( new_data ));
       if (err) {
         console.log(err.stack);
@@ -51,8 +54,9 @@ CyclonecurrentController = {
 
   updateData: async function (req, res) {
     if (Object.entries(req.body).length > 0 && Object.entries(req.params).length > 0) {
-      let { datetime, latitude, longitude, pressure, max_wind_speed } = req.body, { id } = req.params;
-      let new_data = { datetime, latitude, longitude, pressure, max_wind_speed }, err, data, 
+      let { datetime, latitude, longitude, pressure, max_wind_speed, tropical_cyclone_id } = req.body, { id } = req.params;
+      let convert = await ApiController.convert(latitude, longitude);
+      let new_data = { datetime, latitude, longitude, latitude_dd: convert.data.lat, longitude_dd: convert.data.lng, pressure, max_wind_speed, tropical_cyclone_id }, err, data, 
       filter = { _id: id, is_delete: false };
       
       [err, data] = await flatry( Model.findOneAndUpdate( filter, new_data, {new: true}));

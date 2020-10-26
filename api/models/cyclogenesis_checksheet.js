@@ -16,11 +16,21 @@ let cyclogenesis_checksheet_schema = new Schema({
     default: Date.now
   },
   latitude: {
-    type: Float,
+    type: String,
     default: null,
     required: true
   },
   longitude: {
+    type: String,
+    default: null,
+    required: true
+  },
+  latitude_dd: {
+    type: Float,
+    default: null,
+    required: true
+  },
+  longitude_dd: {
     type: Float,
     default: null,
     required: true

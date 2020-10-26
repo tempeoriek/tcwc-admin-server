@@ -65,6 +65,11 @@ CyclonecitraController = {
       let { name } = req.body, err, data;
       let new_data = { name };
 
+      let redundant = await ApiController.redundant(Model, "name", name);
+      if (redundant.status == 201) {
+        response.error(400, `Cyclone Citra name cannot be the same`, res, `Cyclone Citra name cannot be the same`);
+      }
+
       [err, data] = await flatry( Model.create( new_data ));
       if (err) {
         console.log(err.stack);
@@ -91,6 +96,11 @@ CyclonecitraController = {
       let new_data = { name }, err, data, 
       filter = { _id: id, is_delete: false };
       
+      let redundant = await ApiController.redundant(Model, "name", name);
+      if (redundant.status == 201) {
+        response.error(400, `Cyclone Citra name cannot be the same`, res, `Cyclone Citra name cannot be the same`);
+      }
+
       [err, data] = await flatry( Model.findOneAndUpdate( filter, new_data, {new: true}));
       if (err) {
         console.log(err.stack);

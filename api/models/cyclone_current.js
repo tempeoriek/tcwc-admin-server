@@ -3,11 +3,21 @@ Float = require('mongoose-float').loadType(mongoose, 20);
 
 let cyclone_current_schema = new Schema({
   latitude: {
-    type: Float,
+    type: String,
     default: null,
     required: true
   },
   longitude: {
+    type: String,
+    default: null,
+    required: true
+  },
+  latitude_dd: {
+    type: Float,
+    default: null,
+    required: true
+  },
+  longitude_dd: {
     type: Float,
     default: null,
     required: true

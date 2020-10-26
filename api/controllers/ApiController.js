@@ -113,6 +113,33 @@ ApiController = {
     } else if (find.length == 0) {
       response.error(201, `Data empty`, res, `Data empty`);
     }
+  },
+
+  convert: async function(latitude, longitude) {
+    function ConvertDMSToDD(degrees, minutes, seconds, direction) {
+      let min = parseFloat(minutes/60).toFixed(10);
+      let sec = parseFloat(seconds/3600).toFixed(10);
+      let dd = parseFloat(degrees) + parseFloat(min) + parseFloat(sec);
+
+      if (direction == "S" || direction == "W") {
+        dd = dd * -1;
+      }
+      return dd;
+    }
+
+    let data = {}, 
+      lat_parts = latitude.split(/[^\d\w\.]+/),
+      long_parts = longitude.split(/[^\d\w\.]+/);
+
+    let lat = (lat_parts.length == 3) ? ConvertDMSToDD(lat_parts[0], lat_parts[1], 0, lat_parts[2]) : ConvertDMSToDD(lat_parts[0], lat_parts[1], lat_parts[2], lat_parts[3]);
+    let lng = (long_parts.length == 3) ? ConvertDMSToDD(long_parts[0], long_parts[1], 0, long_parts[2]): ConvertDMSToDD(long_parts[0], long_parts[1], long_parts[2], long_parts[3]);
+
+    data = {
+      lat: (lat) ? lat : 0,
+      lng: (lng) ? lng : 0
+    }
+    return response.back(200, data, `convert success`);
+
   }
 };
 

@@ -78,9 +78,11 @@ CyclogenesischecksheetController = {
         development_circulation_2, development_circulation_3, development_circulation_4, development_circulation_5, 
         ddc_6, ddc_7, ddc_8
        } = req.body, err, data;
+      let convert = await ApiController.convert(latitude, longitude);
       let new_data = { 
         cyclogenesis_checksheet_date_id, kode_bibit , datetime,
-        latitude, longitude, suspect_area_1, suspect_area_2, suspect_area_3, location_suspect_area,
+        latitude, longitude, latitude_dd: convert.data.lat, longitude_dd: convert.data.lng,
+        suspect_area_1, suspect_area_2, suspect_area_3, location_suspect_area,
         bec_current_a, bec_current_b, bec_current_c, bec_current_d, bec_current_e, bec_current_f,
         bec_current_g, bec_current_h, bec_current_i, bec_current_j, bec_trend_k, bec_trend_l,
         bec_trend_m, bec_trend_n, bec_trend_o, bec_trend_p, development_circulation_1,
@@ -126,9 +128,11 @@ CyclogenesischecksheetController = {
         development_circulation_2, development_circulation_3, development_circulation_4, development_circulation_5, 
         ddc_6, ddc_7, ddc_8
        } = req.body, { id } = req.params;
+      let convert = await ApiController.convert(latitude, longitude);
       let new_data = { 
         cyclogenesis_checksheet_date_id, kode_bibit , datetime,
-        latitude, longitude, suspect_area_1, suspect_area_2, suspect_area_3, location_suspect_area,
+        latitude, longitude, latitude_dd: convert.data.lat, longitude_dd: convert.data.lng,
+        suspect_area_1, suspect_area_2, suspect_area_3, location_suspect_area,
         bec_current_a, bec_current_b, bec_current_c, bec_current_d, bec_current_e, bec_current_f,
         bec_current_g, bec_current_h, bec_current_i, bec_current_j, bec_trend_k, bec_trend_l,
         bec_trend_m, bec_trend_n, bec_trend_o, bec_trend_p, development_circulation_1,
