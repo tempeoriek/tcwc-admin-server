@@ -55,16 +55,20 @@ ApiController = {
   },
 
   redundant: async function (model, attribute, value) {
-    let err, data, filter = { [attribute] : { "$regex": value.toLowerCase(), "$options": "i"} ,is_delete: false };
-    [err, data] = await flatry( model.find( filter ) );
-    if (err) {
-      return response.back(400, {}, `Error when find in redundant api controller`);
-    }
-    
-    if (data.length > 0) {
-      return response.back(201, null, `Data found, cannot same data`);
+    if (attribute == `path` && value.includes(" ")) {
+      return response.back(201, null, `${attribute} cannot be space`);
     } else {
-      return response.back(200, null, `data not found`);
+      let err, data, filter = { [attribute] : { "$regex": value.toLowerCase(), "$options": "i"} ,is_delete: false };
+      [err, data] = await flatry( model.find( filter ) );
+      if (err) {
+        return response.back(400, {}, `Error when find in redundant api controller`);
+      }
+      
+      if (data.length > 0) {
+        return response.back(201, null, `Data found, cannot same data`);
+      } else {
+        return response.back(200, null, `data not found`);
+      }
     }
 
   },

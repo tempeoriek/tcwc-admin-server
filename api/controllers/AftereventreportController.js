@@ -57,14 +57,22 @@ AftereventreportController = {
     if (Object.entries(req.body).length > 0) {
       let { tropical_cyclone_id, id_paragraph, year, path, en_paragraph, id_title, en_title, url } = req.body, err, data;
       let new_data = { tropical_cyclone_id, id_paragraph, year, path, en_paragraph, id_title, en_title, url };
-
-      [err, data] = await flatry( Model.create( new_data ));
-      if (err) {
-        console.log(err.stack);
-        response.error(400, `Error when create data in createData aftereventreport`, res, err);
+      
+      let redundant = await ApiController.redundant(Model, "path", path);
+      if (redundant.status == 201) {
+        response.error(400, redundant.message, res, redundant.message);
       }
+      
+      
+      if (redundant.status == 200) {
+        [err, data] = await flatry( Model.create( new_data ));
+        if (err) {
+          console.log(err.stack);
+          response.error(400, `Error when create data in createData aftereventreport`, res, err);
+        }
 
-      response.ok(data, res, `success create data`);
+        response.ok(data, res, `success create data`);
+      }
     } else {
       response.error(400, `Data not completed`, res);
     }
@@ -76,13 +84,20 @@ AftereventreportController = {
       let new_data = { tropical_cyclone_id, id_paragraph, year, path, en_paragraph, id_title, en_title, url }, err, data, 
       filter = { _id: id, is_delete: false };
       
-      [err, data] = await flatry( Model.findOneAndUpdate( filter, new_data, {new: true}));
-      if (err) {
-        console.log(err.stack);
-        response.error(400, `Error when findoneandupdate data in updatedata aftereventreport`, res, err);
+      let redundant = await ApiController.redundant(Model, "path", path);
+      if (redundant.status == 201) {
+        response.error(400, redundant.message, res, redundant.message);
       }
-
-      response.ok(data, res, `success update data`);
+      
+      if (redundant.status == 200) {
+        [err, data] = await flatry( Model.findOneAndUpdate( filter, new_data, {new: true}));
+        if (err) {
+          console.log(err.stack);
+          response.error(400, `Error when findoneandupdate data in updatedata aftereventreport`, res, err);
+        }
+  
+        response.ok(data, res, `success update data`);
+      }
     } else {
       response.error(400, `Data not completed`, res);
     }

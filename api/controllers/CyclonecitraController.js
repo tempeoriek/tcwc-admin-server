@@ -67,24 +67,26 @@ CyclonecitraController = {
 
       let redundant = await ApiController.redundant(Model, "name", name);
       if (redundant.status == 201) {
-        response.error(400, `Cyclone Citra name cannot be the same`, res, `Cyclone Citra name cannot be the same`);
+        response.error(400, redundant.message, res, redundant.message);
       }
-
-      [err, data] = await flatry( Model.create( new_data ));
-      if (err) {
-        console.log(err.stack);
-        response.error(400, `Error when create data in createData cyclonecitra`, res, err);
-      }
-
-      //UPLOAD FILE
-      if (req.files && data && file_path) {
-        let upload = await UploadController.uploadData(req.files.files, file_path, data._id, `create`)
-        if (upload.status == 400) {
-          response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
+      
+      if (redundant.status == 200) {
+        [err, data] = await flatry( Model.create( new_data ));
+        if (err) {
+          console.log(err.stack);
+          response.error(400, `Error when create data in createData cyclonecitra`, res, err);
         }
+  
+        //UPLOAD FILE
+        if (req.files && data && file_path) {
+          let upload = await UploadController.uploadData(req.files.files, file_path, data._id, `create`)
+          if (upload.status == 400) {
+            response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
+          }
+        }
+  
+        response.ok(data, res, `success create data`);
       }
-
-      response.ok(data, res, `success create data`);
     } else {
       response.error(400, `Data not completed`, res);
     }
@@ -98,24 +100,26 @@ CyclonecitraController = {
       
       let redundant = await ApiController.redundant(Model, "name", name);
       if (redundant.status == 201) {
-        response.error(400, `Cyclone Citra name cannot be the same`, res, `Cyclone Citra name cannot be the same`);
+        response.error(400, redundant.message, res, redundant.message);
       }
-
-      [err, data] = await flatry( Model.findOneAndUpdate( filter, new_data, {new: true}));
-      if (err) {
-        console.log(err.stack);
-        response.error(400, `Error when findoneandupdate data in updatedata cyclonecitra`, res, err);
-      }
-
-      //UPLOAD FILE
-      if (req.files && data && file_path) {
-        let upload = await UploadController.uploadData(req.files.files, file_path, data._id, `update`)
-        if (upload.status == 400) {
-          response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
+      
+      if (redundant.status == 200) {
+        [err, data] = await flatry( Model.findOneAndUpdate( filter, new_data, {new: true}));
+        if (err) {
+          console.log(err.stack);
+          response.error(400, `Error when findoneandupdate data in updatedata cyclonecitra`, res, err);
         }
+  
+        //UPLOAD FILE
+        if (req.files && data && file_path) {
+          let upload = await UploadController.uploadData(req.files.files, file_path, data._id, `update`)
+          if (upload.status == 400) {
+            response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
+          }
+        }
+  
+        response.ok(data, res, `success update data`);
       }
-
-      response.ok(data, res, `success update data`);
     } else {
       response.error(400, `Data not completed`, res);
     }
