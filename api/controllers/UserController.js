@@ -54,7 +54,7 @@ UserController = {
     if (Object.entries(req.body).length > 0) {
 
       let err, finduser, 
-      { password, confirm_password, username } = req.body;
+      { password, confirm_password, username, is_view, is_admin, is_super_admin } = req.body;
       let data = { username, password, is_view, is_admin, is_super_admin};
     
       if (data.password !== confirm_password) {
