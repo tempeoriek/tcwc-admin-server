@@ -50,6 +50,7 @@ UploadController = {
 
     return response.back(200, data, `success upload file`);
   }, 
+  
   getFile: async function (path, model_id) {
     let old = (path == `tropicalcyclone`) ? {tropical_cyclone_id: model_id, is_delete: false} :
       (path == `annualreport`) ? {annual_report_id: model_id, is_delete: false} :
@@ -58,6 +59,7 @@ UploadController = {
       (path == `about`) ? {about_id: model_id, is_delete: false} :
       (path == `cyclogenesischecksheet`) ? {cyclogenesis_checksheet_id: model_id, is_delete: false} :
       (path == `cyclonecitra`) ? {cyclone_citra_id: model_id, is_delete: false} :
+      (path == `markdown`) ? {_id: model_id, is_delete: false} :
       (path == `publication`) ? {publication_id: model_id, is_delete: false} : null;
 
     let [err, data] = await flatry( Model.findOne( old, `name type path` ));
@@ -67,6 +69,7 @@ UploadController = {
     
     return response.back(200, data, `success get file`);
   },
+
   deleteFile: async function(model_id, path) {
     let old = (path == `tropicalcyclone`) ? {tropical_cyclone_id: model_id, is_delete: false} :
       (path == `annualreport`) ? {annual_report_id: model_id, is_delete: false} :
@@ -83,6 +86,28 @@ UploadController = {
     }  
 
     return response.back(200, null, `success delete file`);
+  },
+
+  upload: async function(req, res) {
+    let { file_path } = req.query, upload, data = null;
+    if (req.files && file_path) {
+      upload = await UploadController.uploadData(req.files.upload, file_path, null, `create`)
+      if (upload.status == 400) {
+        response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
+      }
+      data = upload.data
+    }
+    response.ok(data, res, `success upload data`);
+  },
+
+  get: async function(req, res) {
+    let { file_path, id } = req.query, data;
+    let upload = await UploadController.getFile(file_path, id)
+    if (upload.status == 400 && !upload.data) {
+      response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
+    }
+    data = (upload.data) ? upload.data : null;
+    response.ok(data, res, `success upload data`);
   }
 };
 
