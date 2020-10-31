@@ -1,4 +1,6 @@
-const Model = require('../models/cyclone_outlook');
+const Model = require('../models/cyclone_outlook'),
+  file_path = `cycloneoutlook`;
+
 
 CycloneoutlookController = {
   getAllData: async function (req, res) {
@@ -42,8 +44,22 @@ CycloneoutlookController = {
       console.log(err.stack);
       response.error(400, `Error when findOne data in getdata cycloneoutlook`, res, err);
     }
+    
+    //UPLOAD FILE
+    let upload = await UploadController.getFile(file_path, id)
+    if (upload.status == 400 && !upload.data) {
+      response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
+    }
 
     if (data) {
+      //UPLOAD FILE
+      data = {
+        content: data,
+        file_name: (upload.data.name) ? upload.data.name : null,
+        file_path: (upload.data.path) ? upload.data.path : null,
+        file_type: (upload.data.type) ? upload.data.type : null
+      }
+
       response.ok(data, res, `success get all data`);
     } else {
       response.success(data, res, `success get all data but data is empty`);
@@ -59,6 +75,13 @@ CycloneoutlookController = {
       if (err) {
         console.log(err.stack);
         response.error(400, `Error when create data in createData cycloneoutlook`, res, err);
+      }
+
+      if (req.files && data && file_path) {
+        let upload = await UploadController.uploadData(req.files.files, file_path, data._id, `create`)
+        if (upload.status == 400) {
+          response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
+        }
       }
 
       response.ok(data, res, `success create data`);
@@ -78,7 +101,14 @@ CycloneoutlookController = {
         console.log(err.stack);
         response.error(400, `Error when findoneandupdate data in updatedata cycloneoutlook`, res, err);
       }
-
+      //UPLOAD FILE
+      if (req.files && data && file_path) {
+        let upload = await UploadController.uploadData(req.files.files, file_path, data._id, `update`)
+        if (upload.status == 400) {
+          response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
+        }
+      }
+      
       response.ok(data, res, `success update data`);
     } else {
       response.error(400, `Data not completed`, res);

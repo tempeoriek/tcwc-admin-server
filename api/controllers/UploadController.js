@@ -10,6 +10,7 @@ UploadController = {
       tropical_cyclone_id: (path == `tropicalcyclone`) ? model_id : null,
       annual_report_id: (path == `annualreport`) ? model_id : null,
       after_event_report_id: (path == `aftereventreport`) ? model_id : null,
+      cyclone_outlook_id: (path == `cycloneoutlook`) ? model_id : null,
       about_id: (path == `about`) ? model_id : null,
       cyclogenesis_checksheet_id: (path == `cyclogenesischecksheet`) ? model_id : null,
       cyclone_citra_id: (path == `cyclonecitra`) ? model_id : null,
@@ -35,6 +36,7 @@ UploadController = {
       let old = (path == `tropicalcyclone`) ? {tropical_cyclone_id: model_id, is_delete: false} :
       (path == `annualreport`) ? {annual_report_id: model_id, is_delete: false} :
       (path == `aftereventreport`) ? {after_event_report_id: model_id, is_delete: false} :
+      (path == `cycloneoutlook`) ? {cyclone_outlook_id: model_id, is_delete: false} :
       (path == `about`) ? {about_id: model_id, is_delete: false} :
       (path == `cyclogenesischecksheet`) ? {cyclogenesis_checksheet_id: model_id, is_delete: false} :
       (path == `cyclonecitra`) ? {cyclone_citra_id: model_id, is_delete: false} :
@@ -52,6 +54,7 @@ UploadController = {
     let old = (path == `tropicalcyclone`) ? {tropical_cyclone_id: model_id, is_delete: false} :
       (path == `annualreport`) ? {annual_report_id: model_id, is_delete: false} :
       (path == `aftereventreport`) ? {after_event_report_id: model_id, is_delete: false} :
+      (path == `cycloneoutlook`) ? {cyclone_outlook_id: model_id, is_delete: false} :
       (path == `about`) ? {about_id: model_id, is_delete: false} :
       (path == `cyclogenesischecksheet`) ? {cyclogenesis_checksheet_id: model_id, is_delete: false} :
       (path == `cyclonecitra`) ? {cyclone_citra_id: model_id, is_delete: false} :
@@ -68,6 +71,7 @@ UploadController = {
     let old = (path == `tropicalcyclone`) ? {tropical_cyclone_id: model_id, is_delete: false} :
       (path == `annualreport`) ? {annual_report_id: model_id, is_delete: false} :
       (path == `aftereventreport`) ? {after_event_report_id: model_id, is_delete: false} :
+      (path == `cycloneoutlook`) ? {cyclone_outlook_id: model_id, is_delete: false} :
       (path == `about`) ? {about_id: model_id, is_delete: false} :
       (path == `cyclogenesischecksheet`) ? {cyclogenesis_checksheet_id: model_id, is_delete: false} :
       (path == `cyclonecitra`) ? {cyclone_citra_id: model_id, is_delete: false} :

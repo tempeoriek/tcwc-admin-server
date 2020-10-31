@@ -31,6 +31,10 @@ let file_upload_schema = new Schema({
     type: Schema.Types.ObjectId,
     ref: `after_event_report`
   },
+  cyclone_outlook_id: {
+    type: Schema.Types.ObjectId,
+    ref: `cyclone_outlook`
+  },
   about_id: {
     type: Schema.Types.ObjectId,
     ref: `about`
