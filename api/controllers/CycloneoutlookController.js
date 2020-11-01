@@ -3,6 +3,33 @@ const Model = require('../models/cyclone_outlook'),
 
 
 CycloneoutlookController = {
+  posted: async function (req, res) {
+    let err, data, old_data, old = { is_posted: false, is_delete: false }, updated = { is_posted: true, is_delete: false };
+    [err, old_data] = await flatry( Model.findOne( old, "en_title en_paragraph id_title id_paragraph"));
+    if (err) {
+      response.error(400, `Error when copy data in cyclone outlook posted`, res, err);
+    }
+   
+    if (old_data) {
+      let new_data = {
+        en_title: old_data.en_title,
+        en_paragraph: old_data.en_paragraph,
+        id_title: old_data.id_title,
+        id_paragraph: old_data.id_paragraph,
+        modified_at: moment.utc().format(`YYYY-MM-DDTHH:mm:ss.SSSZ`)
+      }, options = {new: true};
+
+      [err, data] = await flatry( Model.findOneAndUpdate( updated, new_data, options ));
+      if (err) {
+        response.error(400, `Error when copy data in cyclone outlook posted`, res, err);
+      }
+
+      response.ok(data, res, `success copy data`);
+    } else {
+      response.success(data, res, `success copy data but data is empty`);
+    }
+  },
+
   getAllData: async function (req, res) {
     let err, find, fields = [], data = [];
     [err, find] = await flatry( Model.find({ is_delete: false }, `id_paragraph id_title en_paragraph en_title is_posted`));
@@ -93,7 +120,7 @@ CycloneoutlookController = {
   updateData: async function (req, res) {
     if (Object.entries(req.body).length > 0 && Object.entries(req.params).length > 0) {
       let { en_title, en_paragraph, id_title, id_paragraph, is_posted } = req.body, { id } = req.params;
-      let new_data = { en_title, en_paragraph, id_title, id_paragraph, is_posted }, err, data, 
+      let new_data = { modified_at: moment.utc().format(`YYYY-MM-DDTHH:mm:ss.SSSZ`), en_title, en_paragraph, id_title, id_paragraph, is_posted }, err, data, 
       filter = { _id: id, is_delete: false };
       
       [err, data] = await flatry( Model.findOneAndUpdate( filter, new_data, {new: true}));
