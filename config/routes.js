@@ -1,4 +1,7 @@
 module.exports = function (app) {
+  let Upload = require('../api/routes/Upload');
+  app.use('/Upload', Upload);
+
   let About = require('../api/routes/About');
   app.use('/About', About);
 

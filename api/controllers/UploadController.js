@@ -95,7 +95,7 @@ UploadController = {
       if (upload.status == 400) {
         response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
       }
-      data = upload.data
+      data = {url: `http://api.tcwc.tivedemo.com/markdown/${upload.data.name}`}
     }
     response.ok(data, res, `success upload data`);
   },
