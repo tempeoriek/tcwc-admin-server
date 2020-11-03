@@ -48,7 +48,7 @@ TropicalcycloneController = {
     
     if (find.length > 0) {
       fields.push(
-        { key: 'name', label: 'TC Name', sortable: true, sortDirection: 'desc' },
+        { key: 'tc_name', label: 'TC Name', sortable: true, sortDirection: 'desc' },
         { key: 'year', label: 'Year', sortable: true },
         { key: 'area', label: 'Area', sortable: true },
         { key: 'is_active', label: 'Status' },
@@ -59,7 +59,7 @@ TropicalcycloneController = {
         let temp = find[i];
         data.push({
           _id: temp._id,
-          name: (temp.name) ? temp.name : `-`,
+          tc_name: (temp.name) ? temp.name : `-`,
           year: (temp.year) ? temp.year : `-`,
           area: (temp.area) ? temp.area : `-`,
           is_active: (temp.is_active) ? temp.is_active : `-`,

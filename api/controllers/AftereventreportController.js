@@ -13,7 +13,6 @@ AftereventreportController = {
     if (find.length > 0) {
       fields.push(
 	      { key: 'path', label: 'Path', sortable: true },
-        { key: 'tc_name', label: 'TC Name', sortable: true },
         { key: 'year', label: 'Year', sortable: true },
         { key: 'en_title', label: 'Title', sortable: true },
         { key: 'en_paragraph', label: 'Paragraph', class: 'w-50' },
@@ -26,7 +25,6 @@ AftereventreportController = {
         data.push({
           _id: temp._id,
 	        is_posted: (temp.is_posted) ? temp.is_posted: `-`,
-          tc_name: (temp.tropical_cyclone_id) ? temp.tropical_cyclone_id.name: `-`,
           year: (temp.year) ? temp.year: `-`,
           id_title: (temp.id_title) ? temp.id_title : `-`,
           en_title: (temp.en_title) ? temp.en_title : `-`,
