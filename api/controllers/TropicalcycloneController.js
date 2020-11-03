@@ -51,8 +51,8 @@ TropicalcycloneController = {
         { key: 'name', label: 'TC Name', sortable: true, sortDirection: 'desc' },
         { key: 'year', label: 'Year', sortable: true },
         { key: 'area', label: 'Area', sortable: true },
-        { key: 'is_active', label: 'Status', sortable: true, formatter: true, sortByFormatted: true, filterByFormatted: true}, 
-        { key: 'actions', label: 'Actions' }
+        { key: 'is_active', label: 'Status' },
+        { key: 'actions', label: 'Actions', class: 'text-center w-15' }
       );
 
       for (let i = 0; i < find.length; i++) {

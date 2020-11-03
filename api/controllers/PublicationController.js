@@ -11,10 +11,12 @@ PublicationController = {
     
     if (find.length > 0) {
       fields.push(
-        { key: 'id_title', label: 'Publication Name', sortable: true },
-        { key: 'year', label: 'Year', sortable: true },
-        { key: 'author', label: 'Author', sortable: true}, 
-        { key: 'actions', label: 'Actions' }
+        { key: 'path', label: 'Path', sortable: true },
+        { key: 'author', label: 'author', sortable: true },
+        { key: 'en_title', label: 'Title', sortable: true },
+        { key: 'en_paragraph', label: 'Paragraph', class: 'w-50' },
+        { key: 'is_posted', label: 'Posted' },
+        { key: 'actions', label: 'Actions', class: 'text-center w-15' }
       );
 
       for (let i = 0; i < find.length; i++) {

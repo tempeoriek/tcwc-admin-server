@@ -11,10 +11,12 @@ AnnualreportController = {
     
     if (find.length > 0) {
       fields.push(
-        { key: 'id_title', label: 'Report Name', sortable: true },
+        { key: 'path', label: 'Path', sortable: true },
         { key: 'year', label: 'Year', sortable: true },
-        { key: 'is_posted', label: 'Status', sortable: true, formatter: true, sortByFormatted: true, filterByFormatted: true}, 
-        { key: 'actions', label: 'Actions' }
+        { key: 'en_title', label: 'Title', sortable: true },
+        { key: 'en_paragraph', label: 'Paragraph', class: 'w-50' },
+        { key: 'is_posted', label: 'Posted' },
+        { key: 'actions', label: 'Actions', class: 'text-center w-15' }
       );
 
       for (let i = 0; i < find.length; i++) {

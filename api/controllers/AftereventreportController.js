@@ -4,7 +4,7 @@ const Model = require('../models/after_event_report'),
 AftereventreportController = {
   getAllData: async function (req, res) {
     let err, find, fields = [], data = [];
-    [err, find] = await flatry( Model.find({ is_delete: false }, `id_title en_title en_paragraph id_paragraph path year url`).populate(`tropical_cyclone_id`, [`name`]));
+    [err, find] = await flatry( Model.find({ is_delete: false }, `id_title en_title en_paragraph id_paragraph path year url is_posted tropical_cyclone_id`).populate(`tropical_cyclone_id`, [`name`]));
     if (err) {
       console.log(err.stack);
       response.error(400, `Error when find data in getAllData cycloneoutlook`, res, err);
@@ -12,16 +12,22 @@ AftereventreportController = {
     
     if (find.length > 0) {
       fields.push(
+	{ key: 'path', label: 'Path', sortable: true },
         { key: 'name', label: 'TC Name', sortable: true },
         { key: 'year', label: 'Year', sortable: true },
-        { key: 'id_paragraph', label: 'Description', sortable: true}, 
-        { key: 'actions', label: 'Actions' }
+        { key: 'en_title', label: 'Title', sortable: true },
+        { key: 'en_paragraph', label: 'Paragraph', class: 'w-50' },
+        { key: 'is_posted', label: 'Posted' },
+        { key: 'actions', label: 'Actions', class: 'text-center w-15' }
       );
 
       for (let i = 0; i < find.length; i++) {
         let temp = find[i];
         data.push({
           _id: temp._id,
+
+	   is_posted: (temp.is_posted) ? temp.is_posted: `-`,
+          name: (temp.tropical_cyclone_id) ? temp.tropical_cyclone_id.name: `-`,
           year: (temp.year) ? temp.year: `-`,
           id_title: (temp.id_title) ? temp.id_title : `-`,
           en_title: (temp.en_title) ? temp.en_title : `-`,
