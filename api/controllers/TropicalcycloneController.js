@@ -90,9 +90,9 @@ TropicalcycloneController = {
       //UPLOAD FILE
       data = {
         content: data,
-        file_name: (upload.data.name) ? upload.data.name : null,
-        file_path: (upload.data.path) ? upload.data.path : null,
-        file_type: (upload.data.type) ? upload.data.type : null
+        file_name: (upload.data) ? upload.data.name : null,
+        file_path: (upload.data) ? upload.data.path : null,
+        file_type: (upload.data) ? upload.data.type : null
       }
 
       response.ok(data, res, `success get all data`);
