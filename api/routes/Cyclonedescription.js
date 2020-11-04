@@ -1,6 +1,7 @@
 const router = express.Router(),
 Cyclonedescription = require('../controllers/CyclonedescriptionController');
 
+router.post('/posted', Cyclonedescription.posted);
 router.get('/', Cyclonedescription.getAllData);
 router.get('/:id', Cyclonedescription.getData);
 router.post('/', Cyclonedescription.createData);

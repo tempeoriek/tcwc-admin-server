@@ -34,14 +34,6 @@ let after_event_report_schema = new Schema({
     type: Boolean,
     default: false
   },
-  start_post: {
-    type: Date,
-    default: null
-  },
-  end_post: {
-    type: Date,
-    default: null
-  },
 
   tropical_cyclone_id: {
     type: Schema.Types.ObjectId,

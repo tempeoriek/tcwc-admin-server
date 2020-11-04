@@ -2,8 +2,8 @@ const Model = require('../models/menu');
 
 MenuController = {
   getAllData: async function (req, res) {
-    let err, find, fields = [], data = [];
-    [err, find] = await flatry( Model.find({ is_delete: false }, `name route order is_admin is_super_admin sub_menu`));
+    let err, find, fields = [], data = [], sort_data = { order: 1 };
+    [err, find] = await flatry( Model.find({ is_delete: false }, `name route order is_admin is_super_admin sub_menu`).sort( sort_data ));
     if (err) {
       console.log(err.stack);
       response.error(400, `Error when find data in getAllData tropicalcyclone`, res, err);

@@ -1,15 +1,21 @@
 let Schema = mongoose.Schema;
 
 let cyclone_description_schema = new Schema({
-  description: {
+  en_paragraph: {
     type: String,
-    default: null
+    default: null,
+    required: true
   },
-  description_en: {
+  id_paragraph: {
     type: String,
-    default: null
+    default: false,
+    required: true
   },
- 
+  is_posted: {
+    type: Boolean,
+    default: false
+  },
+
   /* config */
   created_at: {
     type: Date,

@@ -5,23 +5,37 @@ const Model = require('../models/cyclone_citra'),
 CyclonecitraController = {
   getAllData: async function (req, res) {
     let err, find, fields = [], data = [];
-    [err, find] = await flatry( Model.find({ is_delete: false }, `name`));
+    [err, find] = await flatry( Model.find({ is_delete: false }));
     if (err) {
       console.log(err.stack);
       response.error(400, `Error when find data in getAllData cyclonecitra`, res, err);
     }
     
     if (find.length > 0) {
+      
       fields.push(
-        { key: 'name', label: 'TC Name', sortable: true},
+        { key: 'is_active', label: 'Active', sortable: true, formatter: true, sortByFormatted: true, filterByFormatted: true}, 
+        { key: 'created_at', label: 'Date' },
+        { key: 'file_path', label: 'File Path' },
         { key: 'actions', label: 'Actions' }
-      );
-
+        );
+        
       for (let i = 0; i < find.length; i++) {
         let temp = find[i];
+        
+        //FIND FILE UPLOAD
+        let upload = await UploadController.getFile(file_path, temp._id);
+        if (upload.status == 400) {
+          response.error(400, `Error when get all file in citra controller`, res, upload.messages);
+        }
+
         data.push({
           _id: temp._id,
-          name: (temp.name) ? temp.name : `-`
+          created_at: (temp.created_at) ? temp.created_at : `-`,
+          is_active: (temp.is_active) ? temp.is_active : `-`,
+          file_name: (upload.data) ? upload.data.name : null,
+          file_path: (upload.data) ? upload.data.path : null,
+          file_type: (upload.data) ? upload.data.type : null
         })
       }
       
@@ -49,9 +63,9 @@ CyclonecitraController = {
       //UPLOAD FILE
       data = {
         content: data,
-        file_name: (upload.data.name) ? upload.data.name : null,
-        file_path: (upload.data.path) ? upload.data.path : null,
-        file_type: (upload.data.type) ? upload.data.type : null
+        file_name: (upload.data) ? upload.data.name : null,
+        file_path: (upload.data) ? upload.data.path : null,
+        file_type: (upload.data) ? upload.data.type : null
       }
 
       response.ok(data, res, `success get all data`);
@@ -62,31 +76,24 @@ CyclonecitraController = {
 
   createData: async function (req, res) {
     if (Object.entries(req.body).length > 0) {
-      let { name } = req.body, err, data;
-      let new_data = { name };
+      let { is_active } = req.body, err, data;
+      let new_data = { is_active };
 
-      let redundant = await ApiController.redundant(Model, "name", name);
-      if (redundant.status == 201) {
-        response.error(400, redundant.message, res, redundant.message);
+      [err, data] = await flatry( Model.create( new_data ));
+      if (err) {
+        console.log(err.stack);
+        response.error(400, `Error when create data in createData cyclonecitra`, res, err);
       }
-      
-      if (redundant.status == 200) {
-        [err, data] = await flatry( Model.create( new_data ));
-        if (err) {
-          console.log(err.stack);
-          response.error(400, `Error when create data in createData cyclonecitra`, res, err);
+
+      //UPLOAD FILE
+      if (req.files && data && file_path) {
+        let upload = await UploadController.uploadData(req.files.files, file_path, data._id, `create`)
+        if (upload.status == 400) {
+          response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
         }
-  
-        //UPLOAD FILE
-        if (req.files && data && file_path) {
-          let upload = await UploadController.uploadData(req.files.files, file_path, data._id, `create`)
-          if (upload.status == 400) {
-            response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
-          }
-        }
-  
-        response.ok(data, res, `success create data`);
       }
+
+      response.ok(data, res, `success create data`);
     } else {
       response.error(400, `Data not completed`, res);
     }
@@ -94,32 +101,36 @@ CyclonecitraController = {
 
   updateData: async function (req, res) {
     if (Object.entries(req.body).length > 0 && Object.entries(req.params).length > 0) {
-      let { name } = req.body, { id } = req.params;
-      let new_data = { name }, err, data, 
+      let { is_active } = req.body, { id } = req.params;
+      let new_data = { is_active }, err, data, 
       filter = { _id: id, is_delete: false };
       
-      let redundant = await ApiController.redundant(Model, "name", name);
-      if (redundant.status == 201) {
-        response.error(400, redundant.message, res, redundant.message);
+      [err, data] = await flatry( Model.findOneAndUpdate( filter, new_data, {new: true}));
+      if (err) {
+        console.log(err.stack);
+        response.error(400, `Error when findoneandupdate data in updatedata cyclonecitra`, res, err);
       }
       
-      if (redundant.status == 200) {
-        [err, data] = await flatry( Model.findOneAndUpdate( filter, new_data, {new: true}));
+      //LOGIC UPDATE ALL FALSE
+      if (is_active) {
+        filter = {_id :{ $ne: id }, is_delete: false};
+        new_data = {is_active: false};
+        [err] = await flatry( Model.updateMany( filter, new_data, {new: true}));
         if (err) {
           console.log(err.stack);
           response.error(400, `Error when findoneandupdate data in updatedata cyclonecitra`, res, err);
         }
-  
-        //UPLOAD FILE
-        if (req.files && data && file_path) {
-          let upload = await UploadController.uploadData(req.files.files, file_path, data._id, `update`)
-          if (upload.status == 400) {
-            response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
-          }
-        }
-  
-        response.ok(data, res, `success update data`);
       }
+
+      //UPLOAD FILE
+      if (req.files && data && file_path) {
+        let upload = await UploadController.uploadData(req.files.files, file_path, data._id, `update`)
+        if (upload.status == 400) {
+          response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
+        }
+      }
+
+      response.ok(data, res, `success update data`);
     } else {
       response.error(400, `Data not completed`, res);
     }

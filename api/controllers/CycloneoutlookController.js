@@ -5,16 +5,14 @@ const Model = require('../models/cyclone_outlook'),
 CycloneoutlookController = {
   posted: async function (req, res) {
     let err, data, old_data, old = { is_posted: false, is_delete: false }, updated = { is_posted: true, is_delete: false };
-    [err, old_data] = await flatry( Model.findOne( old, "en_title en_paragraph id_title id_paragraph"));
+    [err, old_data] = await flatry( Model.findOne( old, "en_paragraph id_paragraph is_posted"));
     if (err) {
       response.error(400, `Error when copy data in cyclone outlook posted`, res, err);
     }
    
     if (old_data) {
       let new_data = {
-        en_title: old_data.en_title,
         en_paragraph: old_data.en_paragraph,
-        id_title: old_data.id_title,
         id_paragraph: old_data.id_paragraph,
         modified_at: moment.utc().format(`YYYY-MM-DDTHH:mm:ss.SSSZ`)
       }, options = {new: true};
@@ -31,28 +29,19 @@ CycloneoutlookController = {
   },
 
   getAllData: async function (req, res) {
-    let err, find, fields = [], data = [];
-    [err, find] = await flatry( Model.find({ is_delete: false }, `id_paragraph id_title en_paragraph en_title is_posted`));
+    let err, find, fields = null, data = [];
+    [err, find] = await flatry( Model.find({ is_delete: false }, `id_paragraph en_paragraph is_posted`));
     if (err) {
       console.log(err.stack);
       response.error(400, `Error when find data in getAllData cycloneoutlook`, res, err);
     }
     
     if (find.length > 0) {
-      fields.push(
-        { key: 'id_title', label: 'Title (indonesia)', sortable: true },
-        { key: 'en_title', label: 'Title (english)', sortable: true },
-        { key: 'is_posted', label: 'Status', sortable: true, formatter: true, sortByFormatted: true, filterByFormatted: true}, 
-        { key: 'actions', label: 'Actions' }
-      );
-
       for (let i = 0; i < find.length; i++) {
         let temp = find[i];
         data.push({
           _id: temp._id,
-          id_title: (temp.id_title) ? temp.id_title : `-`,
           id_paragraph: (temp.id_paragraph) ? temp.id_paragraph : `-`,
-          en_title: (temp.en_title) ? temp.en_title : `-`,
           en_paragraph: (temp.en_paragraph) ? temp.en_paragraph : `-`,
           is_posted: (temp.is_posted) ? temp.is_posted : `-`,
         })
@@ -95,8 +84,8 @@ CycloneoutlookController = {
 
   createData: async function (req, res) {
     if (Object.entries(req.body).length > 0) {
-      let { en_title, en_paragraph, id_title, id_paragraph, is_posted } = req.body, err, data;
-      let new_data = { en_title,  en_paragraph, id_title, id_paragraph, is_posted };
+      let { en_paragraph, id_paragraph, is_posted } = req.body, err, data;
+      let new_data = {  en_paragraph, id_paragraph, is_posted };
 
       [err, data] = await flatry( Model.create( new_data ));
       if (err) {
@@ -119,8 +108,8 @@ CycloneoutlookController = {
 
   updateData: async function (req, res) {
     if (Object.entries(req.body).length > 0 && Object.entries(req.params).length > 0) {
-      let { en_title, en_paragraph, id_title, id_paragraph, is_posted } = req.body, { id } = req.params;
-      let new_data = { modified_at: moment.utc().format(`YYYY-MM-DDTHH:mm:ss.SSSZ`), en_title, en_paragraph, id_title, id_paragraph, is_posted }, err, data, 
+      let { en_paragraph, id_paragraph, is_posted } = req.body, { id } = req.params;
+      let new_data = { modified_at: moment.utc().format(`YYYY-MM-DDTHH:mm:ss.SSSZ`), en_paragraph, id_paragraph, is_posted }, err, data, 
       filter = { _id: id, is_delete: false };
       
       [err, data] = await flatry( Model.findOneAndUpdate( filter, new_data, {new: true}));

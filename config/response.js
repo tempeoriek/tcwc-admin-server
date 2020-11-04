@@ -1,4 +1,8 @@
 Response_data = {
+	send: (values) => {
+		res.json(values);
+		res.end();
+	},
 	ok: (values, res, message, fields) => {
 		let data = {
 			success: true,

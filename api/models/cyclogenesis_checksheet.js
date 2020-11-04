@@ -2,11 +2,6 @@ let Schema = mongoose.Schema,
   Float = require('mongoose-float').loadType(mongoose, 20);
 
 let cyclogenesis_checksheet_schema = new Schema({
-  cyclogenesis_checksheet_date_id: {
-    type: Schema.Types.ObjectId,
-    ref: `cyclogenesis_checksheet_date`, 
-    default: null
-  },
   kode_bibit : {
     type: String,
     default: null
@@ -17,40 +12,33 @@ let cyclogenesis_checksheet_schema = new Schema({
   },
   latitude: {
     type: String,
-    default: null,
-    required: true
+    default: null
   },
   longitude: {
     type: String,
-    default: null,
-    required: true
+    default: null
   },
   latitude_dd: {
     type: Float,
-    default: null,
-    required: true
+    default: null
   },
   longitude_dd: {
     type: Float,
-    default: null,
-    required: true
+    default: null
   },
   
   //SUSPECT AREA
   suspect_area_1: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   },
   suspect_area_2: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
   suspect_area_3: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
   location_suspect_area: {
     type: String,
@@ -59,133 +47,120 @@ let cyclogenesis_checksheet_schema = new Schema({
 
   //BEC
   bec_current_a: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
   bec_current_b: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
   bec_current_c: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
   bec_current_d: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
   bec_current_e: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
   bec_current_f: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
   bec_current_g: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
   bec_current_h: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
   bec_current_i: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
   bec_current_j: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
   bec_trend_k: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
   bec_trend_l: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
   bec_trend_m: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
   bec_trend_n: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
   bec_trend_o: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
   bec_trend_p: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
 
   //DEVELOPMENT CIRCULATION
   development_circulation_1: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
   development_circulation_2: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
   development_circulation_3: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
   development_circulation_4: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
   development_circulation_5: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
 
   //DDC
   ddc_6: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
   ddc_7: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
   ddc_8: {
-    type: Schema.Types.ObjectId,
-    ref: `date_form`, 
-    default: null
+    type: Boolean,
+    default: false
   }, 
 
-  result: {
-    type: String,
+  //MW
+  mw_9: {
+    type: Boolean,
     default: false
+  },
+  mw_10: {
+    type: Boolean,
+    default: false
+  }, 
+
+  result_id: {
+    type: Schema.Types.ObjectId,
+    ref: `result`, 
+    default: null
   },
 
   /* config */

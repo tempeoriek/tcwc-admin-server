@@ -15,11 +15,11 @@ let about_schema = new Schema({
   },
   id_paragraph: {
     type: String,
-    default: false
+    default: null
   },
   path: {
     type: String,
-    default: false
+    default: null
   },
   is_posted: {
     type: Boolean,

@@ -3,7 +3,7 @@ const Model = require('../models/cyclone_name');
 CyclonenameController = {
   getAllData: async function (req, res) {
     let err, find, fields = [], data = [];
-    [err, find] = await flatry( Model.find({ is_delete: false }, `list_a list_b`).populate(`cyclone_description_id`, [`description`]));
+    [err, find] = await flatry( Model.find({ is_delete: false }, `list_a list_b`));
     if (err) {
       console.log(err.stack);
       response.error(400, `Error when find data in getAllData cyclonename`, res, err);
@@ -22,8 +22,7 @@ CyclonenameController = {
         data.push({
           _id: temp._id,
           list_a: temp.list_a,
-          list_b: temp.list_b,
-          description: temp.cyclone_description_id.description
+          list_b: temp.list_b
         })
       }
       response.ok(data, res, `success get all data`, fields);
@@ -34,7 +33,7 @@ CyclonenameController = {
 
   getData: async function (req, res) {
     let err, data, { id } = req.params;
-    [err, data] = await flatry( Model.findOne({ is_delete: false, _id: id }).populate(`cyclone_description_id`));
+    [err, data] = await flatry( Model.findOne({ is_delete: false, _id: id }));
     if (err) {
       console.log(err.stack);
       response.error(400, `Error when findOne data in getdata cyclonename`, res, err);
@@ -49,8 +48,8 @@ CyclonenameController = {
 
   createData: async function (req, res) {
     if (Object.entries(req.body).length > 0) {
-      let { list_a, list_b, cyclone_description_id } = req.body, err, data;
-      let new_data = { list_a, list_b, cyclone_description_id };
+      let { list_a, list_b } = req.body, err, data;
+      let new_data = { list_a, list_b };
 
       [err, data] = await flatry( Model.create( new_data ));
       if (err) {
@@ -66,8 +65,8 @@ CyclonenameController = {
 
   updateData: async function (req, res) {
     if (Object.entries(req.body).length > 0 && Object.entries(req.params).length > 0) {
-      let { list_a, list_b, cyclone_description_id } = req.body, { id } = req.params;
-      let new_data = { list_a, list_b, cyclone_description_id }, err, data, 
+      let { list_a, list_b } = req.body, { id } = req.params;
+      let new_data = { list_a, list_b }, err, data, 
       filter = { _id: id, is_delete: false };
       
       [err, data] = await flatry( Model.findOneAndUpdate( filter, new_data, {new: true}));

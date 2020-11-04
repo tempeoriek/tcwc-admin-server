@@ -40,7 +40,7 @@ TropicalcycloneController = {
 
   getAllData: async function (req, res) {
     let err, find, fields = [], data = [], sort_data = { created_at: -1 };
-    [err, find] = await flatry( Model.find({ is_delete: false }, `name year area is_active _id`).sort( sort_data ));
+    [err, find] = await flatry( Model.find({ is_delete: false }, `tc_name year area is_active _id`).sort( sort_data ));
     if (err) {
       console.log(err.stack);
       response.error(400, `Error when find data in getAllData tropicalcyclone`, res, err);
@@ -59,7 +59,7 @@ TropicalcycloneController = {
         let temp = find[i];
         data.push({
           _id: temp._id,
-          tc_name: (temp.name) ? temp.name : `-`,
+          tc_name: (temp.tc_name) ? temp.tc_name : `-`,
           year: (temp.year) ? temp.year : `-`,
           area: (temp.area) ? temp.area : `-`,
           is_active: (temp.is_active) ? temp.is_active : `-`,
@@ -103,10 +103,10 @@ TropicalcycloneController = {
 
   createData: async function (req, res) {
     if (Object.entries(req.body).length > 0) {
-      let { name, year, area, is_active, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning } = req.body, err, data;
-      let new_data = { name, year, area, is_active, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning };
+      let { tc_name, year, area, is_active, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning } = req.body, err, data;
+      let new_data = { tc_name, year, area, is_active, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning };
       
-      let redundant = await ApiController.redundant(Model, "name", name);
+      let redundant = await ApiController.redundant(Model, "tc_name", tc_name, false);
       if (redundant.status == 201) {
         response.error(400, redundant.message, res, redundant.message);
       }
@@ -135,11 +135,11 @@ TropicalcycloneController = {
 
   updateData: async function (req, res) {
     if (Object.entries(req.body).length > 0 && Object.entries(req.params).length > 0) {
-      let { name, year, area, is_active, max_wind_speed, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning } = req.body, { id } = req.params;
-      let new_data = {name, year, area, is_active, max_wind_speed, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning }, err, data, 
+      let { tc_name, year, area, is_active, max_wind_speed, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning } = req.body, { id } = req.params;
+      let new_data = {tc_name, year, area, is_active, max_wind_speed, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning }, err, data, 
         filter = { _id: id, is_delete: false };
       
-      let redundant = await ApiController.redundant(Model, "name", name);
+      let redundant = await ApiController.redundant(Model, "tc_name", tc_name, false);
       if (redundant.status == 201) {
         response.error(400, redundant.message, res, redundant.message);
       }

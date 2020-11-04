@@ -97,7 +97,7 @@ UploadController = {
       }
       data = {url: `http://api.tcwc.tivedemo.com/${file_path}/${upload.data.name}`}
     }
-    response.ok(data, res, `success upload data`);
+    response.send(data);
   },
 
   get: async function(req, res) {
@@ -108,7 +108,7 @@ UploadController = {
     }
     data = (upload.data) ? upload.data : null;
     response.ok(data, res, `success upload data`);
-  }
+  },
 };
 
 module.exports = UploadController;

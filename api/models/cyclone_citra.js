@@ -1,9 +1,9 @@
 let Schema = mongoose.Schema;
 
 let cyclone_citra_schema = new Schema({
-  name: {
-    type: String,
-    default: null
+  is_active: {
+    type: Boolean,
+    default: false
   },
   
   /* config */

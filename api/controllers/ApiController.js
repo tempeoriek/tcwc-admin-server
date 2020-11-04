@@ -3,6 +3,7 @@ const About = require('../models/about'),
  Annualreport = require('../models/annual_report'),
  Cyclogenesischecksheet = require('../models/cyclogenesis_checksheet'),
  Cyclonecitra = require('../models/cyclone_citra'),
+ Cyclonedescription = require('../models/cyclone_description'),
  Cyclonecurrent = require('../models/cyclone_current'),
  Cyclonename = require('../models/cyclone_name'),
  Cycloneoutlook = require('../models/cyclone_outlook'),
@@ -20,6 +21,7 @@ ApiController = {
       (models == `Annualreport`) ? Annualreport : 
       (models == `Cyclogenesischecksheet`) ? Cyclogenesischecksheet : 
       (models == `Cyclonecitra`) ? Cyclonecitra : 
+      (models == `Cyclonedescription`) ? Cyclonedescription : 
       (models == `Cyclonecurrent`) ? Cyclonecurrent : 
       (models == `Cyclonename`) ? Cyclonename : 
       (models == `Cycloneoutlook`) ? Cycloneoutlook : Publication;
@@ -54,16 +56,21 @@ ApiController = {
     response.ok(data, res, `success get filter data`);
   },
 
-  redundant: async function (model, attribute, value) {
+  redundant: async function (model, attribute, value, same) {
     if (attribute == `path` && value.includes(" ")) {
       return response.back(201, null, `${attribute} cannot be space`);
     } else {
-      let err, data, filter = { [attribute] : { "$regex": value.toLowerCase(), "$options": "i"} ,is_delete: false };
-      [err, data] = await flatry( model.find( filter ) );
+      let err, data, filter;
+      if (same) {
+        filter = { $or: [{[attribute] : value.toLowerCase()}, {[attribute] : value}] , is_delete: false };
+        [err, data] = await flatry( model.find( filter ) );
+      } else {
+        filter = { $or: [{[attribute] : { "$regex": value.toLowerCase(), "$options": "i"}}, {[attribute] : { "$regex": value, "$options": "i"}}] ,is_delete: false };
+        [err, data] = await flatry( model.find( filter ) );
+      }
       if (err) {
         return response.back(400, {}, `Error when find in redundant api controller`);
       }
-      
       if (data.length > 0) {
         return response.back(201, null, `Data found, cannot same data`);
       } else {
@@ -83,6 +90,7 @@ ApiController = {
       (model == `Cyclonecitra`) ? Cyclonecitra : 
       (model == `Cyclonecurrent`) ? Cyclonecurrent : 
       (model == `Cyclonename`) ? Cyclonename : 
+      (model == `Cyclonedescription`) ? Cyclonedescription : 
       (model == `Cycloneoutlook`) ? Cycloneoutlook : Publication;
     let Childs = (child == `Tropicalcyclone`) ? Tropicalcyclone : 
       (child == `About`) ? About : 
@@ -92,6 +100,7 @@ ApiController = {
       (child == `Cyclonecitra`) ? Cyclonecitra : 
       (child == `Cyclonecurrent`) ? Cyclonecurrent : 
       (child == `Cyclonename`) ? Cyclonename : 
+      (child == `Cyclonedescription`) ? Cyclonedescription : 
       (child == `Cycloneoutlook`) ? Cycloneoutlook : Publication;
 
     [err, find] = await flatry( Models.find( req.body ));
@@ -144,6 +153,22 @@ ApiController = {
     }
     return response.back(200, data, `convert success`);
 
+  },
+
+  generated: async function(model, attribute, string) {
+    let str = string.replace(/\s+/g, '-').toLowerCase(), redundant;
+    let temp = str;
+
+    for (let i = 1 ; i < Infinity; i++) {
+      redundant = await ApiController.redundant(model, attribute, str, true);
+      if (redundant.status == 201) {
+        str = `${temp}-${i}`
+      } else {
+        break;
+      }
+    }
+
+    return response.back(200, str, `${str} generated`);
   }
 };
 

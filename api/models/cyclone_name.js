@@ -10,12 +10,6 @@ let cyclone_name_schema = new Schema({
     default: null
   },
   
-  cyclone_description_id: {
-    type: Schema.Types.ObjectId,
-    ref: `cyclone_description`,
-    default: null
-  },
-
   /* config */
   created_at: {
     type: Date,

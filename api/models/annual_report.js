@@ -18,18 +18,10 @@ let annual_report_schema = new Schema({
     type: String,
     default: null
   },
-  en_paragraph: {
-    type: String,
-    default: null
-  },
   id_title: {
     type: String,
     default: null,
     required: true
-  },
-  id_paragraph: {
-    type: String,
-    default: false
   },
   is_posted: {
     type: Boolean,

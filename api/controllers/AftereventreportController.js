@@ -1,5 +1,7 @@
 const Model = require('../models/after_event_report'),
-  Tropical = require('../models/tropical_cyclone');
+  Tropical = require('../models/tropical_cyclone')
+  UploadController = require('./UploadController'),
+  file_path = `aftereventreport`;
 
 AftereventreportController = {
   getAllData: async function (req, res) {
@@ -13,6 +15,7 @@ AftereventreportController = {
     if (find.length > 0) {
       fields.push(
 	      { key: 'path', label: 'Path', sortable: true },
+        { key: 'file_path', label: 'File Path' },
         { key: 'year', label: 'Year', sortable: true },
         { key: 'en_title', label: 'Title', sortable: true },
         { key: 'en_paragraph', label: 'Paragraph', class: 'w-50' },
@@ -22,6 +25,13 @@ AftereventreportController = {
 
       for (let i = 0; i < find.length; i++) {
         let temp = find[i];
+
+        //FIND FILE UPLOAD
+        let upload = await UploadController.getFile(file_path, temp._id);
+        if (upload.status == 400) {
+          response.error(400, `Error when get all file in citra controller`, res, upload.messages);
+        }
+
         data.push({
           _id: temp._id,
 	        is_posted: (temp.is_posted) ? temp.is_posted: `-`,
@@ -32,6 +42,9 @@ AftereventreportController = {
           en_paragraph: (temp.en_paragraph) ? temp.en_paragraph : `-`,
           path: (temp.path) ? temp.path : `-`,
           url: (temp.url) ? temp.url : `-`,
+          file_name: (upload.data) ? upload.data.name : null,
+          file_path: (upload.data) ? upload.data.path : null,
+          file_type: (upload.data) ? upload.data.type : null
         })
       }
 
@@ -49,7 +62,20 @@ AftereventreportController = {
       response.error(400, `Error when findOne data in getdata aftereventreport`, res, err);
     }
 
+    //UPLOAD FILE
+    let upload = await UploadController.getFile(file_path, id)
+    if (upload.status == 400 && !upload.data) {
+      response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
+    }
+    
     if (data) {
+      //UPLOAD FILE
+      data = {
+        content: data,
+        file_name: (upload.data) ? upload.data.name : null,
+        file_path: (upload.data) ? upload.data.path : null,
+        file_type: (upload.data) ? upload.data.type : null
+      }
       response.ok(data, res, `success get all data`);
     } else {
       response.success(data, res, `success get all data but data is empty`);
@@ -58,24 +84,26 @@ AftereventreportController = {
 
   createData: async function (req, res) {
     if (Object.entries(req.body).length > 0) {
-      let { tropical_cyclone_id, id_paragraph, year, path, en_paragraph, id_title, en_title, url } = req.body, err, data;
-      let new_data = { tropical_cyclone_id, id_paragraph, year, path, en_paragraph, id_title, en_title, url };
+      let { tropical_cyclone_id, id_paragraph, year, en_paragraph, id_title, en_title, url } = req.body, err, data;
+      let new_data = { tropical_cyclone_id, id_paragraph, year, en_paragraph, id_title, en_title, url };
       
-      let redundant = await ApiController.redundant(Model, "path", path);
-      if (redundant.status == 201) {
-        response.error(400, redundant.message, res, redundant.message);
+      let generated = await ApiController.generated(Model, "path", en_title);
+      new_data.path = generated.data;
+      [err, data] = await flatry( Model.create( new_data ));
+      if (err) {
+        console.log(err.stack);
+        response.error(400, `Error when create data in createData aftereventreport`, res, err);
       }
-      
-      
-      if (redundant.status == 200) {
-        [err, data] = await flatry( Model.create( new_data ));
-        if (err) {
-          console.log(err.stack);
-          response.error(400, `Error when create data in createData aftereventreport`, res, err);
-        }
 
-        response.ok(data, res, `success create data`);
+      //UPLOAD FILE
+      if (req.files && data && file_path) {
+        let upload = await UploadController.uploadData(req.files.files, file_path, data._id, `create`)
+        if (upload.status == 400) {
+          response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
+        }
       }
+
+      response.ok(data, res, `success create data`);
     } else {
       response.error(400, `Data not completed`, res);
     }
@@ -83,24 +111,27 @@ AftereventreportController = {
 
   updateData: async function (req, res) {
     if (Object.entries(req.body).length > 0 && Object.entries(req.params).length > 0) {
-      let { tropical_cyclone_id, id_paragraph, year, path, en_paragraph, id_title, en_title, url } = req.body, { id } = req.params;
-      let new_data = { tropical_cyclone_id, id_paragraph, year, path, en_paragraph, id_title, en_title, url }, err, data, 
+      let { tropical_cyclone_id, id_paragraph, year, en_paragraph, id_title, en_title, url } = req.body, { id } = req.params;
+      let new_data = { tropical_cyclone_id, id_paragraph, year, en_paragraph, id_title, en_title, url }, err, data, 
       filter = { _id: id, is_delete: false };
       
-      let redundant = await ApiController.redundant(Model, "path", path);
-      if (redundant.status == 201) {
-        response.error(400, redundant.message, res, redundant.message);
+      let generated = await ApiController.generated(Model, "path", en_title);
+      new_data.path = generated.data;
+      [err, data] = await flatry( Model.findOneAndUpdate( filter, new_data, {new: true}));
+      if (err) {
+        console.log(err.stack);
+        response.error(400, `Error when findoneandupdate data in updatedata aftereventreport`, res, err);
       }
       
-      if (redundant.status == 200) {
-        [err, data] = await flatry( Model.findOneAndUpdate( filter, new_data, {new: true}));
-        if (err) {
-          console.log(err.stack);
-          response.error(400, `Error when findoneandupdate data in updatedata aftereventreport`, res, err);
+      //UPLOAD FILE
+      if (req.files && data && file_path) {
+        let upload = await UploadController.uploadData(req.files.files, file_path, data._id, `update`)
+        if (upload.status == 400) {
+          response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
         }
-  
-        response.ok(data, res, `success update data`);
       }
+
+      response.ok(data, res, `success update data`);
     } else {
       response.error(400, `Data not completed`, res);
     }
@@ -117,6 +148,14 @@ AftereventreportController = {
       if (err) {
         console.log(err.stack);
         response.error(400, `Error when findOneAndUpdate data in deleteData aftereventreport`, res, err);
+      }
+      
+      //UPLOAD FILE
+      if (data) {
+        let upload = await UploadController.deleteFile(data._id, file_path)
+        if (upload.status == 400) {
+          response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
+        }
       }
 
       response.ok(data, res, `success delete data`);

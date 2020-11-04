@@ -6,7 +6,7 @@ let tropical_cyclone_schema = new Schema({
     default: null,
     required: true
   },
-  name: {
+  tc_name: {
     type: String,
     default: null,
     required: true

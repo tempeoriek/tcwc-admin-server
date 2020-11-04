@@ -1,17 +1,7 @@
 let Schema = mongoose.Schema;
 
 let cyclone_outlook_schema = new Schema({
-  en_title: {
-    type: String,
-    default: null,
-    required: true
-  },
   en_paragraph: {
-    type: String,
-    default: null,
-    required: true
-  },
-  id_title: {
     type: String,
     default: null,
     required: true
@@ -24,14 +14,6 @@ let cyclone_outlook_schema = new Schema({
   is_posted: {
     type: Boolean,
     default: false
-  },
-  start_post : {
-    type: Date,
-    default: null
-  },
-  end_post: {
-    type: Date,
-    default: null
   },
 
   /* config */

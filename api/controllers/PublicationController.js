@@ -57,23 +57,18 @@ PublicationController = {
 
   createData: async function (req, res) {
     if (Object.entries(req.body).length > 0) {
-      let { id_title, en_title, path, year, author, en_paragraph, id_paragraph, url } = req.body, err, data;
-      let new_data = { id_title, en_title, path, year, author, en_paragraph, id_paragraph, url };
+      let { id_title, en_title, year, author, en_paragraph, id_paragraph, url } = req.body, err, data;
+      let new_data = { id_title, en_title, year, author, en_paragraph, id_paragraph, url };
 
-      let redundant = await ApiController.redundant(Model, "path", path);
-      if (redundant.status == 201) {
-        response.error(400, redundant.message, res, redundant.message);
+      let generated = await ApiController.generated(Model, "path", en_title);
+      new_data.path = generated.data;
+      [err, data] = await flatry( Model.create( new_data ));
+      if (err) {
+        console.log(err.stack);
+        response.error(400, `Error when create data in createData publication`, res, err);
       }
-      
-      if (redundant.status == 200) {
-        [err, data] = await flatry( Model.create( new_data ));
-        if (err) {
-          console.log(err.stack);
-          response.error(400, `Error when create data in createData publication`, res, err);
-        }
-  
-        response.ok(data, res, `success create data`);
-      }
+
+      response.ok(data, res, `success create data`);
     } else {
       response.error(400, `Data not completed`, res);
     }
@@ -81,24 +76,19 @@ PublicationController = {
 
   updateData: async function (req, res) {
     if (Object.entries(req.body).length > 0 && Object.entries(req.params).length > 0) {
-      let { id_title, en_title, path, year, author, en_paragraph, id_paragraph, url } = req.body, { id } = req.params;
-      let new_data = { id_title, en_title, path, year, author, en_paragraph, id_paragraph, url }, err, data, 
+      let { id_title, en_title, year, author, en_paragraph, id_paragraph, url } = req.body, { id } = req.params;
+      let new_data = { id_title, en_title, year, author, en_paragraph, id_paragraph, url }, err, data, 
       filter = { _id: id, is_delete: false };
       
-      let redundant = await ApiController.redundant(Model, "path", path);
-      if (redundant.status == 201) {
-        response.error(400, redundant.message, res, redundant.message);
+      let generated = await ApiController.generated(Model, "path", en_title);
+      new_data.path = generated.data;
+      [err, data] = await flatry( Model.findOneAndUpdate( filter, new_data, {new: true}));
+      if (err) {
+        console.log(err.stack);
+        response.error(400, `Error when findoneandupdate data in updatedata publication`, res, err);
       }
-      
-      if (redundant.status == 200) {
-        [err, data] = await flatry( Model.findOneAndUpdate( filter, new_data, {new: true}));
-        if (err) {
-          console.log(err.stack);
-          response.error(400, `Error when findoneandupdate data in updatedata publication`, res, err);
-        }
-  
-        response.ok(data, res, `success update data`);
-      }
+
+      response.ok(data, res, `success update data`);
     } else {
       response.error(400, `Data not completed`, res);
     }
