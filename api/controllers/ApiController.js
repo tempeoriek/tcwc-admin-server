@@ -1,14 +1,15 @@
 const About = require('../models/about'),
- Aftereventreport = require('../models/after_event_report'),
- Annualreport = require('../models/annual_report'),
- Cyclogenesischecksheet = require('../models/cyclogenesis_checksheet'),
- Cyclonecitra = require('../models/cyclone_citra'),
- Cyclonedescription = require('../models/cyclone_description'),
- Cyclonecurrent = require('../models/cyclone_current'),
- Cyclonename = require('../models/cyclone_name'),
- Cycloneoutlook = require('../models/cyclone_outlook'),
- Publication = require('../models/publication'),
- Tropicalcyclone = require('../models/tropical_cyclone');
+  Aftereventreport = require('../models/after_event_report'),
+  Annualreport = require('../models/annual_report'),
+  Cyclogenesischecksheet = require('../models/cyclogenesis_checksheet'),
+  Cyclonecitra = require('../models/cyclone_citra'),
+  Cyclonedescription = require('../models/cyclone_description'),
+  Cyclonecurrent = require('../models/cyclone_current'),
+  Cyclonename = require('../models/cyclone_name'),
+  Cycloneoutlook = require('../models/cyclone_outlook'),
+  Publication = require('../models/publication'),
+  Tropicalcyclone = require('../models/tropical_cyclone'),
+  pdf = require('html-pdf');
 
 ApiController = {
   filter: async function (req, res) {
@@ -169,6 +170,22 @@ ApiController = {
     }
 
     return response.back(200, str, `${str} generated`);
+  },
+
+  generatePDF: async function(html, path, name) {
+    return new Promise(async (resolve, rejects) => {
+      let data = { status: 200, data: null, message: `Success create PDF` }
+      let options = { format: 'Letter' };
+      await pdf.create(html, options).toFile(`files/pdf/${path}/${name}.pdf`, function(err, res) {
+        if (err) {
+          console.log(err);
+          data.code = 400; data.msg = `Error when create html`;
+          rejects(data)
+        }
+        data.data = res;
+        resolve(data)
+      });
+    });
   }
 };
 

@@ -21,35 +21,51 @@ let file_upload_schema = new Schema({
   /* relations */
   tropical_cyclone_id: {
     type: Schema.Types.ObjectId,
-    ref: `tropical_cyclone`
+    ref: `tropical_cyclone`,
+    default: null
+
   },
   annual_report_id: {
     type: Schema.Types.ObjectId,
-    ref: `annual_report`
+    ref: `annual_report`,
+    default: null
+
   },
   after_event_report_id: {
     type: Schema.Types.ObjectId,
-    ref: `after_event_report`
+    ref: `after_event_report`,
+    default: null
+
   },
   cyclone_outlook_id: {
     type: Schema.Types.ObjectId,
-    ref: `cyclone_outlook`
+    ref: `cyclone_outlook`,
+    default: null
+
   },
   about_id: {
     type: Schema.Types.ObjectId,
-    ref: `about`
+    ref: `about`,
+    default: null
+
   },
   cyclogenesis_checksheet_id: {
     type: Schema.Types.ObjectId,
-    ref: `cyclogenesis_checksheet`
+    ref: `cyclogenesis_checksheet`,
+    default: null
+
   },
   cyclone_citra_id: {
     type: Schema.Types.ObjectId,
-    ref: `cyclone_citra`
+    ref: `cyclone_citra`,
+    default: null
+
   },
   publication_id: {
     type: Schema.Types.ObjectId,
-    ref: `publication`
+    ref: `publication`,
+    default: null
+
   },
 
   /* config */

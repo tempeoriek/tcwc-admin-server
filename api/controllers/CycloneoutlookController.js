@@ -1,8 +1,42 @@
 const Model = require('../models/cyclone_outlook'),
+  UploadController = require('./UploadController'),
+  ApiController = require('./ApiController'),
   file_path = `cycloneoutlook`;
 
 
 CycloneoutlookController = {
+  pdf: async function (req, res) {
+    let { id } = req.body, err, find, data, upload;
+    let filter = { is_delete: false, _id: id };
+    [err, find] = await flatry( Model.findOne( filter ));
+    if (err || !find) {
+      console.log(err);
+      response.error(400, `Error when find data in pdf cycloneoutlook or data not found`, res, err);
+    }
+
+    let today = moment.utc().format(`YYYYMMDDHHMMSS`);
+    let name_pdf = `${file_path}-${today}`;
+
+    if (find) {
+      let create_pdf = await ApiController.generatePDF(find.en_paragraph, file_path, name_pdf);
+      if (create_pdf.status == 400) {
+        response.error(400, `Error when create pdf`, res, create_pdf.message);
+      }
+      
+      //CREATE PDF INTO DB
+      if (create_pdf.data && file_path) {
+        let obj = { name: name_pdf, path: create_pdf.data.filename, type: `pdf`}
+        upload = await UploadController.createPDF(obj, file_path, find._id, `create`)
+        if (upload.status == 400) {
+          response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
+        }
+      }
+
+      data = upload.data;
+      response.ok(data, res, `success create pdf`);
+    }
+  },
+
   posted: async function (req, res) {
     let err, data, old_data, old = { is_posted: false, is_delete: false }, updated = { is_posted: true, is_delete: false };
     [err, old_data] = await flatry( Model.findOne( old, "en_paragraph id_paragraph is_posted"));
@@ -71,9 +105,9 @@ CycloneoutlookController = {
       //UPLOAD FILE
       data = {
         content: data,
-        file_name: (upload.data.name) ? upload.data.name : null,
-        file_path: (upload.data.path) ? upload.data.path : null,
-        file_type: (upload.data.type) ? upload.data.type : null
+        file_name: (upload.data) ? upload.data.name : null,
+        file_path: (upload.data) ? upload.data.path : null,
+        file_type: (upload.data) ? upload.data.type : null
       }
 
       response.ok(data, res, `success get all data`);
@@ -93,12 +127,12 @@ CycloneoutlookController = {
         response.error(400, `Error when create data in createData cycloneoutlook`, res, err);
       }
 
-      if (req.files && data && file_path) {
+      /* if (req.files && data && file_path) {
         let upload = await UploadController.uploadData(req.files.files, file_path, data._id, `create`)
         if (upload.status == 400) {
           response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
         }
-      }
+      } */
 
       response.ok(data, res, `success create data`);
     } else {
@@ -117,13 +151,14 @@ CycloneoutlookController = {
         console.log(err.stack);
         response.error(400, `Error when findoneandupdate data in updatedata cycloneoutlook`, res, err);
       }
-      //UPLOAD FILE
+      
+      /* //UPLOAD FILE
       if (req.files && data && file_path) {
         let upload = await UploadController.uploadData(req.files.files, file_path, data._id, `update`)
         if (upload.status == 400) {
           response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
         }
-      }
+      } */
       
       response.ok(data, res, `success update data`);
     } else {
@@ -144,6 +179,14 @@ CycloneoutlookController = {
         response.error(400, `Error when findOneAndUpdate data in deleteData cycloneoutlook`, res, err);
       }
 
+      //UPLOAD FILE
+      if (data) {
+        let upload = await UploadController.deleteFile(data._id, file_path)
+        if (upload.status == 400) {
+          response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
+        }
+      }
+      
       response.ok(data, res, `success delete data`);
     } else {
       response.error(400, `Data not completed`, res);

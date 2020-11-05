@@ -1,6 +1,32 @@
 const Model = require('../models/file_upload');
 
 UploadController = {
+  
+  createPDF: async function (files, path, model_id, doing) {
+    let new_data = {
+      name: files.name,
+      path: files.path,
+      type: files.type,
+      size: null,
+      cyclone_outlook_id: (path == `cycloneoutlook`) ? model_id : null
+    }, err, data;
+
+    if (doing == `create`) {
+      [err, data] = await flatry( Model.create( new_data ));
+      if (err) {
+        return response.back(400, {}, `Error when create file upload`);
+      }
+    } else if (doing == `update`) {
+      let old = (path == `cycloneoutlook`) ? {cyclone_outlook_id: model_id, is_delete: false} : null;
+      [err, data] = await flatry( Model.findOneAndUpdate( old, new_data ));
+      if (err) {
+        return response.back(400, {}, `Error when create file upload`);
+      }
+    }
+
+    return response.back(200, data, `success upload file`);
+  },
+
   uploadData: async function (files, path, model_id, doing) {
     let new_data = {
       name: files.name,
