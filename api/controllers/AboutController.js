@@ -14,7 +14,7 @@ AboutController = {
         { key: 'id_title', label: 'Topic Name', sortable: true },
         { key: 'start_post', label: 'Date Posted', sortable: true },
         { key: 'is_posted', label: 'Status', sortable: true, formatter: true, sortByFormatted: true, filterByFormatted: true}, 
-        { key: 'actions', label: 'Actions' }
+        { key: 'actions', label: 'Actions', class: 'text-center w-15'}
       );
 
       for (let i = 0; i < find.length; i++) {

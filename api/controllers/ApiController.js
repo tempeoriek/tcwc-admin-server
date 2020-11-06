@@ -186,7 +186,42 @@ ApiController = {
         resolve(data)
       });
     });
-  }
+  },
+
+  getChildFromParent: async function (models, model_id, parent, attribute) {
+    let err, find;
+    let Model = (models == `Tropicalcyclone`) ? Tropicalcyclone : 
+      (models == `About`) ? About : 
+      (models == `Aftereventreport`) ? Aftereventreport : 
+      (models == `Annualreport`) ? Annualreport : 
+      (models == `Cyclogenesischecksheet`) ? Cyclogenesischecksheet : 
+      (models == `Cyclonecitra`) ? Cyclonecitra : 
+      (models == `Cyclonedescription`) ? Cyclonedescription : 
+      (models == `Cyclonecurrent`) ? Cyclonecurrent : 
+      (models == `Cyclonename`) ? Cyclonename : 
+      (models == `Cycloneoutlook`) ? Cycloneoutlook : Publication;
+    let old = (parent == `tropicalcyclone`) ? {tropical_cyclone_id: model_id, is_delete: false} :
+      (parent == `annualreport`) ? {annual_report_id: model_id, is_delete: false} :
+      (parent == `aftereventreport`) ? {after_event_report_id: model_id, is_delete: false} :
+      (parent == `cycloneoutlook`) ? {cyclone_outlook_id: model_id, is_delete: false} :
+      (parent == `about`) ? {about_id: model_id, is_delete: false} :
+      (parent == `cyclogenesischecksheet`) ? {cyclogenesis_checksheet_id: model_id, is_delete: false} :
+      (parent == `cyclonecitra`) ? {cyclone_citra_id: model_id, is_delete: false} :
+      (parent == `publication`) ? {publication_id: model_id, is_delete: false} : null;
+
+    [err, find] = await flatry( Model.find( old , attribute));
+    if (err) {
+      console.log(err.stack);
+      return response.back(400, {}, err.stack);
+    }
+
+    if (find.length > 0) {
+      return response.back(200, find, `Success get child data`);
+    } else if (find.length == 0) {
+      return response.back(201, data, `Success get all data but data is empty`);
+    }
+    
+  },
 };
 
 module.exports = ApiController;

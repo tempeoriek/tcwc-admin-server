@@ -13,8 +13,6 @@ AnnualreportController = {
     
     if (find.length > 0) {
       fields.push(
-        { key: 'path', label: 'Path', sortable: true },
-        { key: 'file_path', label: 'File Path' },
         { key: 'year', label: 'Year', sortable: true },
         { key: 'en_title', label: 'Title', sortable: true },
         { key: 'id_title', label: 'Title (ID)', sortable: true },

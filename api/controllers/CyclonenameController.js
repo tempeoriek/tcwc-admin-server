@@ -13,7 +13,7 @@ CyclonenameController = {
       fields.push(
         { key: 'list_a', label: 'List A', sortable: true},
         { key: 'list_b', label: 'List B', sortable: true },
-        { key: 'actions', label: 'Actions' }
+        { key: 'actions', label: 'Actions', class: 'text-center w-15' }
       );
 
       console.log(find)

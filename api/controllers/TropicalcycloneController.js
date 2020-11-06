@@ -73,13 +73,14 @@ TropicalcycloneController = {
   },
 
   getData: async function (req, res) {
-    let err, data, { id } = req.params;
+    let err, data, { id } = req.params, fields = [], childs = [];
     [err, data] = await flatry( Model.findOne({ is_delete: false, _id: id }, { strict: false }));
     if (err) {
       console.log(err.stack);
       response.error(400, `Error when findOne data in getdata tropicalcyclone`, res, err);
     }
 
+    
     //UPLOAD FILE
     let upload = await UploadController.getFile(file_path, id)
     if (upload.status == 400 && !upload.data) {
@@ -87,15 +88,46 @@ TropicalcycloneController = {
     }
     
     if (data) {
-      //UPLOAD FILE
-      data = {
-        content: data,
-        file_name: (upload.data) ? upload.data.name : null,
-        file_path: (upload.data) ? upload.data.path : null,
-        file_type: (upload.data) ? upload.data.type : null
+      //GET ALL CHILD
+      let child = await ApiController.getChildFromParent(`Cyclonecurrent`, data._id, file_path, `datetime latitude_dd longitude_dd pressure max_wind_speed`);
+      if (child.status == 201 || child.status == 400) {
+        response.error(400, child.message, res, child.message);
       }
+      
+      if (child.status == 200) {
+        fields.push(
+          { key: 'datetime', label: 'Date Time', sortable: true},
+          { key: 'latitude_dd', label: 'Latitude', sortable: true },
+          { key: 'longitude_dd', label: 'Longitude', sortable: true },
+          { key: 'pressure', label: 'Pressure', sortable: true },
+          { key: 'max_wind_speed', label: 'Max Wind Speed', sortable: true },
+          { key: 'actions', label: 'Actions', class: 'text-center w-15' }
+        );
 
-      response.ok(data, res, `success get all data`);
+        for (let i = 0; i < child.data.length; i++) {
+          let temp = child.data[i];
+          childs.push({
+            _id: temp._id,
+            datetime: (temp.datetime) ? temp.datetime : `-`,
+            latitude_dd: (temp.latitude_dd) ? temp.latitude_dd : `-`,
+            longitude_dd: (temp.longitude_dd) ? temp.longitude_dd : `-`,
+            pressure: (temp.pressure) ? temp.pressure : `-`,
+            max_wind_speed: (temp.max_wind_speed) ? temp.max_wind_speed : `-`
+          })
+        }
+
+        //UPLOAD FILE
+        data = {
+          content: data,
+          childs,
+          child_fields,
+          file_name: (upload.data) ? upload.data.name : null,
+          file_path: (upload.data) ? upload.data.path : null,
+          file_type: (upload.data) ? upload.data.type : null
+        }
+  
+        response.ok(data, res, `success get all data`);
+      }
     } else {
       response.success(data, res, `success get all data but data is empty`);
     }
