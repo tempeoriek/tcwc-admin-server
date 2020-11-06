@@ -16,7 +16,7 @@ AftereventreportController = {
       fields.push(
         { key: 'year', label: 'Year', sortable: true },
         { key: 'en_title', label: 'Title', sortable: true },
-        { key: 'en_paragraph', label: 'Paragraph', class: 'w-50' },
+        // { key: 'en_paragraph', label: 'Paragraph', class: 'w-50' },
         { key: 'is_posted', label: 'Posted' },
         { key: 'actions', label: 'Actions', class: 'text-center w-15' }
       );
