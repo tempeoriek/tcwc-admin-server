@@ -73,7 +73,7 @@ TropicalcycloneController = {
   },
 
   getData: async function (req, res) {
-    let err, data, { id } = req.params, fields = [], childs = [];
+    let err, data, { id } = req.params, child_fields = [], childs = [];
     [err, data] = await flatry( Model.findOne({ is_delete: false, _id: id }, { strict: false }));
     if (err) {
       console.log(err.stack);
@@ -95,7 +95,7 @@ TropicalcycloneController = {
       }
       
       if (child.status == 200) {
-        fields.push(
+        child_fields.push(
           { key: 'datetime', label: 'Date Time', sortable: true},
           { key: 'latitude_dd', label: 'Latitude', sortable: true },
           { key: 'longitude_dd', label: 'Longitude', sortable: true },
