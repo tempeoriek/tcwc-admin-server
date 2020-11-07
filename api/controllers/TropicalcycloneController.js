@@ -90,13 +90,14 @@ TropicalcycloneController = {
     if (data) {
       //GET ALL CHILD
       let child = await ApiController.getChildFromParent(`Cyclonecurrent`, data._id, file_path, `datetime latitude_dd longitude_dd pressure max_wind_speed`);
-      if (child.status == 201 || child.status == 400) {
+      if (child.status == 400) {
         response.error(400, child.message, res, child.message);
       }
       
-      if (child.status == 200) {
+      if(child.status == 200) {
         child_fields.push(
-          { key: 'datetime', label: 'Date Time', sortable: true},
+          { key: 'date', label: 'Date', sortable: true},
+          { key: 'time', label: 'Time', sortable: true},
           { key: 'latitude_dd', label: 'Latitude', sortable: true },
           { key: 'longitude_dd', label: 'Longitude', sortable: true },
           { key: 'pressure', label: 'Pressure', sortable: true },
@@ -108,26 +109,27 @@ TropicalcycloneController = {
           let temp = child.data[i];
           childs.push({
             _id: temp._id,
-            datetime: (temp.datetime) ? temp.datetime : `-`,
+            time: (temp.datetime) ? moment(temp.datetime).format(`DD-MM-YYY`) : `-`,
+            date: (temp.datetime) ? moment(temp.datetime).format(`HH:mm:ss`) : `-`,
             latitude_dd: (temp.latitude_dd) ? temp.latitude_dd : `-`,
             longitude_dd: (temp.longitude_dd) ? temp.longitude_dd : `-`,
             pressure: (temp.pressure) ? temp.pressure : `-`,
             max_wind_speed: (temp.max_wind_speed) ? temp.max_wind_speed : `-`
           })
         }
-
-        //UPLOAD FILE
-        data = {
-          content: data,
-          childs,
-          child_fields,
-          file_name: (upload.data) ? upload.data.name : null,
-          file_path: (upload.data) ? upload.data.path : null,
-          file_type: (upload.data) ? upload.data.type : null
-        }
-  
-        response.ok(data, res, `success get all data`);
       }
+
+      //UPLOAD FILE
+      data = {
+        content: data,
+        childs,
+        child_fields,
+        file_name: (upload.data) ? upload.data.name : null,
+        file_path: (upload.data) ? upload.data.path : null,
+        file_type: (upload.data) ? upload.data.type : null
+      }
+
+      response.ok(data, res, `success get all data`);
     } else {
       response.success(data, res, `success get all data but data is empty`);
     }

@@ -218,7 +218,7 @@ ApiController = {
     if (find.length > 0) {
       return response.back(200, find, `Success get child data`);
     } else if (find.length == 0) {
-      return response.back(201, data, `Success get all data but data is empty`);
+      return response.back(201, {}, `Success get all data but data is empty`);
     }
     
   },

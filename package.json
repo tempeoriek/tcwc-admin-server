@@ -16,6 +16,7 @@
     "express": "^4.16.4",
     "express-fileupload": "^1.2.0",
     "flatry": "^1.0.12",
+    "html-pdf": "^2.2.0",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.31",
