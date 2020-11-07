@@ -86,7 +86,7 @@ CyclonecitraController = {
       }
 
       //LOGIC UPDATE ALL FALSE
-      if (is_active) {
+      if (is_active == true) {
         filter = {_id :{ $ne: data.id }, is_delete: false};
         new_data = {is_active: false};
         [err] = await flatry( Model.updateMany( filter, new_data, {new: true}));
@@ -123,7 +123,7 @@ CyclonecitraController = {
       }
       
       //LOGIC UPDATE ALL FALSE
-      if (is_active) {
+      if (is_active == true) {
         filter = {_id :{ $ne: id }, is_delete: false};
         new_data = {is_active: false};
         [err] = await flatry( Model.updateMany( filter, new_data, {new: true}));
