@@ -85,6 +85,17 @@ CyclonecitraController = {
         response.error(400, `Error when create data in createData cyclonecitra`, res, err);
       }
 
+      //LOGIC UPDATE ALL FALSE
+      if (is_active) {
+        filter = {_id :{ $ne: data.id }, is_delete: false};
+        new_data = {is_active: false};
+        [err] = await flatry( Model.updateMany( filter, new_data, {new: true}));
+        if (err) {
+          console.log(err.stack);
+          response.error(400, `Error when findoneandupdate data in updatedata cyclonecitra`, res, err);
+        }
+      }
+
       //UPLOAD FILE
       if (req.files && data && file_path) {
         let upload = await UploadController.uploadData(req.files.files, file_path, data._id, `create`)

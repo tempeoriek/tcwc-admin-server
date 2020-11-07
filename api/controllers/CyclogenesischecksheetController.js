@@ -12,7 +12,7 @@ CyclogenesischecksheetController = {
     if (find.length > 0) {
       fields.push(
         { key: 'kode_bibit', label: 'Kode Bibit', sortable: true },
-        { key: 'datetime', label: 'Date Time', sortable: true },
+        { key: 'date', label: 'Date Time', sortable: true },
         { key: 'longitude', label: 'Longitude', sortable: true },
         { key: 'latitude', label: 'Latitude', sortable: true}, 
         { key: 'actions', label: 'Actions' }
@@ -49,7 +49,7 @@ CyclogenesischecksheetController = {
   createData: async function (req, res) {
     if (Object.entries(req.body).length > 0) {
       let { 
-        kode_bibit , datetime,
+        kode_bibit , date, time, 
         latitude, longitude, suspect_area_1, suspect_area_2, suspect_area_3, location_suspect_area,
         bec_current_a, bec_current_b, bec_current_c, bec_current_d, bec_current_e, bec_current_f,
         bec_current_g, bec_current_h, bec_current_i, bec_current_j, bec_trend_k, bec_trend_l,
@@ -59,7 +59,7 @@ CyclogenesischecksheetController = {
        } = req.body, err, data;
       let convert = await ApiController.convert(latitude, longitude);
       let new_data = { 
-        kode_bibit , datetime,
+        kode_bibit , date, time, 
         latitude, longitude, latitude_dd: convert.data.lat, longitude_dd: convert.data.lng,
         suspect_area_1, suspect_area_2, suspect_area_3, location_suspect_area,
         bec_current_a, bec_current_b, bec_current_c, bec_current_d, bec_current_e, bec_current_f,
@@ -91,7 +91,7 @@ CyclogenesischecksheetController = {
   updateData: async function (req, res) {
     if (Object.entries(req.body).length > 0 && Object.entries(req.params).length > 0) {
       let { 
-        kode_bibit , datetime,
+        kode_bibit , date, time, 
         latitude, longitude, suspect_area_1, suspect_area_2, suspect_area_3, location_suspect_area,
         bec_current_a, bec_current_b, bec_current_c, bec_current_d, bec_current_e, bec_current_f,
         bec_current_g, bec_current_h, bec_current_i, bec_current_j, bec_trend_k, bec_trend_l,
@@ -101,7 +101,7 @@ CyclogenesischecksheetController = {
        } = req.body, { id } = req.params;
       let convert = await ApiController.convert(latitude, longitude);
       let new_data = { 
-        kode_bibit , datetime,
+        kode_bibit , date, time, 
         latitude, longitude, latitude_dd: convert.data.lat, longitude_dd: convert.data.lng,
         suspect_area_1, suspect_area_2, suspect_area_3, location_suspect_area,
         bec_current_a, bec_current_b, bec_current_c, bec_current_d, bec_current_e, bec_current_f,

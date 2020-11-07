@@ -33,6 +33,21 @@ ApiController = {
       response.error(400, `Error when filter data`, res, err);
     }
 
+    //FIND FILE UPLOAD
+    let upload = await UploadController.getFile(models.toLowerCase(), data[0]._id);
+    if (upload.status == 400) {
+      response.error(400, `Error when get all file in citra controller`, res, upload.messages);
+    }
+    
+    if (upload.status == 200) {
+      data = {
+        content: data,
+        file_name: (upload.data) ? upload.data.name : null,
+        file_path: (upload.data) ? upload.data.path: null,
+        file_type: (upload.data) ? upload.data.type: null
+      }
+    }
+
     response.ok(data, res, `success get filter data`);
   },
   
@@ -209,7 +224,17 @@ ApiController = {
       (parent == `cyclonecitra`) ? {cyclone_citra_id: model_id, is_delete: false} :
       (parent == `publication`) ? {publication_id: model_id, is_delete: false} : null;
 
-    [err, find] = await flatry( Model.find( old , attribute));
+    let parent_attribute = (parent == `tropicalcyclone`) ? `tropical_cyclone_id` :
+      (parent == `annualreport`) ? `annual_report_id` :
+      (parent == `aftereventreport`) ? `after_event_report_id` :
+      (parent == `cycloneoutlook`) ? `cyclone_outlook_id` :
+      (parent == `about`) ? `about_id` :
+      (parent == `cyclogenesischecksheet`) ? `cyclogenesis_checksheet_id` :
+      (parent == `cyclonecitra`) ? `cyclone_citra_id` :
+      (parent == `publication`) ? `publication_id` : null;
+      
+
+    [err, find] = await flatry( Model.find( old , attribute ).populate(parent_attribute));
     if (err) {
       console.log(err.stack);
       return response.back(400, {}, err.stack);

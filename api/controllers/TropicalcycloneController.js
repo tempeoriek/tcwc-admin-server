@@ -89,7 +89,7 @@ TropicalcycloneController = {
     
     if (data) {
       //GET ALL CHILD
-      let child = await ApiController.getChildFromParent(`Cyclonecurrent`, data._id, file_path, `datetime latitude_dd longitude_dd pressure max_wind_speed`);
+      let child = await ApiController.getChildFromParent(`Cyclonecurrent`, data._id, file_path, `datetime latitude_dd longitude_dd pressure max_wind_speed tropical_cyclone_id`);
       if (child.status == 400) {
         response.error(400, child.message, res, child.message);
       }
@@ -114,7 +114,8 @@ TropicalcycloneController = {
             latitude_dd: (temp.latitude_dd) ? temp.latitude_dd : `-`,
             longitude_dd: (temp.longitude_dd) ? temp.longitude_dd : `-`,
             pressure: (temp.pressure) ? temp.pressure : `-`,
-            max_wind_speed: (temp.max_wind_speed) ? temp.max_wind_speed : `-`
+            max_wind_speed: (temp.max_wind_speed) ? temp.max_wind_speed : `-`,
+            tropical_cyclone_id: (temp.tropical_cyclone_id) ? temp.tropical_cyclone_id : `-`
           })
         }
       }
