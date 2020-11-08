@@ -13,7 +13,7 @@ const About = require('../models/about'),
 
 ApiController = {
   filter: async function (req, res) {
-    let err, data, { filter, sort, models } = req.body;
+    let err, data = [], { filter, sort, models } = req.body;
     let find_data = (Object.entries(filter).length > 0) ? filter : { is_delete: false };
     let sort_data = (sort) ? sort : { created_at : 1 };
     let Model = (models == `Tropicalcyclone`) ? Tropicalcyclone : 
@@ -25,30 +25,42 @@ ApiController = {
       (models == `Cyclonedescription`) ? Cyclonedescription : 
       (models == `Cyclonecurrent`) ? Cyclonecurrent : 
       (models == `Cyclonename`) ? Cyclonename : 
-      (models == `Cycloneoutlook`) ? Cycloneoutlook : Publication;
+      (models == `Cycloneoutlook`) ? Cycloneoutlook : 
+      (models == `Publication`) ? Publication : null;
 
-    [err, data] = await flatry( Model.find(find_data).sort(sort_data));
-    if (err) {
-      console.log(err.stack);
-      response.error(400, `Error when filter data`, res, err);
-    }
-
-    //FIND FILE UPLOAD
-    let upload = await UploadController.getFile(models.toLowerCase(), data[0]._id);
-    if (upload.status == 400) {
-      response.error(400, `Error when get all file in citra controller`, res, upload.messages);
-    }
-    
-    if (upload.status == 200) {
-      data = {
-        content: data,
-        file_name: (upload.data) ? upload.data.name : null,
-        file_path: (upload.data) ? upload.data.path: null,
-        file_type: (upload.data) ? upload.data.type: null
+    if (Model) {
+      [err, find] = await flatry( Model.find(find_data).sort(sort_data));
+      if (err) {
+        console.log(err.stack);
+        response.error(400, `Error when filter data`, res, err);
       }
+      
+      if (find.length > 0) {
+        for (let i = 0 ; i < find.length ; i++) {
+          let temp = find[i];
+          //FIND FILE UPLOAD
+          let upload = await UploadController.getFile(models.toLowerCase(), temp._id);
+          if (upload.status == 400) {
+            response.error(400, `Error when get all file in citra controller`, res, upload.messages);
+          }
+          
+          if (upload.status == 200) {
+            data.push({
+              content: temp,
+              file_name: (upload.data) ? upload.data.name : null,
+              file_path: (upload.data) ? upload.data.path: null,
+              file_type: (upload.data) ? upload.data.type: null
+            });
+          }
+        }
+        
+        response.ok(data, res, `success get filter data`);
+      } else {
+        response.success(null, res, `success get filter data, but no data`);
+      }
+    } else {
+      response.error(400, `Error with Model's name`, res, `Error with Model's name`);
     }
-
-    response.ok(data, res, `success get filter data`);
   },
   
   last: async function (req, res) {
@@ -72,18 +84,19 @@ ApiController = {
     response.ok(data, res, `success get filter data`);
   },
 
-  redundant: async function (model, attribute, value, same) {
+  redundant: async function (model, attribute, value, same, not_id, method) {
     if (attribute == `path` && value.includes(" ")) {
       return response.back(201, null, `${attribute} cannot be space`);
     } else {
       let err, data, filter;
-      if (same) {
-        filter = { $or: [{[attribute] : value.toLowerCase()}, {[attribute] : value}] , is_delete: false };
-        [err, data] = await flatry( model.find( filter ) );
-      } else {
-        filter = { $or: [{[attribute] : { "$regex": value.toLowerCase(), "$options": "i"}}, {[attribute] : { "$regex": value, "$options": "i"}}] ,is_delete: false };
-        [err, data] = await flatry( model.find( filter ) );
+      if (method == `create`) {
+        filter = (same) ? { $or: [{[attribute] : value.toLowerCase()}, {[attribute] : value}] , is_delete: false } : 
+        { $or: [{[attribute] : { "$regex": value.toLowerCase(), "$options": "i"}}, {[attribute] : { "$regex": value, "$options": "i"}}] ,is_delete: false };
+      } else if (method == `update`) {
+        filter = (same) ? { _id :{ $ne: not_id }, $or: [{[attribute] : value.toLowerCase()}, {[attribute] : value}] , is_delete: false } : 
+        { _id :{ $ne: not_id }, $or: [{[attribute] : { "$regex": value.toLowerCase(), "$options": "i"}}, {[attribute] : { "$regex": value, "$options": "i"}}] ,is_delete: false };
       }
+      [err, data] = await flatry( model.find( filter ) );
       if (err) {
         return response.back(400, {}, `Error when find in redundant api controller`);
       }
@@ -107,7 +120,9 @@ ApiController = {
       (model == `Cyclonecurrent`) ? Cyclonecurrent : 
       (model == `Cyclonename`) ? Cyclonename : 
       (model == `Cyclonedescription`) ? Cyclonedescription : 
-      (model == `Cycloneoutlook`) ? Cycloneoutlook : Publication;
+      (model == `Cycloneoutlook`) ? Cycloneoutlook :
+      (model == `Publication`) ? Publication : null;
+
     let Childs = (child == `Tropicalcyclone`) ? Tropicalcyclone : 
       (child == `About`) ? About : 
       (child == `Aftereventreport`) ? Aftereventreport : 
@@ -117,30 +132,35 @@ ApiController = {
       (child == `Cyclonecurrent`) ? Cyclonecurrent : 
       (child == `Cyclonename`) ? Cyclonename : 
       (child == `Cyclonedescription`) ? Cyclonedescription : 
-      (child == `Cycloneoutlook`) ? Cycloneoutlook : Publication;
+      (child == `Cycloneoutlook`) ? Cycloneoutlook :
+      (child == `Publication`) ? Publication : null;
 
-    [err, find] = await flatry( Models.find( req.body ));
-    if (err) {
-      console.log(err.stack);
-      response.error(400, `Error when find parent data in api controller`, res, err);
-    }
-    if (find.length > 0) {
-      for (let i = 0 ; i < find.length ; i++) {
-        let temp = find[i];
-        [err, find_c] = await flatry( Childs.find( {[attribute]: temp._id, is_delete: false} ) );
-        if (err) {
-          response.error(400, `Error when find child in api controller`, res, err);
+    if (Models && Childs) {
+      [err, find] = await flatry( Models.find( req.body ));
+      if (err) {
+        console.log(err.stack);
+        response.error(400, `Error when find parent data in api controller`, res, err);
+      }
+      if (find.length > 0) {
+        for (let i = 0 ; i < find.length ; i++) {
+          let temp = find[i];
+          [err, find_c] = await flatry( Childs.find( {[attribute]: temp._id, is_delete: false} ) );
+          if (err) {
+            response.error(400, `Error when find child in api controller`, res, err);
+          }
+          data.push(find_c);
         }
-        data.push(find_c);
-      }
 
-      if (data.length > 0 ) {
-        response.ok(data, res, `success get data`);
-      } else {
-        response.success(data, res, `success get data, but data empty`);
+        if (data.length > 0 ) {
+          response.ok(data, res, `success get data`);
+        } else {
+          response.success(data, res, `success get data, but data empty`);
+        }
+      } else if (find.length == 0) {
+        response.error(201, `Data empty`, res, `Data empty`);
       }
-    } else if (find.length == 0) {
-      response.error(201, `Data empty`, res, `Data empty`);
+    } else {
+      response.error(400, `Error with Model's name or Child's name`, res, `Error with Model's name or Child's name`);
     }
   },
 
@@ -176,7 +196,7 @@ ApiController = {
     let temp = str;
 
     for (let i = 1 ; i < Infinity; i++) {
-      redundant = await ApiController.redundant(model, attribute, str, true);
+      redundant = await ApiController.redundant(model, attribute, str, true, null, `create`);
       if (redundant.status == 201) {
         str = `${temp}-${i}`
       } else {
@@ -214,7 +234,9 @@ ApiController = {
       (models == `Cyclonedescription`) ? Cyclonedescription : 
       (models == `Cyclonecurrent`) ? Cyclonecurrent : 
       (models == `Cyclonename`) ? Cyclonename : 
-      (models == `Cycloneoutlook`) ? Cycloneoutlook : Publication;
+      (models == `Cycloneoutlook`) ? Cycloneoutlook : 
+      (models == `Publication`) ? Publication : null;
+
     let old = (parent == `tropicalcyclone`) ? {tropical_cyclone_id: model_id, is_delete: false} :
       (parent == `annualreport`) ? {annual_report_id: model_id, is_delete: false} :
       (parent == `aftereventreport`) ? {after_event_report_id: model_id, is_delete: false} :
@@ -234,16 +256,20 @@ ApiController = {
       (parent == `publication`) ? `publication_id` : null;
       
 
-    [err, find] = await flatry( Model.find( old , attribute ).populate(parent_attribute));
-    if (err) {
-      console.log(err.stack);
-      return response.back(400, {}, err.stack);
-    }
+    if (Model) {
+      [err, find] = await flatry( Model.find( old , attribute ).populate(parent_attribute));
+      if (err) {
+        console.log(err.stack);
+        return response.back(400, {}, err.stack);
+      }
 
-    if (find.length > 0) {
-      return response.back(200, find, `Success get child data`);
-    } else if (find.length == 0) {
-      return response.back(201, {}, `Success get all data but data is empty`);
+      if (find.length > 0) {
+        return response.back(200, find, `Success get child data`);
+      } else if (find.length == 0) {
+        return response.back(201, {}, `Success get all data but data is empty`);
+      }
+    } else {
+      response.error(400, `Error with Model's name`, res, `Error with Model's name`);
     }
     
   },

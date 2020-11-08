@@ -88,12 +88,16 @@ UploadController = {
       (path == `markdown`) ? {_id: model_id, is_delete: false} :
       (path == `publication`) ? {publication_id: model_id, is_delete: false} : null;
 
-    let [err, data] = await flatry( Model.findOne( old, `name type path` ));
-    if (err) {
-      return response.back(400, {}, `Error when create file upload`);
-    }  
-    
-    return response.back(200, data, `success get file`);
+    if (old) {
+      let [err, data] = await flatry( Model.findOne( old, `name type path` ));
+      if (err) {
+        return response.back(400, {}, `Error when create file upload`);
+      }  
+      
+      return response.back(200, data, `success get file`);
+    } else {
+      return response.back(400, {}, `Error when create file upload, body is null`);
+    }
   },
 
   deleteFile: async function(model_id, path) {

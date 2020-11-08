@@ -17,8 +17,8 @@ CyclonecitraController = {
         { key: 'is_active', label: 'Active', sortable: true, formatter: true, sortByFormatted: true, filterByFormatted: true}, 
         { key: 'created_at', label: 'Date' },
         { key: 'file_path', label: 'File Path' },
-        { key: 'actions', label: 'Actions' }
-        );
+        { key: 'actions', label: 'Actions', class: 'text-center w-15' }
+      );
         
       for (let i = 0; i < find.length; i++) {
         let temp = find[i];
