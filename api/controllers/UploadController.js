@@ -85,6 +85,9 @@ UploadController = {
       (path == `about`) ? {about_id: model_id, is_delete: false} :
       (path == `cyclogenesischecksheet`) ? {cyclogenesis_checksheet_id: model_id, is_delete: false} :
       (path == `cyclonecitra`) ? {cyclone_citra_id: model_id, is_delete: false} :
+      (path == `cyclonename`) ? {cyclone_name_id: model_id, is_delete: false} :
+      (path == `cyclonedescription`) ? {cyclone_description_id: model_id, is_delete: false} :
+      (path == `cyclonecurrent`) ? {cyclone_current_id: model_id, is_delete: false} :
       (path == `markdown`) ? {_id: model_id, is_delete: false} :
       (path == `publication`) ? {publication_id: model_id, is_delete: false} : null;
 

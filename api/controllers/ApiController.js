@@ -41,7 +41,7 @@ ApiController = {
           //FIND FILE UPLOAD
           let upload = await UploadController.getFile(models.toLowerCase(), temp._id);
           if (upload.status == 400) {
-            response.error(400, `Error when get all file in citra controller`, res, upload.messages);
+            response.error(400, `Error when get all file in api controller`, res, upload.messages);
           }
           
           if (upload.status == 200) {
