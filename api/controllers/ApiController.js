@@ -273,6 +273,44 @@ ApiController = {
     }
     
   },
+
+  search: async function (req, res) {
+    let Model = [About, Aftereventreport, Annualreport, Cyclonename, Publication, Tropicalcyclone];
+    let data = [], err, find, { keyword } = req.body, models;
+
+    for (let i = 0; i < Model.length; i++) {
+      let Temp = Model[i];
+      [err, find] = await flatry( Temp.find({ 
+        $or: [
+          {en_title : {$regex: keyword, $options: "-i"}},
+          {id_title : {$regex: keyword, $options: "-i"}},
+          {tc_name : {$regex: keyword, $options: "-i"}},
+          {area : {$regex: keyword, $options: "-i"}},
+          {path : {$regex: keyword, $options: "-i"}},
+          {list_a : {$regex: keyword, $options: "-i"}},
+          {list_b : {$regex: keyword, $options: "-i"}}
+        ],
+        is_delete: false
+       }, `tc_name area en_title id_title list_a list_b path`) );
+       if (err) {
+        response.error(400, `Error when find data in search api controller`, res, err);
+       }
+
+       if (find.length > 0) {
+        models = (Temp == About) ? `About` : 
+          (Temp == Aftereventreport) ? `Aftereventreport` : 
+          (Temp == Annualreport) ? `Annualreport` : 
+          (Temp == Cyclonename) ? `Cyclonename` : 
+          (Temp == Publication) ? `Publication` : 
+          (Temp == Tropicalcyclone) ? `Tropicalcyclone` : null;
+
+        data.push ({  
+          [models] : find
+        })
+       }
+    }
+    response.ok(data, res, `success search data`);
+  }
 };
 
 module.exports = ApiController;
