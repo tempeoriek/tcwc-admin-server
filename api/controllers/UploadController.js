@@ -77,6 +77,43 @@ UploadController = {
     return response.back(200, data, `success upload file`);
   }, 
   
+  getMultipleFile: async function (path, model_id) {
+    let old = (path == `tropicalcyclone`) ? {tropical_cyclone_id: model_id, is_delete: false} :
+      (path == `annualreport`) ? {annual_report_id: model_id, is_delete: false} :
+      (path == `aftereventreport`) ? {after_event_report_id: model_id, is_delete: false} :
+      (path == `cycloneoutlook`) ? {cyclone_outlook_id: model_id, is_delete: false} :
+      (path == `about`) ? {about_id: model_id, is_delete: false} :
+      (path == `cyclogenesischecksheet`) ? {cyclogenesis_checksheet_id: model_id, is_delete: false} :
+      (path == `cyclonecitra`) ? {cyclone_citra_id: model_id, is_delete: false} :
+      (path == `cyclonename`) ? {cyclone_name_id: model_id, is_delete: false} :
+      (path == `cyclonedescription`) ? {cyclone_description_id: model_id, is_delete: false} :
+      (path == `cyclonecurrent`) ? {cyclone_current_id: model_id, is_delete: false} :
+      (path == `markdown`) ? {_id: model_id, is_delete: false} :
+      (path == `publication`) ? {publication_id: model_id, is_delete: false} : null;
+
+    if (old) {
+      let [err, find] = await flatry( Model.find( old, `name type path` ));
+      if (err) {
+        return response.back(400, {}, `Error when create file upload`);
+      }
+      let data = [];
+      if (find.length > 0) {
+        for (let i = 0; i < find.length; i++) {
+          let temp = find[i];
+          data.push({
+            file_name: temp.name,
+            file_path: temp.path,
+            file_type: temp.type,
+          })
+        }
+      }
+
+      return response.back(200, data, `success get file`);
+    } else {
+      return response.back(400, {}, `Error when create file upload, body is null`);
+    }
+  },
+
   getFile: async function (path, model_id) {
     let old = (path == `tropicalcyclone`) ? {tropical_cyclone_id: model_id, is_delete: false} :
       (path == `annualreport`) ? {annual_report_id: model_id, is_delete: false} :

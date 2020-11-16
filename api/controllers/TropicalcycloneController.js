@@ -82,7 +82,8 @@ TropicalcycloneController = {
 
     
     //UPLOAD FILE
-    let upload = await UploadController.getFile(file_path, id)
+    let upload = await UploadController.getMultipleFile(file_path, id)
+    // let upload = await UploadController.getFile(file_path, id)
     if (upload.status == 400 && !upload.data) {
       response.error(400, `Error when upload data in createData tropicalcyclone`, res, err);
     }
@@ -127,9 +128,10 @@ TropicalcycloneController = {
         content: data,
         childs,
         child_fields,
-        file_name: (upload.data) ? upload.data.name : null,
-        file_path: (upload.data) ? upload.data.path : null,
-        file_type: (upload.data) ? upload.data.type : null
+        files : (upload.data.length > 0) ? upload.data : null
+        // file_name: (upload.data) ? upload.data.name : null,
+        // file_path: (upload.data) ? upload.data.path : null,
+        // file_type: (upload.data) ? upload.data.type : null
       }
 
       response.ok(data, res, `success get all data`);
