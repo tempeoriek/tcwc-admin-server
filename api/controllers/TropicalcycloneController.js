@@ -99,8 +99,8 @@ TropicalcycloneController = {
         child_fields.push(
           { key: 'date', label: 'Date', sortable: true},
           { key: 'time', label: 'Time', sortable: true},
-          { key: 'latitude_dd', label: 'Latitude', sortable: true },
-          { key: 'longitude_dd', label: 'Longitude', sortable: true },
+          { key: 'latitude', label: 'Latitude', sortable: true },
+          { key: 'longitude', label: 'Longitude', sortable: true },
           { key: 'pressure', label: 'Pressure', sortable: true },
           { key: 'max_wind_speed', label: 'Max Wind Speed', sortable: true },
           { key: 'actions', label: 'Actions', class: 'text-center w-15' }
@@ -110,8 +110,8 @@ TropicalcycloneController = {
           let temp = child.data[i];
           childs.push({
             _id: temp._id,
-            time: (temp.datetime) ? moment(temp.datetime).format(`DD-MM-YYY`) : `-`,
-            date: (temp.datetime) ? moment(temp.datetime).format(`HH:mm:ss`) : `-`,
+            date: (temp.datetime) ? moment(temp.datetime).format(`DD-MM-YYY`) : `-`,
+            time: (temp.datetime) ? moment(temp.datetime).format(`HH:mm:ss`) : `-`,
             latitude: (temp.latitude) ? temp.latitude : `-`,
             longitude: (temp.longitude) ? temp.longitude : `-`,
             latitude_dd: (temp.latitude_dd) ? temp.latitude_dd : `-`,
