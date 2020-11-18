@@ -110,7 +110,7 @@ TropicalcycloneController = {
           let temp = child.data[i];
           childs.push({
             _id: temp._id,
-            date: (temp.datetime) ? moment(temp.datetime).format(`DD-MM-YYY`) : `-`,
+            date: (temp.datetime) ? moment(temp.datetime).format(`DD-MM-YYYY`) : `-`,
             time: (temp.datetime) ? moment(temp.datetime).format(`HH:mm:ss`) : `-`,
             latitude: (temp.latitude) ? temp.latitude : `-`,
             longitude: (temp.longitude) ? temp.longitude : `-`,
