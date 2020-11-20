@@ -190,8 +190,10 @@ TropicalcycloneController = {
       let { tc_name, year, area, is_active, max_wind_speed, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning } = req.body, { id } = req.params;
       let new_data = {tc_name, year, area, is_active, max_wind_speed, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning }, err, data, 
         filter = { _id: id, is_delete: false };
-      
-      let redundant = await ApiController.redundant(Model, "tc_name", tc_name, false, id, `update`);
+
+      let check_data = Object.values(new_data).every(x => x);
+      new_data = (check_data) ? new_data : req.body;
+      let redundant = (check_data && tc_name) ? await ApiController.redundant(Model, "tc_name", tc_name, false, id, `update`) : { status : 200 };
       if (redundant.status == 201) {
         response.error(400, redundant.message, res, redundant.message);
       }
