@@ -33,13 +33,13 @@ UploadController = {
       path: `/files/${path}/${files.name}`,
       type: files.mimetype,
       size: files.size,
-      techincal_bulletin_id: (path == `techincal_bulletin`) ? model_id : null,
-      public_info_bulletin_id: (path == `public_info_bulletin`) ? model_id : null,
-      ocean_gale_storm_warn_id: (path == `ocean_gale_storm_warn`) ? model_id : null,
-      track_impact_id: (path == `track_impact`) ? model_id : null,
-      coastal_zone_id: (path == `coastal_zone`) ? model_id : null,
-      extreme_weather_id: (path == `extreme_weather`) ? model_id : null,
-      gale_warning_id: (path == `gale_warning`) ? model_id : null,
+      techincal_bulletin_id: (path == `techincal_bulletin_file`) ? model_id : null,
+      public_info_bulletin_id: (path == `public_info_bulletin_file`) ? model_id : null,
+      ocean_gale_storm_warn_id: (path == `ocean_gale_storm_warn_file`) ? model_id : null,
+      track_impact_id: (path == `track_impact_file`) ? model_id : null,
+      coastal_zone_id: (path == `coastal_zone_file`) ? model_id : null,
+      extreme_weather_id: (path == `extreme_weather_file`) ? model_id : null,
+      gale_warning_id: (path == `gale_warning_file`) ? model_id : null,
       annual_report_id: (path == `annualreport`) ? model_id : null,
       after_event_report_id: (path == `aftereventreport`) ? model_id : null,
       cyclone_outlook_id: (path == `cycloneoutlook`) ? model_id : null,
@@ -92,13 +92,13 @@ UploadController = {
   }, 
   
   getMultipleFile: async function (path, model_id) {
-    let old = (path == `techincal_bulletin`) ? {techincal_bulletin_id: model_id, is_delete: false} :
-      (path == `public_info_bulletin`) ? {public_info_bulletin_id: model_id, is_delete: false} :
-      (path == `ocean_gale_storm_warn`) ? {ocean_gale_storm_warn_id: model_id, is_delete: false} :
-      (path == `track_impact`) ? {track_impact_id: model_id, is_delete: false} :
-      (path == `coastal_zone`) ? {coastal_zone_id: model_id, is_delete: false} :
-      (path == `extreme_weather`) ? {extreme_weather_id: model_id, is_delete: false} :
-      (path == `gale_warning`) ? {gale_warning_id: model_id, is_delete: false} :
+    let old = (path == `techincal_bulletin_file`) ? {techincal_bulletin_id: model_id, is_delete: false} :
+      (path == `public_info_bulletin_file`) ? {public_info_bulletin_id: model_id, is_delete: false} :
+      (path == `ocean_gale_storm_warn_file`) ? {ocean_gale_storm_warn_id: model_id, is_delete: false} :
+      (path == `track_impact_file`) ? {track_impact_id: model_id, is_delete: false} :
+      (path == `coastal_zone_file`) ? {coastal_zone_id: model_id, is_delete: false} :
+      (path == `extreme_weather_file`) ? {extreme_weather_id: model_id, is_delete: false} :
+      (path == `gale_warning_file`) ? {gale_warning_id: model_id, is_delete: false} :
       (path == `annualreport`) ? {annual_report_id: model_id, is_delete: false} :
       (path == `aftereventreport`) ? {after_event_report_id: model_id, is_delete: false} :
       (path == `cycloneoutlook`) ? {cyclone_outlook_id: model_id, is_delete: false} :
@@ -149,13 +149,13 @@ UploadController = {
   },
 
   getFile: async function (path, model_id) {
-    let old = (path == `techincal_bulletin`) ? {techincal_bulletin_id: model_id, is_delete: false} :
-      (path == `public_info_bulletin`) ? {public_info_bulletin_id: model_id, is_delete: false} :
-      (path == `ocean_gale_storm_warn`) ? {ocean_gale_storm_warn_id: model_id, is_delete: false} :
-      (path == `track_impact`) ? {track_impact_id: model_id, is_delete: false} :
-      (path == `coastal_zone`) ? {coastal_zone_id: model_id, is_delete: false} :
-      (path == `extreme_weather`) ? {extreme_weather_id: model_id, is_delete: false} :
-      (path == `gale_warning`) ? {gale_warning_id: model_id, is_delete: false} :
+    let old = (path == `techincal_bulletin_file`) ? {techincal_bulletin_id: model_id, is_delete: false} :
+      (path == `public_info_bulletin_file`) ? {public_info_bulletin_id: model_id, is_delete: false} :
+      (path == `ocean_gale_storm_warn_file`) ? {ocean_gale_storm_warn_id: model_id, is_delete: false} :
+      (path == `track_impact_file`) ? {track_impact_id: model_id, is_delete: false} :
+      (path == `coastal_zone_file`) ? {coastal_zone_id: model_id, is_delete: false} :
+      (path == `extreme_weather_file`) ? {extreme_weather_id: model_id, is_delete: false} :
+      (path == `gale_warning_file`) ? {gale_warning_id: model_id, is_delete: false} :
       (path == `annualreport`) ? {annual_report_id: model_id, is_delete: false} :
       (path == `aftereventreport`) ? {after_event_report_id: model_id, is_delete: false} :
       (path == `cycloneoutlook`) ? {cyclone_outlook_id: model_id, is_delete: false} :
@@ -182,13 +182,13 @@ UploadController = {
   },
 
   deleteFile: async function(model_id, path) {
-    let old = (path == `techincal_bulletin`) ? {techincal_bulletin_id: model_id, is_delete: false} :
-      (path == `public_info_bulletin`) ? {public_info_bulletin_id: model_id, is_delete: false} :
-      (path == `ocean_gale_storm_warn`) ? {ocean_gale_storm_warn_id: model_id, is_delete: false} :
-      (path == `track_impact`) ? {track_impact_id: model_id, is_delete: false} :
-      (path == `coastal_zone`) ? {coastal_zone_id: model_id, is_delete: false} :
-      (path == `extreme_weather`) ? {extreme_weather_id: model_id, is_delete: false} :
-      (path == `gale_warning`) ? {gale_warning_id: model_id, is_delete: false} :
+    let old = (path == `techincal_bulletin_file`) ? {techincal_bulletin_id: model_id, is_delete: false} :
+      (path == `public_info_bulletin_file`) ? {public_info_bulletin_id: model_id, is_delete: false} :
+      (path == `ocean_gale_storm_warn_file`) ? {ocean_gale_storm_warn_id: model_id, is_delete: false} :
+      (path == `track_impact_file`) ? {track_impact_id: model_id, is_delete: false} :
+      (path == `coastal_zone_file`) ? {coastal_zone_id: model_id, is_delete: false} :
+      (path == `extreme_weather_file`) ? {extreme_weather_id: model_id, is_delete: false} :
+      (path == `gale_warning_file`) ? {gale_warning_id: model_id, is_delete: false} :
       (path == `annualreport`) ? {annual_report_id: model_id, is_delete: false} :
       (path == `aftereventreport`) ? {after_event_report_id: model_id, is_delete: false} :
       (path == `cycloneoutlook`) ? {cyclone_outlook_id: model_id, is_delete: false} :

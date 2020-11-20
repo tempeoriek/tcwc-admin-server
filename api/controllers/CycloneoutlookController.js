@@ -25,7 +25,10 @@ CycloneoutlookController = {
       
       //CREATE PDF INTO DB
       if (create_pdf.data && file_path) {
-        let obj = { name: name_pdf, path: create_pdf.data.filename, type: `pdf`}
+        let str = create_pdf.data.filename;
+        let n = str.indexOf(`pdf`);
+        let path = str.substring(n-1, str.length)
+        let obj = { name: name_pdf, path, type: `pdf`}
         upload = await UploadController.createPDF(obj, file_path, find._id, `create`)
         if (upload.status == 400) {
           response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
