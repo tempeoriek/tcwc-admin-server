@@ -25,6 +25,48 @@ let file_upload_schema = new Schema({
     default: null
 
   },
+  techincal_bulletin_id: {
+    type: Schema.Types.ObjectId,
+    ref: `tropical_cyclone`,
+    default: null
+
+  },
+  public_info_bulletin_id: {
+    type: Schema.Types.ObjectId,
+    ref: `tropical_cyclone`,
+    default: null
+
+  },
+  ocean_gale_storm_warn_id: {
+    type: Schema.Types.ObjectId,
+    ref: `tropical_cyclone`,
+    default: null
+
+  },
+  track_impact_id: {
+    type: Schema.Types.ObjectId,
+    ref: `tropical_cyclone`,
+    default: null
+
+  },
+  coastal_zone_id: {
+    type: Schema.Types.ObjectId,
+    ref: `tropical_cyclone`,
+    default: null
+
+  },
+  extreme_weather_id: {
+    type: Schema.Types.ObjectId,
+    ref: `tropical_cyclone`,
+    default: null
+
+  },
+  gale_warning_id: {
+    type: Schema.Types.ObjectId,
+    ref: `tropical_cyclone`,
+    default: null
+
+  },
   annual_report_id: {
     type: Schema.Types.ObjectId,
     ref: `annual_report`,
@@ -52,6 +94,12 @@ let file_upload_schema = new Schema({
   cyclogenesis_checksheet_id: {
     type: Schema.Types.ObjectId,
     ref: `cyclogenesis_checksheet`,
+    default: null
+
+  },
+  cyclogenesis_checksheet_detail_id: {
+    type: Schema.Types.ObjectId,
+    ref: `cyclogenesis_checksheet_detail`,
     default: null
 
   },

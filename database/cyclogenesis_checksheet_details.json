@@ -1,0 +1,45 @@
+[{
+  "_id": {
+    "$oid": "5fb747f3d6f081228cf100c1"
+  },
+  "cyclogenesis_checksheet_id": {
+    "$oid": "5fb7478488c8871fc0b7e63b"
+  },
+  "suspect_area_1": false,
+  "suspect_area_2": true,
+  "suspect_area_3": false,
+  "location_suspect_area": "Jakarta",
+  "bec_current_a": false,
+  "bec_current_b": true,
+  "bec_current_c": false,
+  "bec_current_d": false,
+  "bec_current_e": false,
+  "bec_current_f": false,
+  "bec_current_g": true,
+  "bec_current_h": false,
+  "bec_current_i": false,
+  "bec_current_j": false,
+  "bec_trend_k": false,
+  "bec_trend_l": false,
+  "bec_trend_m": true,
+  "bec_trend_n": false,
+  "bec_trend_o": false,
+  "bec_trend_p": true,
+  "development_circulation_1": false,
+  "development_circulation_2": false,
+  "development_circulation_3": true,
+  "development_circulation_4": false,
+  "development_circulation_5": false,
+  "ddc_6": false,
+  "ddc_7": false,
+  "ddc_8": false,
+  "mw_9": false,
+  "mw_10": true,
+  "result_id": null,
+  "modified_at": null,
+  "is_delete": false,
+  "created_at": {
+    "$date": "2020-11-20T04:37:07.485Z"
+  },
+  "__v": 0
+}]

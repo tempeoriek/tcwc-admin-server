@@ -33,11 +33,18 @@ UploadController = {
       path: `/files/${path}/${files.name}`,
       type: files.mimetype,
       size: files.size,
-      tropical_cyclone_id: (path == `tropicalcyclone`) ? model_id : null,
+      techincal_bulletin_id: (path == `techincal_bulletin`) ? model_id : null,
+      public_info_bulletin_id: (path == `public_info_bulletin`) ? model_id : null,
+      ocean_gale_storm_warn_id: (path == `ocean_gale_storm_warn`) ? model_id : null,
+      track_impact_id: (path == `track_impact`) ? model_id : null,
+      coastal_zone_id: (path == `coastal_zone`) ? model_id : null,
+      extreme_weather_id: (path == `extreme_weather`) ? model_id : null,
+      gale_warning_id: (path == `gale_warning`) ? model_id : null,
       annual_report_id: (path == `annualreport`) ? model_id : null,
       after_event_report_id: (path == `aftereventreport`) ? model_id : null,
       cyclone_outlook_id: (path == `cycloneoutlook`) ? model_id : null,
       about_id: (path == `about`) ? model_id : null,
+      cyclogenesis_checksheet_detail_id: (path == `cyclogenesischecksheetdetail`) ? model_id : null,
       cyclogenesis_checksheet_id: (path == `cyclogenesischecksheet`) ? model_id : null,
       cyclone_citra_id: (path == `cyclonecitra`) ? model_id : null,
       publication_id: (path == `publication`) ? model_id : null
@@ -59,11 +66,18 @@ UploadController = {
         return response.back(400, {}, `Error when create file upload`);
       }
     } else if (doing == `update`) {
-      let old = (path == `tropicalcyclone`) ? {tropical_cyclone_id: model_id, is_delete: false} :
+      let old = (path == `techincal_bulletin_file`) ? {techincal_bulletin_id: model_id, is_delete: false} :
+      (path == `public_info_bulletin_file`) ? {public_info_bulletin_id: model_id, is_delete: false} :
+      (path == `ocean_gale_storm_warn_file`) ? {ocean_gale_storm_warn_id: model_id, is_delete: false} :
+      (path == `track_impact_file`) ? {track_impact_id: model_id, is_delete: false} :
+      (path == `coastal_zone_file`) ? {coastal_zone_id: model_id, is_delete: false} :
+      (path == `extreme_weather_file`) ? {extreme_weather_id: model_id, is_delete: false} :
+      (path == `gale_warning_file`) ? {gale_warning_id: model_id, is_delete: false} :
       (path == `annualreport`) ? {annual_report_id: model_id, is_delete: false} :
       (path == `aftereventreport`) ? {after_event_report_id: model_id, is_delete: false} :
       (path == `cycloneoutlook`) ? {cyclone_outlook_id: model_id, is_delete: false} :
       (path == `about`) ? {about_id: model_id, is_delete: false} :
+      (path == `cyclogenesischecksheetdetail`) ? {cyclogenesis_checksheet_detail_id: model_id, is_delete: false} :
       (path == `cyclogenesischecksheet`) ? {cyclogenesis_checksheet_id: model_id, is_delete: false} :
       (path == `cyclonecitra`) ? {cyclone_citra_id: model_id, is_delete: false} :
       (path == `publication`) ? {publication_id: model_id, is_delete: false} : null;
@@ -78,18 +92,37 @@ UploadController = {
   }, 
   
   getMultipleFile: async function (path, model_id) {
-    let old = (path == `tropicalcyclone`) ? {tropical_cyclone_id: model_id, is_delete: false} :
+    let old = (path == `techincal_bulletin`) ? {techincal_bulletin_id: model_id, is_delete: false} :
+      (path == `public_info_bulletin`) ? {public_info_bulletin_id: model_id, is_delete: false} :
+      (path == `ocean_gale_storm_warn`) ? {ocean_gale_storm_warn_id: model_id, is_delete: false} :
+      (path == `track_impact`) ? {track_impact_id: model_id, is_delete: false} :
+      (path == `coastal_zone`) ? {coastal_zone_id: model_id, is_delete: false} :
+      (path == `extreme_weather`) ? {extreme_weather_id: model_id, is_delete: false} :
+      (path == `gale_warning`) ? {gale_warning_id: model_id, is_delete: false} :
       (path == `annualreport`) ? {annual_report_id: model_id, is_delete: false} :
       (path == `aftereventreport`) ? {after_event_report_id: model_id, is_delete: false} :
       (path == `cycloneoutlook`) ? {cyclone_outlook_id: model_id, is_delete: false} :
       (path == `about`) ? {about_id: model_id, is_delete: false} :
+      (path == `cyclogenesischecksheetdetail`) ? {cyclogenesis_checksheet_detail_id: model_id, is_delete: false} :
       (path == `cyclogenesischecksheet`) ? {cyclogenesis_checksheet_id: model_id, is_delete: false} :
       (path == `cyclonecitra`) ? {cyclone_citra_id: model_id, is_delete: false} :
       (path == `cyclonename`) ? {cyclone_name_id: model_id, is_delete: false} :
       (path == `cyclonedescription`) ? {cyclone_description_id: model_id, is_delete: false} :
       (path == `cyclonecurrent`) ? {cyclone_current_id: model_id, is_delete: false} :
       (path == `markdown`) ? {_id: model_id, is_delete: false} :
-      (path == `publication`) ? {publication_id: model_id, is_delete: false} : null;
+      (path == `publication`) ? {publication_id: model_id, is_delete: false} : 
+      (path == `tropicalcyclone`) ? {
+        $or: [
+          {techincal_bulletin_id: model_id, is_delete: false},
+          {public_info_bulletin_id: model_id, is_delete: false},
+          {ocean_gale_storm_warn_id: model_id, is_delete: false},
+          {track_impact_id: model_id, is_delete: false},
+          {coastal_zone_id: model_id, is_delete: false},
+          {extreme_weather_id: model_id, is_delete: false},
+          {gale_warning_id: model_id, is_delete: false},
+          {tropical_cyclone_id: model_id, is_delete: false},
+        ]
+      } : null;
 
     if (old) {
       let [err, find] = await flatry( Model.find( old, `name type path` ));
@@ -104,6 +137,7 @@ UploadController = {
             file_name: temp.name,
             file_path: temp.path,
             file_type: temp.type,
+            attribute: temp.path.split("/")[2],
           })
         }
       }
@@ -115,11 +149,18 @@ UploadController = {
   },
 
   getFile: async function (path, model_id) {
-    let old = (path == `tropicalcyclone`) ? {tropical_cyclone_id: model_id, is_delete: false} :
+    let old = (path == `techincal_bulletin`) ? {techincal_bulletin_id: model_id, is_delete: false} :
+      (path == `public_info_bulletin`) ? {public_info_bulletin_id: model_id, is_delete: false} :
+      (path == `ocean_gale_storm_warn`) ? {ocean_gale_storm_warn_id: model_id, is_delete: false} :
+      (path == `track_impact`) ? {track_impact_id: model_id, is_delete: false} :
+      (path == `coastal_zone`) ? {coastal_zone_id: model_id, is_delete: false} :
+      (path == `extreme_weather`) ? {extreme_weather_id: model_id, is_delete: false} :
+      (path == `gale_warning`) ? {gale_warning_id: model_id, is_delete: false} :
       (path == `annualreport`) ? {annual_report_id: model_id, is_delete: false} :
       (path == `aftereventreport`) ? {after_event_report_id: model_id, is_delete: false} :
       (path == `cycloneoutlook`) ? {cyclone_outlook_id: model_id, is_delete: false} :
       (path == `about`) ? {about_id: model_id, is_delete: false} :
+      (path == `cyclogenesischecksheetdetail`) ? {cyclogenesis_checksheet_detail_id: model_id, is_delete: false} :
       (path == `cyclogenesischecksheet`) ? {cyclogenesis_checksheet_id: model_id, is_delete: false} :
       (path == `cyclonecitra`) ? {cyclone_citra_id: model_id, is_delete: false} :
       (path == `cyclonename`) ? {cyclone_name_id: model_id, is_delete: false} :
@@ -141,14 +182,32 @@ UploadController = {
   },
 
   deleteFile: async function(model_id, path) {
-    let old = (path == `tropicalcyclone`) ? {tropical_cyclone_id: model_id, is_delete: false} :
+    let old = (path == `techincal_bulletin`) ? {techincal_bulletin_id: model_id, is_delete: false} :
+      (path == `public_info_bulletin`) ? {public_info_bulletin_id: model_id, is_delete: false} :
+      (path == `ocean_gale_storm_warn`) ? {ocean_gale_storm_warn_id: model_id, is_delete: false} :
+      (path == `track_impact`) ? {track_impact_id: model_id, is_delete: false} :
+      (path == `coastal_zone`) ? {coastal_zone_id: model_id, is_delete: false} :
+      (path == `extreme_weather`) ? {extreme_weather_id: model_id, is_delete: false} :
+      (path == `gale_warning`) ? {gale_warning_id: model_id, is_delete: false} :
       (path == `annualreport`) ? {annual_report_id: model_id, is_delete: false} :
       (path == `aftereventreport`) ? {after_event_report_id: model_id, is_delete: false} :
       (path == `cycloneoutlook`) ? {cyclone_outlook_id: model_id, is_delete: false} :
       (path == `about`) ? {about_id: model_id, is_delete: false} :
+      (path == `cyclogenesischecksheetdetail`) ? {cyclogenesis_checksheet_detail_id: model_id, is_delete: false} :
       (path == `cyclogenesischecksheet`) ? {cyclogenesis_checksheet_id: model_id, is_delete: false} :
       (path == `cyclonecitra`) ? {cyclone_citra_id: model_id, is_delete: false} :
-      (path == `publication`) ? {publication_id: model_id, is_delete: false} : null;
+      (path == `publication`) ? {publication_id: model_id, is_delete: false} : 
+      (path == `tropicalcyclone`) ? {
+        $or: [
+          {techincal_bulletin_id: model_id, is_delete: false},
+          {public_info_bulletin_id: model_id, is_delete: false},
+          {ocean_gale_storm_warn_id: model_id, is_delete: false},
+          {track_impact_id: model_id, is_delete: false},
+          {coastal_zone_id: model_id, is_delete: false},
+          {extreme_weather_id: model_id, is_delete: false},
+          {gale_warning_id: model_id, is_delete: false},
+        ]
+      } : null;
 
     [err] = await flatry( Model.updateMany( old, { is_delete: true } ));
     if (err) {

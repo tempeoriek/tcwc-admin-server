@@ -1,6 +1,7 @@
 const About = require('../models/about'),
   Aftereventreport = require('../models/after_event_report'),
   Annualreport = require('../models/annual_report'),
+  Cyclogenesischecksheetdetail = require('../models/cyclogenesis_checksheet_detail'),
   Cyclogenesischecksheet = require('../models/cyclogenesis_checksheet'),
   Cyclonecitra = require('../models/cyclone_citra'),
   Cyclonedescription = require('../models/cyclone_description'),
@@ -20,6 +21,7 @@ ApiController = {
       (models == `About`) ? About : 
       (models == `Aftereventreport`) ? Aftereventreport : 
       (models == `Annualreport`) ? Annualreport : 
+      (models == `Cyclogenesischecksheetdetail`) ? Cyclogenesischecksheetdetail : 
       (models == `Cyclogenesischecksheet`) ? Cyclogenesischecksheet : 
       (models == `Cyclonecitra`) ? Cyclonecitra : 
       (models == `Cyclonedescription`) ? Cyclonedescription : 
@@ -115,6 +117,7 @@ ApiController = {
       (model == `About`) ? About : 
       (model == `Aftereventreport`) ? Aftereventreport : 
       (model == `Annualreport`) ? Annualreport : 
+      (model == `Cyclogenesischecksheetdetail`) ? Cyclogenesischecksheetdetail : 
       (model == `Cyclogenesischecksheet`) ? Cyclogenesischecksheet : 
       (model == `Cyclonecitra`) ? Cyclonecitra : 
       (model == `Cyclonecurrent`) ? Cyclonecurrent : 
@@ -127,6 +130,7 @@ ApiController = {
       (child == `About`) ? About : 
       (child == `Aftereventreport`) ? Aftereventreport : 
       (child == `Annualreport`) ? Annualreport : 
+      (child == `Cyclogenesischecksheetdetail`) ? Cyclogenesischecksheetdetail : 
       (child == `Cyclogenesischecksheet`) ? Cyclogenesischecksheet : 
       (child == `Cyclonecitra`) ? Cyclonecitra : 
       (child == `Cyclonecurrent`) ? Cyclonecurrent : 
@@ -229,6 +233,7 @@ ApiController = {
       (models == `About`) ? About : 
       (models == `Aftereventreport`) ? Aftereventreport : 
       (models == `Annualreport`) ? Annualreport : 
+      (models == `Cyclogenesischecksheetdetail`) ? Cyclogenesischecksheetdetail : 
       (models == `Cyclogenesischecksheet`) ? Cyclogenesischecksheet : 
       (models == `Cyclonecitra`) ? Cyclonecitra : 
       (models == `Cyclonedescription`) ? Cyclonedescription : 
@@ -242,6 +247,7 @@ ApiController = {
       (parent == `aftereventreport`) ? {after_event_report_id: model_id, is_delete: false} :
       (parent == `cycloneoutlook`) ? {cyclone_outlook_id: model_id, is_delete: false} :
       (parent == `about`) ? {about_id: model_id, is_delete: false} :
+      (parent == `cyclogenesischecksheetdetail`) ? {cyclogenesis_checksheet_detail_id: model_id, is_delete: false} :
       (parent == `cyclogenesischecksheet`) ? {cyclogenesis_checksheet_id: model_id, is_delete: false} :
       (parent == `cyclonecitra`) ? {cyclone_citra_id: model_id, is_delete: false} :
       (parent == `publication`) ? {publication_id: model_id, is_delete: false} : null;
@@ -251,6 +257,7 @@ ApiController = {
       (parent == `aftereventreport`) ? `after_event_report_id` :
       (parent == `cycloneoutlook`) ? `cyclone_outlook_id` :
       (parent == `about`) ? `about_id` :
+      (parent == `cyclogenesischecksheetdetail`) ? `cyclogenesis_checksheet_detail_id` :
       (parent == `cyclogenesischecksheet`) ? `cyclogenesis_checksheet_id` :
       (parent == `cyclonecitra`) ? `cyclone_citra_id` :
       (parent == `publication`) ? `publication_id` : null;

@@ -80,7 +80,6 @@ TropicalcycloneController = {
       response.error(400, `Error when findOne data in getdata tropicalcyclone`, res, err);
     }
 
-    
     //UPLOAD FILE
     let upload = await UploadController.getMultipleFile(file_path, id)
     // let upload = await UploadController.getFile(file_path, id)
@@ -160,7 +159,7 @@ TropicalcycloneController = {
         //UPLOAD FILE FOR MULTIPLE AND SINGLE UPLOAD FILE
         if (req.files && data && file_path) {
           let upload;
-          if (req.files.files.length >= 2) {
+          if (Object.entries(req.files).length >= 2 && req.files.files != undefined) {
             for (let i = 0 ; i < req.files.files.length ; i ++) {
               let temp = req.files.files[i]
               upload = await UploadController.uploadData(temp, file_path, data._id, `create`)
@@ -168,10 +167,13 @@ TropicalcycloneController = {
                 response.error(400, `Error when upload data in createData tropicalcyclone`, res, err);
               }  
             }
-          } else if (req.files.files.length == undefined) {
-            upload = await UploadController.uploadData(req.files.files, file_path, data._id, `create`)
-            if (upload.status == 400) {
-              response.error(400, `Error when upload data in createData tropicalcyclone`, res, err);
+          } else if (Object.entries(req.files).length > 0) {
+            for (const att in req.files) {
+              let attribute = (att == `files`) ? file_path : att;
+              upload = await UploadController.uploadData(req.files[att], attribute, data._id, `create`)
+              if (upload.status == 400) {
+                response.error(400, `Error when upload data in createData tropicalcyclone`, res, err);
+              }
             }
           }
         }
@@ -201,11 +203,25 @@ TropicalcycloneController = {
           response.error(400, `Error when findoneandupdate data in updatedata tropicalcyclone`, res, err);
         }
   
-        //UPLOAD FILE
+        //UPLOAD FILE FOR MULTIPLE AND SINGLE UPLOAD FILE
         if (req.files && data && file_path) {
-          let upload = await UploadController.uploadData(req.files.files, file_path, data._id, `update`)
-          if (upload.status == 400) {
-            response.error(400, `Error when upload data in createData tropicalcyclone`, res, err);
+          let upload;
+          if (Object.entries(req.files).length >= 2 && req.files.files != undefined) {
+            for (let i = 0 ; i < req.files.files.length ; i ++) {
+              let temp = req.files.files[i]
+              upload = await UploadController.uploadData(temp, file_path, data._id, `update`)
+              if (upload.status == 400) {
+                response.error(400, `Error when upload data in updateData tropicalcyclone`, res, err);
+              }  
+            }
+          } else if (Object.entries(req.files).length > 0) {
+            for (const att in req.files) {
+              let attribute = (att == `files`) ? file_path : att;
+              upload = await UploadController.uploadData(req.files[att], attribute, data._id, `update`)
+              if (upload.status == 400) {
+                response.error(400, `Error when upload data in updateData tropicalcyclone`, res, err);
+              }
+            }
           }
         }
         
