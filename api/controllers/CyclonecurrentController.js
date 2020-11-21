@@ -108,27 +108,37 @@ CyclonecurrentController = {
   countByYear: async function (req, res) {
     let err, data;
     // [err, data] = await flatry( Model.find({ is_delete: false }, "_id").populate('tropical_cyclone_id', ['year']));
-    [err, data] = await flatry( Tropical.find({ is_delete: false }, "year"));
+    [err, data] = await flatry( Tropical.find({ is_delete: false }, "year area"));
     if (err) {
       console.log(err.stack);
       response.error(400, `Error when find data in getTropicalCylone cyclonecurrent`, res, err);
     }
 
     if (data.length > 0) {
-      let temp_year = {};
+      let temp_year = {}, data_year = {};
       for (let i = 0 ; i < data.length ; i++) {
         let temp = data[i];
-
         if (i == 0 || temp_year[temp.year] == undefined) {
         // if (i == 0 || temp_year[temp.tropical_cyclone_id.year] == undefined) {
           temp_year[temp.year] = [];
           // temp_year[temp.tropical_cyclone_id.year] = [];
         }
         
-        temp_year[temp.year]++;
+        temp_year[temp.year].push(temp.area);
+        // temp_year[temp.year]++;
         // temp_year[temp.tropical_cyclone_id.year]++;
       }
-      data = temp_year
+      
+      for (let obj in temp_year) {
+        data_year[obj] = {};
+        let uniq = [...new Set(temp_year[obj])];
+        for (let i = 0 ; i < uniq.length ; i++) {
+          let temp = temp_year[obj].filter(word => word == uniq[i]);
+          data_year[obj][uniq[i]] = temp.length
+        }
+      }
+
+      data = data_year
       response.ok(data, res, `success get all data`);
     } else if (data.length == 0) {
       response.success(data, res, `success get all data but data is empty`);
