@@ -41,7 +41,7 @@ ApiController = {
         for (let i = 0 ; i < find.length ; i++) {
           let temp = find[i];
           //FIND FILE UPLOAD
-          let upload = await UploadController.getFile(models.toLowerCase(), temp._id);
+          let upload = await UploadController.getMultipleFile(models.toLowerCase(), temp._id);
           if (upload.status == 400) {
             response.error(400, `Error when get all file in api controller`, res, upload.messages);
           }
@@ -49,9 +49,7 @@ ApiController = {
           if (upload.status == 200) {
             data.push({
               content: temp,
-              file_name: (upload.data) ? upload.data.name : null,
-              file_path: (upload.data) ? upload.data.path: null,
-              file_type: (upload.data) ? upload.data.type: null
+              files : (upload.data.length > 0) ? upload.data : null
             });
           }
         }
