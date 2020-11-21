@@ -23,7 +23,16 @@ CyclogenesischecksheetController = {
 
       for (let i = 0; i < find.length; i++) {
         let temp = find[i];
-        data.push(temp)
+        data.push({
+          _id: temp._id,
+          kode_bibit: (temp.kode_bibit) ? temp.kode_bibit : `-`,
+          date: (temp.date) ? moment(temp.date).format(`DD-MM-YYYY`) : `-`,
+          time: (temp.time) ? temp.time : `-`,
+          latitude: (temp.latitude) ? temp.latitude : `-`,
+          longitude: (temp.longitude) ? temp.longitude : `-`,
+          latitude_dd: (temp.latitude_dd) ? temp.latitude_dd : `-`,
+          longitude_dd: (temp.longitude_dd) ? temp.longitude_dd : `-`,
+        })
       }
       
       response.ok(data, res, `success get all data`, fields);

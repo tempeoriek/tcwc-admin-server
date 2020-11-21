@@ -107,22 +107,26 @@ CyclonecurrentController = {
 
   countByYear: async function (req, res) {
     let err, data;
-    [err, data] = await flatry( Model.find({ is_delete: false }, "_id").populate('tropical_cyclone_id', ['year']));
+    // [err, data] = await flatry( Model.find({ is_delete: false }, "_id").populate('tropical_cyclone_id', ['year']));
+    [err, data] = await flatry( Tropical.find({ is_delete: false }, "year"));
     if (err) {
       console.log(err.stack);
       response.error(400, `Error when find data in getTropicalCylone cyclonecurrent`, res, err);
     }
-    
+
     if (data.length > 0) {
       let temp_year = {};
       for (let i = 0 ; i < data.length ; i++) {
         let temp = data[i];
 
-        if (i == 0 || temp_year[temp.tropical_cyclone_id.year] == undefined) {
-          temp_year[temp.tropical_cyclone_id.year] = [];
+        if (i == 0 || temp_year[temp.year] == undefined) {
+        // if (i == 0 || temp_year[temp.tropical_cyclone_id.year] == undefined) {
+          temp_year[temp.year] = [];
+          // temp_year[temp.tropical_cyclone_id.year] = [];
         }
         
-        temp_year[temp.tropical_cyclone_id.year]++;
+        temp_year[temp.year]++;
+        // temp_year[temp.tropical_cyclone_id.year]++;
       }
       data = temp_year
       response.ok(data, res, `success get all data`);
