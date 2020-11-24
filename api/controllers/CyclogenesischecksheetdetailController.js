@@ -40,7 +40,7 @@ CyclogenesischecksheetdetaildetailController = {
   createData: async function (req, res) {
     if (Object.entries(req.body).length > 0) {
       let { 
-        cyclogenesis_checksheet_id,
+        cyclogenesis_checksheet_id, date, time, 
         suspect_area_1, suspect_area_2, suspect_area_3, location_suspect_area,
         bec_current_a, bec_current_b, bec_current_c, bec_current_d, bec_current_e, bec_current_f,
         bec_current_g, bec_current_h, bec_current_i, bec_current_j, bec_trend_k, bec_trend_l,
@@ -49,7 +49,7 @@ CyclogenesischecksheetdetaildetailController = {
         ddc_6, ddc_7, ddc_8, mw_9, mw_10
        } = req.body, err, data;
       let new_data = { 
-        cyclogenesis_checksheet_id,
+        cyclogenesis_checksheet_id, date, time,
         suspect_area_1, suspect_area_2, suspect_area_3, location_suspect_area,
         bec_current_a, bec_current_b, bec_current_c, bec_current_d, bec_current_e, bec_current_f,
         bec_current_g, bec_current_h, bec_current_i, bec_current_j, bec_trend_k, bec_trend_l,
@@ -80,7 +80,7 @@ CyclogenesischecksheetdetaildetailController = {
   updateData: async function (req, res) {
     if (Object.entries(req.body).length > 0 && Object.entries(req.params).length > 0) {
       let { 
-        cyclogenesis_checksheet_id,
+        cyclogenesis_checksheet_id, date, time,
         suspect_area_1, suspect_area_2, suspect_area_3, location_suspect_area,
         bec_current_a, bec_current_b, bec_current_c, bec_current_d, bec_current_e, bec_current_f,
         bec_current_g, bec_current_h, bec_current_i, bec_current_j, bec_trend_k, bec_trend_l,
@@ -89,7 +89,7 @@ CyclogenesischecksheetdetaildetailController = {
         ddc_6, ddc_7, ddc_8, mw_9, mw_10
        } = req.body, { id } = req.params;
       let new_data = { 
-        cyclogenesis_checksheet_id,
+        cyclogenesis_checksheet_id, date, time,
         suspect_area_1, suspect_area_2, suspect_area_3, location_suspect_area,
         bec_current_a, bec_current_b, bec_current_c, bec_current_d, bec_current_e, bec_current_f,
         bec_current_g, bec_current_h, bec_current_i, bec_current_j, bec_trend_k, bec_trend_l,

@@ -8,6 +8,14 @@ let cyclogenesis_checksheet_detail_schema = new Schema({
     default: null
   },
   
+  date: {
+    type: Date,
+    default: Date.now
+  },
+  time: {
+    type: String,
+    default: null
+  },
   //SUSPECT AREA
   suspect_area_1: {
     type: Boolean,
