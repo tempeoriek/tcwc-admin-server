@@ -8,7 +8,8 @@ UploadController = {
       path: files.path,
       type: files.type,
       size: null,
-      cyclone_outlook_id: (path == `cycloneoutlook`) ? model_id : null
+      cyclone_outlook_id: (path == `cycloneoutlook`) ? model_id : null,
+      cyclogenesis_checksheet_id : (path == `cyclogenesischecksheet`) ? model_id : null
     }, err, data;
 
     if (doing == `create`) {
@@ -17,7 +18,8 @@ UploadController = {
         return response.back(400, {}, `Error when create file upload`);
       }
     } else if (doing == `update`) {
-      let old = (path == `cycloneoutlook`) ? {cyclone_outlook_id: model_id, is_delete: false} : null;
+      let old = (path == `cycloneoutlook`) ? {cyclone_outlook_id: model_id, is_delete: false} : 
+        (path == `cyclogenesischecksheet`) ? {cyclogenesis_checksheet_id: model_id, is_delete: false} : null;
       [err, data] = await flatry( Model.findOneAndUpdate( old, new_data ));
       if (err) {
         return response.back(400, {}, `Error when create file upload`);

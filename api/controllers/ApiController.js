@@ -225,7 +225,7 @@ ApiController = {
     });
   },
 
-  getChildFromParent: async function (models, model_id, parent, attribute) {
+  getChildFromParent: async function (models, model_id, parent, attribute, extra_populate) {
     let err, find;
     let Model = (models == `Tropicalcyclone`) ? Tropicalcyclone : 
       (models == `About`) ? About : 
@@ -250,7 +250,8 @@ ApiController = {
       (parent == `cyclonecitra`) ? {cyclone_citra_id: model_id, is_delete: false} :
       (parent == `publication`) ? {publication_id: model_id, is_delete: false} : null;
 
-    let parent_attribute = (parent == `tropicalcyclone`) ? `tropical_cyclone_id` :
+    let parent_attribute = (extra_populate) ? extra_populate : 
+      (parent == `tropicalcyclone`) ? `tropical_cyclone_id` :
       (parent == `annualreport`) ? `annual_report_id` :
       (parent == `aftereventreport`) ? `after_event_report_id` :
       (parent == `cycloneoutlook`) ? `cyclone_outlook_id` :

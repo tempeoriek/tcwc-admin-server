@@ -1,9 +1,62 @@
 const Model = require('../models/cyclogenesis_checksheet'),
   UploadController = require('./UploadController'),
   ApiController = require('./ApiController'),
+  fs = require('fs'),
+  ejs = require('ejs'),
   file_path = `cyclogenesischecksheet`;
 
 CyclogenesischecksheetController = {
+  chunk : function (array, size) {
+    if (!array.length) {
+      return [];
+    }
+    const head = array.slice(0, size);
+    const tail = array.slice(size);
+  
+    return [head, ...CyclogenesischecksheetController.chunk(tail, size)];
+  },
+
+  pdf: async function (req, res) {
+    let { id } = req.body, data = [], upload;
+    let child = await ApiController.getChildFromParent(`Cyclogenesischecksheetdetail`, id, file_path, null, `cyclogenesis_checksheet_id result_id`);
+    if (child.status == 400) {
+      response.error(400, child.message, res, child.message);
+    }
+
+    if (child.status == 200) {
+      let template = fs.readFileSync('./files/html/checksheet/html.ejs', 'utf8');
+      let today = moment.utc().format(`YYYYMMDDHHMMSS`);
+      let file_loop = CyclogenesischecksheetController.chunk(child.data, 8), html, temp_data = [];
+      
+      for (let i = 0; i < file_loop.length; i++) {
+        let temp = file_loop[i];
+        let html = ejs.render(template, {data: temp, result : child.data[child.data.length-1].result_id});
+        let name_pdf = `${file_path}-${today}-${i}`;
+
+        let create_pdf = await ApiController.generatePDF(html, file_path, name_pdf);
+        if (create_pdf.status == 400) {
+          response.error(400, `Error when create pdf`, res, create_pdf.message);
+        }
+        
+        //CREATE PDF INTO DB
+        if (create_pdf.data && file_path) {
+          let str = create_pdf.data.filename;
+          let n = str.indexOf(`pdf`);
+          let path = str.substring(n-1, str.length)
+          let obj = { name: name_pdf, path, type: `pdf`}
+          upload = await UploadController.createPDF(obj, file_path, id, `create`)
+          if (upload.status == 400) {
+            response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
+          }
+        }
+
+        data.push(upload.data)
+        // data = (upload) ? upload.data : null;
+      }
+      response.ok(data, res, `success create pdf`);
+    }
+  },
+
   getAllData: async function (req, res) {
     let err, find, fields = [], data = [];
     [err, find] = await flatry( Model.find({ is_delete: false }));
@@ -57,7 +110,7 @@ CyclogenesischecksheetController = {
 
     if (data) {
       //GET ALL CHILD
-      let child = await ApiController.getChildFromParent(`Cyclogenesischecksheetdetail`, data._id, file_path, null);
+      let child = await ApiController.getChildFromParent(`Cyclogenesischecksheetdetail`, data._id, file_path, null, null);
       if (child.status == 400) {
         response.error(400, child.message, res, child.message);
       }
