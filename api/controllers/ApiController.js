@@ -262,7 +262,7 @@ ApiController = {
       (parent == `publication`) ? `publication_id` : null;
       
 
-    if (Model) {
+    if (Model && old) {
       [err, find] = await flatry( Model.find( old , attribute ).populate(parent_attribute));
       if (err) {
         console.log(err.stack);
@@ -275,10 +275,48 @@ ApiController = {
         return response.back(201, {}, `Success get all data but data is empty`);
       }
     } else {
-      response.error(400, `Error with Model's name`, res, `Error with Model's name`);
+      return response.back(400, null,`Error with Model's name or old's name or empty`);
     }
     
   },
+
+  getChildToDelete : async function (models, model_id, parent) {
+    let Model = (models == `Tropicalcyclone`) ? Tropicalcyclone : 
+      (models == `About`) ? About : 
+      (models == `Aftereventreport`) ? Aftereventreport : 
+      (models == `Annualreport`) ? Annualreport : 
+      (models == `Cyclogenesischecksheetdetail`) ? Cyclogenesischecksheetdetail : 
+      (models == `Cyclogenesischecksheet`) ? Cyclogenesischecksheet : 
+      (models == `Cyclonecitra`) ? Cyclonecitra : 
+      (models == `Cyclonedescription`) ? Cyclonedescription : 
+      (models == `Cyclonecurrent`) ? Cyclonecurrent : 
+      (models == `Cyclonename`) ? Cyclonename : 
+      (models == `Cycloneoutlook`) ? Cycloneoutlook : 
+      (models == `Publication`) ? Publication : null;
+
+    let old = (parent == `tropicalcyclone`) ? {tropical_cyclone_id: model_id, is_delete: false} :
+      (parent == `annualreport`) ? {annual_report_id: model_id, is_delete: false} :
+      (parent == `aftereventreport`) ? {after_event_report_id: model_id, is_delete: false} :
+      (parent == `cycloneoutlook`) ? {cyclone_outlook_id: model_id, is_delete: false} :
+      (parent == `about`) ? {about_id: model_id, is_delete: false} :
+      (parent == `cyclogenesischecksheetdetail`) ? {cyclogenesis_checksheet_detail_id: model_id, is_delete: false} :
+      (parent == `cyclogenesischecksheet`) ? {cyclogenesis_checksheet_id: model_id, is_delete: false} :
+      (parent == `cyclonecitra`) ? {cyclone_citra_id: model_id, is_delete: false} :
+      (parent == `publication`) ? {publication_id: model_id, is_delete: false} : null;
+
+    let  new_data = { is_delete: true };
+
+    if (Model && old) {
+      [err, find] = await flatry( Model.updateMany( old, new_data, {new: true}));
+      if (err) {
+        console.log(err.stack);
+        return response.back(400, {}, err.stack);
+      } 
+      return response.back(200, find, `Success delete child data`);
+    } else {
+      return response.back(400, null,`Error with Model's name or old's name or empty`);
+    }
+},
 
   search: async function (req, res) {
     let Model = [About, Aftereventreport, Annualreport, Cyclonename, Publication, Tropicalcyclone];

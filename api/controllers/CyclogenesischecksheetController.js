@@ -208,20 +208,24 @@ CyclogenesischecksheetController = {
       new_data = { is_delete: true };
       
       [err, data] = await flatry( Model.findOneAndUpdate( filter, new_data, {new: true}));
-      if (err) {
+      if (err || !data) {
         console.log(err.stack);
         response.error(400, `Error when findOneAndUpdate data in deleteData cyclogenesischecksheet`, res, err);
       }
 
+      let child = await ApiController.getChildToDelete(`Cyclogenesischecksheetdetail`, id, file_path);
+      if (child.status == 400) {
+        response.error(400, child.message, res, child.message);
+      } 
+
       //UPLOAD FILE
-      if (data) {
+      if (data && child.status == 200) {
         let upload = await UploadController.deleteFile(data._id, file_path)
         if (upload.status == 400) {
           response.error(400, `Error when upload data in createData tropicalcyclone`, res, err);
         }
+        response.ok(data, res, `success delete data`);
       }
-
-      response.ok(data, res, `success delete data`);
     } else {
       response.error(400, `Data not completed`, res);
     }
