@@ -91,10 +91,11 @@ ApiController = {
       let err, data, filter;
       if (method == `create`) {
         filter = (same) ? { $or: [{[attribute] : value.toLowerCase()}, {[attribute] : value}] , is_delete: false } : 
-        { $or: [{[attribute] : { "$regex": value.toLowerCase(), "$options": "i"}}, {[attribute] : { "$regex": value, "$options": "i"}}] ,is_delete: false };
+        { [attribute] : {"$regex": `${value}$`, $options: "-i"}, is_delete: false };
+        /* $or: [ {[attribute] : { "$regex": value.toLowerCase(), "$options": "i"}}, {[attribute] : { "$regex": value, "$options": "i"}} ] , */
       } else if (method == `update`) {
         filter = (same) ? { _id :{ $ne: not_id }, $or: [{[attribute] : value.toLowerCase()}, {[attribute] : value}] , is_delete: false } : 
-        { _id :{ $ne: not_id }, $or: [{[attribute] : { "$regex": value.toLowerCase(), "$options": "i"}}, {[attribute] : { "$regex": value, "$options": "i"}}] ,is_delete: false };
+        { _id :{ $ne: not_id },  [attribute] : {"$regex": `${value}$`, $options: "-i"}, is_delete: false };
       }
       [err, data] = await flatry( model.find( filter ) );
       if (err) {
@@ -166,7 +167,11 @@ ApiController = {
     }
   },
 
-  convert: async function(latitude, longitude) {
+  convert: async function(latitude, longitude, type) {
+    function ConvertDDToDMS(D, arah){
+      return [0|D, '°', 0|(D<0?D=-D:D)%1*60, "'", 0|D*60%1*60, ` ${arah}`].join('');
+    }
+
     function ConvertDMSToDD(degrees, minutes, seconds, direction) {
       let min = parseFloat(minutes/60).toFixed(10);
       let sec = parseFloat(seconds/3600).toFixed(10);
@@ -178,19 +183,26 @@ ApiController = {
       return dd;
     }
 
-    let data = {}, 
-      lat_parts = latitude.split(/[^\d\w\.]+/),
-      long_parts = longitude.split(/[^\d\w\.]+/);
-
-    let lat = (lat_parts.length == 3) ? ConvertDMSToDD(lat_parts[0], lat_parts[1], 0, lat_parts[2]) : ConvertDMSToDD(lat_parts[0], lat_parts[1], lat_parts[2], lat_parts[3]);
-    let lng = (long_parts.length == 3) ? ConvertDMSToDD(long_parts[0], long_parts[1], 0, long_parts[2]): ConvertDMSToDD(long_parts[0], long_parts[1], long_parts[2], long_parts[3]);
+    let data = {}, lat, lng,
+      lat_parts = (type == `dd`) ? latitude.split(/[^\d\w\.]+/) : latitude.substring(0, latitude.length - 2),
+      long_parts = (type == `dd`) ? longitude.split(/[^\d\w\.]+/) : longitude.substring(0, longitude.length - 2);
+    
+    if (type == `dd`) {
+      lat = (lat_parts.length == 3) ? ConvertDMSToDD(lat_parts[0], lat_parts[1], 0, lat_parts[2]) : ConvertDMSToDD(lat_parts[0], lat_parts[1], lat_parts[2], lat_parts[3]);
+      lng = (long_parts.length == 3) ? ConvertDMSToDD(long_parts[0], long_parts[1], 0, long_parts[2]): ConvertDMSToDD(long_parts[0], long_parts[1], long_parts[2], long_parts[3]);
+    } else if (type == `dms`) {
+      let lat_arah = (latitude.substring(latitude.length-2, latitude.length) == 'LS') ? `S` : `N`;
+      let long_arah = (latitude.substring(latitude.length-2, latitude.length == `BT`)) ? `E` : `W`;
+      lat = ConvertDDToDMS(lat_parts, lat_arah);
+      lng = ConvertDDToDMS(long_parts, long_arah);
+    }
 
     data = {
       lat: (lat) ? lat : 0,
       lng: (lng) ? lng : 0
     }
-    return response.back(200, data, `convert success`);
 
+    return response.back(200, data, `convert success`);
   },
 
   generated: async function(model, attribute, string) {
@@ -316,7 +328,90 @@ ApiController = {
     } else {
       return response.back(400, null,`Error with Model's name or old's name or empty`);
     }
-},
+  },
+
+  cuChildAndParent: async function (child, parent_id, parent, parent_data, child_data, to_do, filter_child) {
+    let err, data_parent, data_child, data = {}, filter;
+    let Child = (child == `Tropicalcyclone`) ? Tropicalcyclone : 
+      (child == `About`) ? About : 
+      (child == `Aftereventreport`) ? Aftereventreport : 
+      (child == `Annualreport`) ? Annualreport : 
+      (child == `Cyclogenesischecksheetdetail`) ? Cyclogenesischecksheetdetail : 
+      (child == `Cyclogenesischecksheet`) ? Cyclogenesischecksheet : 
+      (child == `Cyclonecitra`) ? Cyclonecitra : 
+      (child == `Cyclonedescription`) ? Cyclonedescription : 
+      (child == `Cyclonecurrent`) ? Cyclonecurrent : 
+      (child == `Cyclonename`) ? Cyclonename : 
+      (child == `Cycloneoutlook`) ? Cycloneoutlook : 
+      (child == `Publication`) ? Publication : null;
+    let Parent = (parent == `tropicalcyclone`) ? Tropicalcyclone :
+      (parent == `annualreport`) ? Annualreport :
+      (parent == `aftereventreport`) ? Aftereventreport :
+      (parent == `cycloneoutlook`) ? Cycloneoutlook :
+      (parent == `about`) ? About :
+      (parent == `cyclogenesischecksheetdetail`) ? Cyclogenesischecksheetdetail :
+      (parent == `cyclogenesischecksheet`) ? Cyclogenesischecksheet :
+      (parent == `cyclonecitra`) ? Cyclonecitra :
+      (parent == `publication`) ? Publication : null;
+    let parent_fk = (parent == `tropicalcyclone`) ? `tropical_cyclone_id` :
+      (parent == `annualreport`) ? `annual_report_id` :
+      (parent == `aftereventreport`) ? `after_event_report_id` :
+      (parent == `cycloneoutlook`) ? `cyclone_outlook_id` :
+      (parent == `about`) ? `about_id` :
+      (parent == `cyclogenesischecksheetdetail`) ? `cyclogenesis_checksheet_detail_id` :
+      (parent == `cyclogenesischecksheet`) ? `cyclogenesis_checksheet_id` :
+      (parent == `cyclonecitra`) ? `cyclone_citra_id` :
+      (parent == `publication`) ? `publication_id` : null;
+    
+    if (Child && Parent && parent_fk) {
+      if (to_do == `create`) {
+        [err, data_parent] = await flatry( Parent.create( parent_data ));
+        if (err) {
+          console.log(err.stack);
+          return response.back(400, {}, err.stack);
+        } 
+  
+        child_data[parent_fk] = data_parent._id;
+        [err, data_child] = await flatry( Child.create( child_data ));
+        if (err) {
+          console.log(err.stack);
+          return response.back(400, {}, err.stack);
+        } 
+      } else if (to_do == `update`) {
+        let old = { _id : parent_id, is_delete: false };
+        [err, data_parent] = await flatry( Parent.findOneAndUpdate( old, parent_data, {new: true}));
+        if (err) {
+          console.log(err.stack);
+          return response.back(400, {}, err.stack);
+        }
+        
+        filter_child[parent_fk] = data_parent._id;
+        [err, filter] = await flatry( Child.find( filter_child ));
+        if (err) {
+          console.log(err.stack);
+          return response.back(400, {}, err.stack);
+        } 
+
+        if (filter.length == 0) {
+          child_data[parent_fk] = data_parent._id;
+          [err, data_child] = await flatry( Child.create( child_data ));
+          if (err) {
+            console.log(err.stack);
+            return response.back(400, {}, err.stack);
+          } 
+        } else {
+          console.log(`Same child's data`);
+        }
+      }
+      data = {
+        parent: data_parent,
+        child: data_child
+      }
+      return response.back(200, data, `Success create or update child data`);
+    } else {
+      return response.back(400, null,`Error with Model's name or old's name or empty`);
+    }
+  },
 
   search: async function (req, res) {
     let Model = [About, Aftereventreport, Annualreport, Cyclonename, Publication, Tropicalcyclone];

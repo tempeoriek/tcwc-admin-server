@@ -9,5 +9,9 @@ module.exports = function (global) {
     global.axios = require('axios');
     global.qs = require('qs');
     global.crypto = require('crypto');
+    global.fs = require('fs');
+    global.fse = require('fs-extra');
+    global.ejs = require('ejs');
+    global.glob = require('glob');
     global.response = require('./response');
 }

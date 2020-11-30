@@ -18,6 +18,8 @@
     "express-fileupload": "^1.2.0",
     "flatry": "^1.0.12",
     "fs": "0.0.1-security",
+    "fs-extra": "^9.0.1",
+    "glob": "^7.1.6",
     "html-pdf": "^2.2.0",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",

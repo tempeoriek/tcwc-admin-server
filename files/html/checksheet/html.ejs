@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    padding: 20px;
+  }
+  table, th, td {
+    border: 1px solid black;
+    font-size: 11px;
+  }
+</style>
+</head>
+
+<body>
+  <div>
+    <label for="fname">Kode Bibit</label><br>
+    <b><%= data[0].cyclogenesis_checksheet_id.kode_bibit %></b><br><br>
+    <label for="lname">Tanggal</label><br>
+    <b><%= data[0].cyclogenesis_checksheet_id.date %></b><br><br>
+    <label for="lname">Longitude</label><br>
+    <b><%= data[0].cyclogenesis_checksheet_id.longitude %></b><br><br>
+    <label for="lname">latitude</label><br>
+    <b><%= data[0].cyclogenesis_checksheet_id.latitude %></b><br><br>
+  </div> 
+  
+  <div>
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <h5>Suspect Area Identification</h5></td> 
+            <% for(var i=0; i < data.length; i++) { %>
+              <td><span></span></td>
+            <% } %>
+        </tr>
+        <tr>
+          <td>I. Does an identifiable circulation already exist at any level in the low or middle levels?</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].suspect_area_1){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>II. Is there currently a deep convective disturbance which has persisted for at least 12 hours?</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].suspect_area_2){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>III. Does NWP indicate the development of any persistent low/mid-level circulation during the next 72 hours?</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].suspect_area_3){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>
+          Location of suspect area</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td><span><%= data[i].location_suspect_area %></span></td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>
+            <h5>Broadscale Environmental Conditions - Current</h5></td> 
+            <% for(var i=0; i < data.length; i++) { %>
+              <td><span></span></td>
+            <% } %>
+        </tr>
+        <tr>
+          <td>A. Is the MJO active in our longitude?</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].bec_current_a){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>B. Are there any tropical waves currently propagating towards the suspect area?</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].bec_current_b){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>C. Are there any strong low-level monsoon/trade flows or surges feeding into the suspect area now?</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].bec_current_c){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>D. Is there a low/mid-level trough in the suspect area now?</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].bec_current_d){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>E. Are the winds at 200/250 hPa over suspect the area &lt;20 knots?</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].bec_current_e){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>F. Is there low (5-15 kt) 850-200 hPa vertical shear near the area and stronger (&gt;15 kt) shear away (5-10°) from the suspect area?</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].bec_current_f){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>G. Is there a synoptic feature creating strong upper divergence above the suspect area? For example, an upper trough or retrogressing upper low within 25 degrees to the west, or a strong equatorial jet, with the ridge centre over the area.</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].bec_current_g){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>H. Is there evidence on satellite imagery or upper streamline charts of at least one outflow channel?</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].bec_current_h){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>I. Is there evidence of two outflow channels or fanning of cirrus (equatorward and eastward of CDO)? If so consider rapid development potential.</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].bec_current_i){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>J. Is the suspect area being fed by deep moist air in all sectors?</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].bec_current_j){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>
+            <h5>Broadscale Environmental Conditions - 72 Hour Trend</h5></td> 
+            <% for(var i=0; i < data.length; i++) { %>
+              <td><span></span></td>
+            <% } %>
+        </tr>
+        <tr>
+          <td>K. Are any tropical waves likely to move into the area within 72 hours?</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].bec_trend_k){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>L. Are there any monsoon or trade surges likely to feed into the area during the next 72 hours?</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].bec_trend_l){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>M. Will the 850-200 hPa shear conditions remain favourable / improve during the next 72 hours?</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].bec_trend_m){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>N. Will the upper divergence remain/become favourable for cyclogenesis during the next 72 hours?</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].bec_trend_n){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>O. Is deep moisture infeed into the area likely to remain / improve during the next 72 hours?</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].bec_trend_o){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>P. Do NWP cyclogenesis parameters support further development in the area during the 72 hours period?</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].bec_trend_p){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>
+            <h5>Development of Circulation</h5></td> 
+            <% for(var i=0; i < data.length; i++) { %>
+              <td><span></span></td>
+            <% } %>
+        </tr>
+        <tr>
+          <td>1. Does a vertically stacked circulation currently exist from surface to 500 hPa?</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].development_circulation_1){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>2. Is there a low/mid-level circulation centre defined by cloud line or band curvature, or by cloud line mergence within an area of 2.5° latitude or less? (This is best seen on vis imagery.)</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].development_circulation_2){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>3. Are there (disturbance-relative) wind speed observations of the order 15-25 kts (850 hPa) within 5° of the circulation centre?</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].development_circulation_3){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>4. Is there evidence of a significant (15-25 kt) middle-level circulation (850-500 hPa) present? (Vertically stacked and round.)</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].development_circulation_4){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>5. Have there been pressure falls of greater than 2 hPa per day within 3° of the system centre?</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].development_circulation_5){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>
+            <h5>Development of Deep Convection</h5></td> 
+            <% for(var i=0; i < data.length; i++) { %>
+              <td><span></span></td>
+            <% } %>
+        </tr>
+        <tr>
+          <td>6. Has there been an Early Convective Maximum (ECM) within the last 3 days? - i.e. was there deep convection (-65°C or colder/Dvorak black) focused in one area (within about a 2° radius) and persisting for 6-12 hours possibly against the diurnal cycle?</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].ddc_6){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>7. Has there been a reduction in the area of deep convection after the occurrence of the ECM? (This quiet period may continue 1-3 days.)</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].ddc_7){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>8. Is there currently persistent deep convection (at least 12 hours old) which is within 2° of a low level cloud system centre?</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].ddc_8){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>
+            <h5>Movement on water</h5></td> 
+            <% for(var i=0; i < data.length; i++) { %>
+              <td><span></span></td>
+            <% } %>
+        </tr>
+        <tr>
+          <td>9. The disturbance remain over water or move over water</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].mw_9){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr>
+        <tr>
+          <td>10. The disturbance will not remain over water or not move over water</td> 
+          <% for(var i=0; i < data.length; i++) { %>
+            <td style="text-align: center;">
+              <% if(data[i].mw_10){ %>
+                <input type="checkbox" checked>
+              <% } else{ %>  
+                <input type="checkbox">
+              <% } %>
+            </td>
+          <% } %>
+        </tr> 
+      </tbody>
+    </table>
+  </div>
+  
+  <div style="margin-top: 10px; text-align:center;">
+    <table style="width: 100%">
+      <thead>
+        <th><h6>Checklist Result</h6></th> 
+        <th><h6>Suggested Action</h6></th>
+      </thead> 
+      
+      <tbody>
+        <td><%= result.result %></td> 
+        <td><%= result.suggestion %></td> 
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>

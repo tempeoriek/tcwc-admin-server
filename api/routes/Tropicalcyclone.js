@@ -1,6 +1,7 @@
 const router = express.Router(),
 Tropicalcyclone = require('../controllers/TropicalcycloneController');
 
+router.get('/read', Tropicalcyclone.read);
 router.post('/approve', Tropicalcyclone.approve);
 router.get('/remove', Tropicalcyclone.remove);
 

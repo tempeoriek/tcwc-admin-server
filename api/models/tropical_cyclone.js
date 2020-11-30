@@ -4,7 +4,7 @@ let tropical_cyclone_schema = new Schema({
   area: {
     type: String,
     default: null,
-    required: true
+    // required: true
   },
   tc_name: {
     type: String,

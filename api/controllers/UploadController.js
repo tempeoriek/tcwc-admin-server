@@ -45,6 +45,7 @@ UploadController = {
       annual_report_id: (path == `annualreport`) ? model_id : null,
       after_event_report_id: (path == `aftereventreport`) ? model_id : null,
       cyclone_outlook_id: (path == `cycloneoutlook`) ? model_id : null,
+      tropical_cyclone_id: (path == `tropicalcyclone`) ? model_id : null,
       about_id: (path == `about`) ? model_id : null,
       cyclogenesis_checksheet_detail_id: (path == `cyclogenesischecksheetdetail`) ? model_id : null,
       cyclogenesis_checksheet_id: (path == `cyclogenesischecksheet`) ? model_id : null,
@@ -56,10 +57,12 @@ UploadController = {
       return response.back(400, {}, `file is not found`);
     }
 
-    let myFile = files;
-    err = await myFile.mv(`./files/${path}/${myFile.name}`);
-    if (err) {
-      return response.back(400, {}, `Error when mv file`);
+    if (!files.temp_file) {
+      let myFile = files;
+      err = await myFile.mv(`./files/${path}/${myFile.name}`);
+      if (err) {
+        return response.back(400, {}, `Error when mv file`);
+      }
     }
 
     if (doing == `create`) {
@@ -78,6 +81,7 @@ UploadController = {
       (path == `annualreport`) ? {annual_report_id: model_id, is_delete: false} :
       (path == `aftereventreport`) ? {after_event_report_id: model_id, is_delete: false} :
       (path == `cycloneoutlook`) ? {cyclone_outlook_id: model_id, is_delete: false} :
+      (path == `tropicalcyclone`) ? {tropical_cyclone_id: model_id, is_delete: false} :
       (path == `about`) ? {about_id: model_id, is_delete: false} :
       (path == `cyclogenesischecksheetdetail`) ? {cyclogenesis_checksheet_detail_id: model_id, is_delete: false} :
       (path == `cyclogenesischecksheet`) ? {cyclogenesis_checksheet_id: model_id, is_delete: false} :

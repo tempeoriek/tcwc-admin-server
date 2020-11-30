@@ -34,12 +34,12 @@ let cyclone_current_schema = new Schema({
   pressure: {
     type: Float,
     default: null,
-    required: true
+    // required: true
   },
   datetime: {
     type: Date,
     default: null,
-    required: true
+    // required: true
   },
 
   /* relations */

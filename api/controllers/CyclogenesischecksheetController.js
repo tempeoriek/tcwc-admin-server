@@ -1,8 +1,6 @@
 const Model = require('../models/cyclogenesis_checksheet'),
   UploadController = require('./UploadController'),
   ApiController = require('./ApiController'),
-  fs = require('fs'),
-  ejs = require('ejs'),
   file_path = `cyclogenesischecksheet`;
 
 CyclogenesischecksheetController = {
@@ -26,7 +24,7 @@ CyclogenesischecksheetController = {
     if (child.status == 200) {
       let template = fs.readFileSync('./files/html/checksheet/html.ejs', 'utf8');
       let today = moment.utc().format(`YYYYMMDDHHMMSS`);
-      let file_loop = CyclogenesischecksheetController.chunk(child.data, 8), html, temp_data = [];
+      let file_loop = CyclogenesischecksheetController.chunk(child.data, 8);
       
       for (let i = 0; i < file_loop.length; i++) {
         let temp = file_loop[i];
@@ -137,7 +135,7 @@ CyclogenesischecksheetController = {
     console.log(req.body)
     if (Object.entries(req.body).length > 0) {
       let {  kode_bibit , date, time, latitude, longitude } = req.body, err, data;
-      let convert = await ApiController.convert(latitude, longitude);
+      let convert = await ApiController.convert(latitude, longitude, `dd`);
       let new_data = { kode_bibit , date, time, latitude, longitude, latitude_dd: convert.data.lat, longitude_dd: convert.data.lng };
     
       //CREATE DATA
@@ -175,7 +173,7 @@ CyclogenesischecksheetController = {
   updateData: async function (req, res) {
     if (Object.entries(req.body).length > 0 && Object.entries(req.params).length > 0) {
       let {  kode_bibit , date, time, latitude, longitude } = req.body, { id } = req.params;
-      let convert = await ApiController.convert(latitude, longitude);
+      let convert = await ApiController.convert(latitude, longitude, `dd`);
       let new_data = { kode_bibit , date, time, latitude, longitude, latitude_dd: convert.data.lat, longitude_dd: convert.data.lng }, err, data, 
       filter = { _id: id, is_delete: false };
 
