@@ -10,6 +10,7 @@ const About = require('../models/about'),
   Cycloneoutlook = require('../models/cyclone_outlook'),
   Publication = require('../models/publication'),
   Tropicalcyclone = require('../models/tropical_cyclone'),
+  Filecyclone = require('../models/file_cyclone'),
   pdf = require('html-pdf');
 
 ApiController = {
@@ -331,7 +332,7 @@ ApiController = {
   },
 
   cuChildAndParent: async function (child, parent_id, parent, parent_data, child_data, to_do, filter_child) {
-    let err, data_parent, data_child, data = {}, filter;
+    let err, data_parent, data_child, data = {}, filter, today = moment().format(`YYYY-MM-DDTHH:mm:ss.SSSZ`);
     let Child = (child == `Tropicalcyclone`) ? Tropicalcyclone : 
       (child == `About`) ? About : 
       (child == `Aftereventreport`) ? Aftereventreport : 
@@ -379,12 +380,14 @@ ApiController = {
         } 
       } else if (to_do == `update`) {
         let old = { _id : parent_id, is_delete: false };
+        parent_data.modified_at = today;
         [err, data_parent] = await flatry( Parent.findOneAndUpdate( old, parent_data, {new: true}));
         if (err) {
           console.log(err.stack);
           return response.back(400, {}, err.stack);
         }
         
+        //FILTER : TO FIND THE SAME DATA IN CHILD, CONTENT SAME ATTRIBUTE IN DB 
         filter_child[parent_fk] = data_parent._id;
         [err, filter] = await flatry( Child.find( filter_child ));
         if (err) {
@@ -411,6 +414,45 @@ ApiController = {
     } else {
       return response.back(400, null,`Error with Model's name or old's name or empty`);
     }
+  },
+
+  existFileCyclone: async function () {
+    let err, data = [], find, 
+      file = {
+        name: null,
+        arr_file: [],
+        not_exist: []
+      };
+      
+    [err, find] = await flatry( Filecyclone.find({ is_delete: false }) );
+    if (err || find.length == 0) {
+      return response.back(400, {}, `Error when find in exist file cyclone api controller or empty file`);
+    }
+
+    for (let i = 0 ; i < find.length; i++) {
+      let temp = find[i];
+      let exist = await fse.pathExists(`files/tc_module/${temp.name}.txt`);
+      if (exist) {
+        file.name = temp.name;
+        for (let j = 0; j < temp.arr_file.length ; j++) {
+          let temp_j = temp.arr_file[j];
+          let sub_exist = await fse.pathExists(`files/tc_module/${temp_j.file}.txt`);
+          if (!sub_exist) {
+            file.not_exist.push(temp_j);
+          } else {
+            file.arr_file.push(temp_j);
+          }
+        }
+      }
+      data.push(file);
+      file = {
+        name: null,
+        arr_file: [],
+        not_exist: []
+      }
+    }
+
+    return response.back(200, data, `Data found`);
   },
 
   search: async function (req, res) {

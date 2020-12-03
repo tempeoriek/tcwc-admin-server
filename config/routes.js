@@ -61,4 +61,7 @@ module.exports = function (app) {
 
   let Link = require('../api/routes/Link');
   app.use('/Link', Link);
+
+  let Filecyclone = require('../api/routes/Filecyclone');
+  app.use('/Filecyclone', Filecyclone);
 }

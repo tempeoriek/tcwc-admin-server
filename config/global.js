@@ -1,4 +1,5 @@
 module.exports = function (global) {
+    global.async = require('async');
     global.flatry = require('flatry');
     global.bcrypt = require('bcryptjs');
     global.passport = require('passport');
