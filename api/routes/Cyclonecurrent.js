@@ -3,6 +3,7 @@ Cyclonecurrent = require('../controllers/CyclonecurrentController');
 
 router.get('/get_tropical', Cyclonecurrent.getTropicalCylone);
 router.get('/count_by_year', Cyclonecurrent.countByYear);
+router.get('/count_by_month', Cyclonecurrent.countByMonth);
 
 router.get('/', Cyclonecurrent.getAllData);
 router.get('/:id', Cyclonecurrent.getData);

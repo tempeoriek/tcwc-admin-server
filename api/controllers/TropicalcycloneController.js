@@ -13,7 +13,7 @@ TropicalcycloneController = {
         response.error(400, `Error when check file exist`, res, check_file.message);
       }
 
-      if (check_file.status == 200 && check_file.data > 0) {
+      if (check_file.status == 200 && check_file.data.length > 0) {
         let cyclone = check_file.data;
         for (let z = 0 ; z < cyclone.length ; z++) {
           let temp_z = cyclone[z];
@@ -33,11 +33,13 @@ TropicalcycloneController = {
           let latitude = (temp_posisi[0]) ? temp_posisi[0].substring(0, temp_posisi[0].length - 1) : null;
           let longitude = (temp_posisi[1]) ? temp_posisi[1] : null;
           let max_wind_speed = (temp_max_wind[0]) ? temp_max_wind[0]: null;
-          let date = (temp_date[0]) ? new Date(temp_date[0]) : null;
+          let dateParts = temp_date[0].split("/");
+          let date = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]); 
+          // let date = (temp_date[0]) ? new Date(temp_date[0]) : null;
 
           let convert = await ApiController.convert(latitude, longitude, `dms`);
 
-          let parent_data = { tc_name, is_delete: false, is_active: true, year: moment(date).format(`YYYY`) };
+          let parent_data = { tc_name, is_delete: false, is_active: true, year: moment(date).format(`YYYY`), month: moment(date).format(`M`) };
           let child_data = { 
             latitude_dd : latitude.substring(0, latitude.length - 2), 
             longitude_dd: longitude.substring(0, longitude.length - 2), 

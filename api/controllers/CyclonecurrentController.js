@@ -143,6 +143,44 @@ CyclonecurrentController = {
     } else if (data.length == 0) {
       response.success(data, res, `success get all data but data is empty`);
     }
+  },
+
+  countByMonth: async function (req, res) {
+    let err, data;
+    [err, data] = await flatry( Tropical.find({ is_delete: false }, "month year"));
+    if (err) {
+      console.log(err.stack);
+      response.error(400, `Error when find data in getTropicalCylone cyclonecurrent`, res, err);
+    }
+
+    if (data.length > 0) {
+      let temp_month = {}, temp_year = [], avg = {};
+      for (let i = 0 ; i < data.length ; i++) {
+        let temp = data[i];
+        if (i == 0 || temp_month[temp.month] == undefined) {
+          temp_month[temp.month] = [];
+        }
+        
+        temp_month[temp.month]++;
+        temp_year.push(parseInt(temp.year));
+      }
+      
+      let year_max = Math.max(...temp_year);
+      let year_min = Math.min(...temp_year);
+      for (const [key, value] of Object.entries(temp_month)) {
+        avg[key] = parseFloat(parseInt(value) / (year_max-year_min)).toFixed(2);
+      }
+      
+      data = {
+        total: temp_month,
+        avg,
+        year_min,
+        year_max
+      }
+      response.ok(data, res, `success get all data`);
+    } else if (data.length == 0) {
+      response.success(data, res, `success get all data but data is empty`);
+    }
   }
     
 };

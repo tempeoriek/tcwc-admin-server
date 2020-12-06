@@ -19,6 +19,10 @@ let tropical_cyclone_schema = new Schema({
     type: Boolean,
     default: false
   },
+  month: {
+    type: String,
+    default: null
+  },
   year: {
     type: String,
     default: null,
