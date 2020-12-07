@@ -469,10 +469,11 @@ ApiController = {
           {area : {$regex: keyword, $options: "-i"}},
           {path : {$regex: keyword, $options: "-i"}},
           {list_a : {$regex: keyword, $options: "-i"}},
-          {list_b : {$regex: keyword, $options: "-i"}}
+          {list_b : {$regex: keyword, $options: "-i"}},
+          {year : {$regex: keyword, $options: "-i"}}
         ],
         is_delete: false
-       }, `tc_name area en_title id_title list_a list_b path`) );
+       }, `tc_name area en_title id_title list_a list_b path year`) );
        if (err) {
         response.error(400, `Error when find data in search api controller`, res, err);
        }
