@@ -121,10 +121,15 @@ CyclonecurrentController = {
         temp_year.push(parseInt(temp.year));
         if (i == 0 || temp_month[temp.month] == undefined) {
         // if (i == 0 || temp_year[temp.tropical_cyclone_id.year] == undefined) {
-          temp_month[temp.month] = [];
+          if (temp.area) {
+            temp_month[temp.month] = [];
+          }
           // temp_year[temp.tropical_cyclone_id.year] = [];
         }
-        temp_month[temp.month].push(temp.area);
+
+        if (temp.area) {
+          temp_month[temp.month].push(temp.area);
+        }
         // temp_year[temp.year]++;
         // temp_year[temp.tropical_cyclone_id.year]++;
       }
