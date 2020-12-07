@@ -93,7 +93,6 @@ UploadController = {
         return response.back(400, {}, `Error when create file upload`);
       }
     }
-
     return response.back(200, data, `success upload file`);
   }, 
   
