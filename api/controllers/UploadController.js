@@ -92,6 +92,13 @@ UploadController = {
       if (err) {
         return response.back(400, {}, `Error when create file upload`);
       }
+
+      if (!data && (path == `techincal_bulletin_file` || path == `public_info_bulletin_file` || path == `ocean_gale_storm_warn_file` || path == `track_impact_file` || path == `coastal_zone_file` || path == `extreme_weather_file` || path == `gale_warning_file`)) {
+        [err, data] = await flatry( Model.create( new_data ));
+        if (err) {
+          return response.back(400, {}, `Error when create file upload`);
+        }
+      }
     }
     return response.back(200, data, `success upload file`);
   }, 
