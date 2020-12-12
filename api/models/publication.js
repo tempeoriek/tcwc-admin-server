@@ -33,6 +33,10 @@ let publication_schema = new Schema({
     type: String,
     default: null
   },
+  is_posted: {
+    type: Boolean,
+    default: false
+  },
 
   /* config */
   created_at: {

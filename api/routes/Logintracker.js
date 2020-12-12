@@ -1,6 +1,6 @@
 const router = express.Router(),
 Logintracker = require('../controllers/LogintrackerController');
 
-router.get('/fetch', Logintracker.fetchRecord);
+router.get('/', Logintracker.getData);
 
 module.exports = router;

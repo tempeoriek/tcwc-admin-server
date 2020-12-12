@@ -1,6 +1,10 @@
 let Schema = mongoose.Schema;
 
 let login_tracker_schema = new Schema({
+  token: {
+    type: String,
+    default: null
+  },
   ip_address: {
     type: String,
     default: null

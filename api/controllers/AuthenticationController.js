@@ -35,7 +35,7 @@ AuthenticationController = {
           if (user.username) {
             // if user is found and password is right create a token
             let token = AuthenticationController.encodeJWT(user.toJSON(), settings.secret);
-            let create_login_tracker =  AuthenticationController.createLoginTracker(user, req);
+            let create_login_tracker =  AuthenticationController.createLoginTracker(token, user, req);
             [err] = await flatry(Promise.all([token, create_login_tracker]));
             if (err) {
               response.error(400, `Error when Promise all in login User`, res);
@@ -71,11 +71,12 @@ AuthenticationController = {
     response.ok(token, res, `success update token`);
   },
 
-  createLoginTracker: async function (user, req) {
+  createLoginTracker: async function (token, user, req) {
     let now = momenttz.tz("Asia/Jakarta").format('DD MMM YYYY HH:mm:ss'),
     ip_address = req.header('x-forwarded-for') || req.connection.remoteAddress;
 
     let [err] = await flatry( LoginTracker.create({
+      token,
       ip_address,
       login_time: now,
       logout_time: null,
