@@ -66,7 +66,7 @@ CyclogenesischecksheetController = {
     if (find.length > 0) {
       fields.push(
         { key: 'kode_bibit', label: 'Kode Bibit', sortable: true },
-        { key: 'date', label: 'Date Time', sortable: true },
+        // { key: 'date', label: 'Date Time', sortable: true },
         { key: 'longitude', label: 'Longitude', sortable: true },
         { key: 'latitude', label: 'Latitude', sortable: true}, 
         { key: 'actions', label: 'Actions' }

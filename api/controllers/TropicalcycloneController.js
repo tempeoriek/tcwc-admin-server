@@ -9,10 +9,10 @@ TropicalcycloneController = {
     try {
       //CHECK IF FILE EXIST OR NOT
       let check_file = await ApiController.existFileCyclone();
-      if (check_file.status == 400) {
+      if (check_file.status == 400 || check_file.data.length == 0) {
         response.error(400, `Error when check file exist`, res, check_file.message);
       }
-
+      
       if (check_file.status == 200 && check_file.data.length > 0) {
         let cyclone = check_file.data;
         for (let z = 0 ; z < cyclone.length ; z++) {
@@ -105,8 +105,6 @@ TropicalcycloneController = {
           }
         }
         response.ok(data, res, `success read file`);
-      } else {
-        response.error(400, `Error when read 18 file`, res, `File's are empty please check the file`);
       }
     } catch (err) {
       console.log(err)

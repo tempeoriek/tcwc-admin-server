@@ -443,8 +443,8 @@ ApiController = {
             file.arr_file.push(temp_j);
           }
         }
+        data.push(file);
       }
-      data.push(file);
       file = {
         name: null,
         arr_file: [],
@@ -452,7 +452,11 @@ ApiController = {
       }
     }
 
-    return response.back(200, data, `Data found`);
+    if (data.length > 0) {
+      return response.back(200, data, `Data found`);
+    } else if (data.length == 0) {
+      return response.back(400, {}, `Empty file in the folder`);
+    }
   },
 
   search: async function (req, res) {
