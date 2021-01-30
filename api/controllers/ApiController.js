@@ -11,11 +11,25 @@ const About = require('../models/about'),
   Publication = require('../models/publication'),
   Tropicalcyclone = require('../models/tropical_cyclone'),
   Filecyclone = require('../models/file_cyclone'),
+  Fileupload = require('../models/file_upload'),
+  key = require('../../config/setting'),
+  { Parser, transforms } = require('json2csv'),
   pdf = require('html-pdf');
 
 ApiController = {
+  checkHeaders: async function (headers) {
+    let today = moment.utc().format(`YYYYMMDDHH`);
+    let auth = `${key.secret}${today}`;
+    console.log(auth)
+    if (headers[`authorization`] == auth) {
+      return response.back(200, null, `Authorization Matched`);
+    } else {
+      return response.back(400, null, `Authorization not Matched`);
+    }
+  },
+
   filter: async function (req, res) {
-    let err, data = [], { filter, sort, models } = req.body;
+    let err, data = [], { filter, sort, models, select, is_direct_value } = req.body, obj = {};
     let find_data = (Object.entries(filter).length > 0) ? filter : { is_delete: false };
     let sort_data = (sort) ? sort : { created_at : 1 };
     let Model = (models == `Tropicalcyclone`) ? Tropicalcyclone : 
@@ -32,7 +46,7 @@ ApiController = {
       (models == `Publication`) ? Publication : null;
 
     if (Model) {
-      [err, find] = await flatry( Model.find(find_data).sort(sort_data));
+      [err, find] = await flatry( Model.find(find_data, select).sort(sort_data));
       if (err) {
         console.log(err.stack);
         response.error(400, `Error when filter data`, res, err);
@@ -41,20 +55,32 @@ ApiController = {
       if (find.length > 0) {
         for (let i = 0 ; i < find.length ; i++) {
           let temp = find[i];
+
           //FIND FILE UPLOAD
           let upload = await UploadController.getMultipleFile(models.toLowerCase(), temp._id);
           if (upload.status == 400) {
-            response.error(400, `Error when get all file in api controller`, res, upload.messages);
+            return response.error(400, `Error when get all file in api controller`, res, upload.messages);
           }
           
-          if (upload.status == 200) {
-            data.push({
-              content: temp,
-              files : (upload.data.length > 0) ? upload.data : null
-            });
-          }
+          data.push({
+            content: (is_direct_value) ? obj : temp,
+            files : (upload.data.length > 0) ? upload.data : null
+          });
         }
-        
+
+        if (is_direct_value) {
+          select.map((sl) => {
+            obj[sl] = [];
+          });
+          select.map((sl) => {
+            find.map(fn => {
+              obj[sl].push(fn[sl])
+            })
+          });
+          data = [];
+          data.push({ content: obj })
+        }
+
         response.ok(data, res, `success get filter data`);
       } else {
         response.success(null, res, `success get filter data, but no data`);
@@ -65,6 +91,12 @@ ApiController = {
   },
   
   last: async function (req, res) {
+    //CHECK HEADERS
+    let checkHeaders = await ApiController.checkHeaders(req.headers)
+    if (checkHeaders.status == 400) {
+      return response.error(400, `Error when check headers cyclonecitra`, res, checkHeaders.message);
+    }
+
     let err, data, find_t, find_c, filter = { is_delete: false }, sort = { modified_at: -1 };
     [err, find_t] = await flatry( Tropicalcyclone.findOne( filter ).sort( sort ) );
     if (err) {
@@ -85,17 +117,28 @@ ApiController = {
     response.ok(data, res, `success get filter data`);
   },
 
-  redundant: async function (model, attribute, value, same, not_id, method) {
+  redundant: async function (model, attribute, value, same, not_id, method, array) {
     if (attribute == `path` && value.includes(" ")) {
       return response.back(201, null, `${attribute} cannot be space`);
     } else {
-      let err, data, filter;
+      let err, data, filter, temp_filter = {};
+
+      //NEW FEATURE, EXAMPLE IN TROPICAL CYCLONE CREATE
+      if (array) {
+        for (let i = 0 ; i < attribute.length; i++) {
+          let att = attribute[i]
+          temp_filter[att.att] = (att.type == `string`) ? {"$regex": `${att.value}$`, $options: "-i"} :
+            (att.type == `not-id`) ? { $ne: not_id } : 
+            (att.type == `number`) ? parseInt(att.value) : 
+            (att.type == `boolean`) ? att.value : null
+        }
+      }
+
       if (method == `create`) {
-        filter = (same) ? { $or: [{[attribute] : value.toLowerCase()}, {[attribute] : value}] , is_delete: false } : 
+        filter = (array) ? temp_filter : (same) ? { $or: [{[attribute] : value.toLowerCase()}, {[attribute] : value}] , is_delete: false } : 
         { [attribute] : {"$regex": `${value}$`, $options: "-i"}, is_delete: false };
-        /* $or: [ {[attribute] : { "$regex": value.toLowerCase(), "$options": "i"}}, {[attribute] : { "$regex": value, "$options": "i"}} ] , */
       } else if (method == `update`) {
-        filter = (same) ? { _id :{ $ne: not_id }, $or: [{[attribute] : value.toLowerCase()}, {[attribute] : value}] , is_delete: false } : 
+        filter = (array) ? temp_filter : (same) ? { _id :{ $ne: not_id }, $or: [{[attribute] : value.toLowerCase()}, {[attribute] : value}] , is_delete: false } : 
         { _id :{ $ne: not_id },  [attribute] : {"$regex": `${value}$`, $options: "-i"}, is_delete: false };
       }
       [err, data] = await flatry( model.find( filter ) );
@@ -169,7 +212,11 @@ ApiController = {
   },
 
   convert: async function(latitude, longitude, type) {
+    latitude = parseFloat(latitude).toFixed(10);
+    longitude = parseFloat(longitude).toFixed(10);
+
     function ConvertDDToDMS(D, arah){
+      D = Math.abs(D);
       return [0|D, '°', 0|(D<0?D=-D:D)%1*60, "'", 0|D*60%1*60, ` ${arah}`].join('');
     }
 
@@ -192,8 +239,8 @@ ApiController = {
       lat = (lat_parts.length == 3) ? ConvertDMSToDD(lat_parts[0], lat_parts[1], 0, lat_parts[2]) : ConvertDMSToDD(lat_parts[0], lat_parts[1], lat_parts[2], lat_parts[3]);
       lng = (long_parts.length == 3) ? ConvertDMSToDD(long_parts[0], long_parts[1], 0, long_parts[2]): ConvertDMSToDD(long_parts[0], long_parts[1], long_parts[2], long_parts[3]);
     } else if (type == `dms`) {
-      let lat_arah = (latitude.substring(latitude.length-2, latitude.length) == 'LS') ? `S` : `N`;
-      let long_arah = (latitude.substring(latitude.length-2, latitude.length == `BT`)) ? `E` : `W`;
+      let lat_arah = (latitude.substring(latitude.length-2, latitude.length) == 'LS' || latitude < 0) ? `S` : `N`;
+      let long_arah = (longitude.substring(longitude.length-2, longitude.length) == `BT` || longitude > 0) ? `E` : `W`;
       lat = ConvertDDToDMS(lat_parts, lat_arah);
       lng = ConvertDDToDMS(long_parts, long_arah);
     }
@@ -229,10 +276,33 @@ ApiController = {
       await pdf.create(html, options).toFile(`files/pdf/${path}/${name}.pdf`, function(err, res) {
         if (err) {
           console.log(err);
-          data.code = 400; data.msg = `Error when create html`;
+          data.status = 400; data.msg = `Error when create html`;
           rejects(data)
         }
         data.data = res;
+        resolve(data)
+      });
+    });
+  },
+
+  generateCSV: async function(data_csv, fields, path, transforms) {
+    return new Promise(async (resolve, rejects) => {
+      let random = Math.floor((Math.random() * 100) + 1),
+        today = moment.utc().format(`YYYYMMDDHHMMSS`);
+
+      let name = `${path}-${today}${random}`;
+      let json2csvParser = (transforms) ? new Parser({fields, transforms}) : new Parser({fields});
+      let csv = json2csvParser.parse(data_csv);
+      let data = { status: 200, data: {}, message: `Success create CSV File` }
+      fs.writeFile(`./files/csv/${path}/${name}.csv`, csv, function(err) {
+        if (err) {
+          console.log(err);
+          data.status = 400; data.msg = `Error when create html`;
+          rejects(data)
+        }
+        data.data.csv = csv;
+        data.data.name = `${name}.csv`;
+        data.data.path = `/files/csv/${path}/${name}.csv`;
         resolve(data)
       });
     });
@@ -261,7 +331,7 @@ ApiController = {
       (parent == `cyclogenesischecksheetdetail`) ? {cyclogenesis_checksheet_detail_id: model_id, is_delete: false} :
       (parent == `cyclogenesischecksheet`) ? {cyclogenesis_checksheet_id: model_id, is_delete: false} :
       (parent == `cyclonecitra`) ? {cyclone_citra_id: model_id, is_delete: false} :
-      (parent == `publication`) ? {publication_id: model_id, is_delete: false} : null;
+      (parent == `publication`) ? {publication_id: model_id, is_delete: false} : {is_delete: false};
 
     let parent_attribute = (extra_populate) ? extra_populate : 
       (parent == `tropicalcyclone`) ? `tropical_cyclone_id` :
@@ -293,7 +363,67 @@ ApiController = {
     
   },
 
+  getChildFromParent2: async function (child, parent, parent_body, view_parent, parent_att) {
+    let err, find_parent, find_child, obj = [], child_data = [];
+    let Childmodel = (child == `Tropicalcyclone`) ? Tropicalcyclone : 
+      (child == `About`) ? About : 
+      (child == `Aftereventreport`) ? Aftereventreport : 
+      (child == `Annualreport`) ? Annualreport : 
+      (child == `Cyclogenesischecksheetdetail`) ? Cyclogenesischecksheetdetail : 
+      (child == `Cyclogenesischecksheet`) ? Cyclogenesischecksheet : 
+      (child == `Cyclonecitra`) ? Cyclonecitra : 
+      (child == `Cyclonedescription`) ? Cyclonedescription : 
+      (child == `Cyclonecurrent`) ? Cyclonecurrent : 
+      (child == `Cyclonename`) ? Cyclonename : 
+      (child == `Cycloneoutlook`) ? Cycloneoutlook : 
+      (child == `Publication`) ? Publication : null;
+
+    let Parentmodel = (parent == `tropicalcyclone`) ? Tropicalcyclone : 
+      (parent == `about`) ? About : 
+      (parent == `aftereventreport`) ? Aftereventreport : 
+      (parent == `annualreport`) ? Annualreport : 
+      (parent == `cyclogenesischecksheetdetail`) ? Cyclogenesischecksheetdetail : 
+      (parent == `cyclogenesischecksheet`) ? Cyclogenesischecksheet : 
+      (parent == `cyclonecitra`) ? Cyclonecitra : 
+      (parent == `cyclonedescription`) ? Cyclonedescription : 
+      (parent == `cyclonecurrent`) ? Cyclonecurrent : 
+      (parent == `cyclonename`) ? Cyclonename : 
+      (parent == `cycloneoutlook`) ? Cycloneoutlook : 
+      (parent == `publication`) ? Publication : null;
+
+    if (Parentmodel && Childmodel && parent_body && parent_att) {
+      [err, find_parent] = await flatry(Parentmodel.find(parent_body, view_parent));
+      if (err) {
+        return response.back(400, {}, err.stack);
+      }
+
+      if (find_parent.length > 0) {
+        for (let i = 0; i < find_parent.length ; i++) {
+          child_data = [];
+          let temp = find_parent[i];
+          [err, find_child] = await flatry(Childmodel.find({ [parent_att]: temp._id, is_delete: false }));
+          if (err) {
+            return response.back(400, {}, err.stack);
+          }
+          child_data.push(find_child);
+          obj.push({
+            parent: temp,
+            child: child_data[0]
+          })
+        }
+
+        return response.back(200, obj, `Success get child data`);
+      } else {
+        return response.back(201, null, `Success but empty data`);
+      }
+    } else {
+      return response.back(400, null, `Data not complete`);
+    }
+
+  },
+
   getChildToDelete : async function (models, model_id, parent) {
+    let err, find;
     let Model = (models == `Tropicalcyclone`) ? Tropicalcyclone : 
       (models == `About`) ? About : 
       (models == `Aftereventreport`) ? Aftereventreport : 
@@ -317,7 +447,7 @@ ApiController = {
       (parent == `cyclonecitra`) ? {cyclone_citra_id: model_id, is_delete: false} :
       (parent == `publication`) ? {publication_id: model_id, is_delete: false} : null;
 
-    let  new_data = { is_delete: true };
+    let new_data = { is_delete: true };
 
     if (Model && old) {
       [err, find] = await flatry( Model.updateMany( old, new_data, {new: true}));
@@ -496,6 +626,52 @@ ApiController = {
        }
     }
     response.ok(data, res, `success search data`);
+  },
+
+  deleteData: async function (path, model_id, models) {
+    let Model = (models == `Tropicalcyclone`) ? Tropicalcyclone : 
+      (models == `About`) ? About : 
+      (models == `Aftereventreport`) ? Aftereventreport : 
+      (models == `Annualreport`) ? Annualreport : 
+      (models == `Cyclogenesischecksheetdetail`) ? Cyclogenesischecksheetdetail : 
+      (models == `Cyclogenesischecksheet`) ? Cyclogenesischecksheet : 
+      (models == `Cyclonecitra`) ? Cyclonecitra : 
+      (models == `Cyclonedescription`) ? Cyclonedescription : 
+      (models == `Cyclonecurrent`) ? Cyclonecurrent : 
+      (models == `Cyclonename`) ? Cyclonename : 
+      (models == `Fileupload`) ? Fileupload : 
+      (models == `Cycloneoutlook`) ? Cycloneoutlook : 
+      (models == `Publication`) ? Publication : null;
+
+    let filter = (path == `techincal_bulletin_file`) ? {techincal_bulletin_id: model_id, is_delete: false} : 
+      (path == `public_info_bulletin_file`) ? {public_info_bulletin_id: model_id, is_delete: false} : 
+      (path == `ocean_gale_storm_warn_file`) ? {ocean_gale_storm_warn_id: model_id, is_delete: false} : 
+      (path == `track_impact_file`) ? {track_impact_id: model_id, is_delete: false} : 
+      (path == `coastal_zone_file`) ? {coastal_zone_id: model_id, is_delete: false} : 
+      (path == `extreme_weather_file`) ? {extreme_weather_id: model_id, is_delete: false} : 
+      (path == `gale_warning_file`) ? {gale_warning_id: model_id, is_delete: false} : 
+      (path == `annualreport`) ? {annual_report_id: model_id, is_delete: false} : 
+      (path == `aftereventreport`) ? {after_event_report_id: model_id, is_delete: false} : 
+      (path == `thumbnail_after_event_report_file`) ? {thumbnail_after_event_report_id: model_id, is_delete: false} : 
+      (path == `thumbnail_publication_file`) ? {thumbnail_publication_id: model_id, is_delete: false} : 
+      (path == `cycloneoutlook`) ? {cyclone_outlook_id: model_id, is_delete: false} : 
+      (path == `tropicalcyclone`) ? {tropical_cyclone_id: model_id, is_delete: false} : 
+      (path == `about`) ? {about_id: model_id, is_delete: false} : 
+      (path == `cyclogenesischecksheetdetail`) ? {cyclogenesis_checksheet_detail_id: model_id, is_delete: false} : 
+      (path == `cyclogenesischecksheet`) ? {cyclogenesis_checksheet_id: model_id, is_delete: false} : 
+      (path == `cyclonecitra`) ? {cyclone_citra_id: model_id, is_delete: false} : 
+      (path == `publication`) ? {publication_id: model_id, is_delete: false} : null;
+    new_data = {is_delete: true};
+
+    if (filter && Model) {
+      let [err] = await flatry( Model.updateMany( filter, new_data ));
+      if (err) {
+        return response.back(400, {}, err.stack);
+      }
+      return response.back(200, null, `Success delete data`);
+    } else {
+      return response.back(400, {}, `Data is empty`);
+    }
   }
 };
 

@@ -29,7 +29,7 @@ CycloneoutlookController = {
         let n = str.indexOf(`pdf`);
         let path = str.substring(n-1, str.length)
         let obj = { name: name_pdf, path, type: `pdf`}
-        upload = await UploadController.createPDF(obj, file_path, find._id, `create`)
+        upload = await UploadController.createExternalFile(obj, file_path, find._id, `create`)
         if (upload.status == 400) {
           response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
         }
@@ -67,6 +67,13 @@ CycloneoutlookController = {
 
   getAllData: async function (req, res) {
     let err, find, fields = null, data = [];
+             
+    //CHECK HEADERS
+    let checkHeaders = await ApiController.checkHeaders(req.headers)
+    if (checkHeaders.status == 400) {
+      return response.error(400, `Error when check headers cyclonecitra`, res, checkHeaders.message);
+    }
+
     [err, find] = await flatry( Model.find({ is_delete: false }, `id_paragraph en_paragraph is_posted`));
     if (err) {
       console.log(err.stack);
@@ -92,6 +99,13 @@ CycloneoutlookController = {
 
   getData: async function (req, res) {
     let err, data, { id } = req.params;
+             
+    //CHECK HEADERS
+    let checkHeaders = await ApiController.checkHeaders(req.headers)
+    if (checkHeaders.status == 400) {
+      return response.error(400, `Error when check headers cyclonecitra`, res, checkHeaders.message);
+    }
+
     [err, data] = await flatry( Model.findOne({ is_delete: false, _id: id }));
     if (err) {
       console.log(err.stack);
@@ -130,13 +144,6 @@ CycloneoutlookController = {
         response.error(400, `Error when create data in createData cycloneoutlook`, res, err);
       }
 
-      /* if (req.files && data && file_path) {
-        let upload = await UploadController.uploadData(req.files.files, file_path, data._id, `create`)
-        if (upload.status == 400) {
-          response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
-        }
-      } */
-
       response.ok(data, res, `success create data`);
     } else {
       response.error(400, `Data not completed`, res);
@@ -154,14 +161,6 @@ CycloneoutlookController = {
         console.log(err.stack);
         response.error(400, `Error when findoneandupdate data in updatedata cycloneoutlook`, res, err);
       }
-      
-      /* //UPLOAD FILE
-      if (req.files && data && file_path) {
-        let upload = await UploadController.uploadData(req.files.files, file_path, data._id, `update`)
-        if (upload.status == 400) {
-          response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
-        }
-      } */
       
       response.ok(data, res, `success update data`);
     } else {

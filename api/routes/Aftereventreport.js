@@ -2,6 +2,7 @@ const router = express.Router(),
 Aftereventreport = require('../controllers/AftereventreportController');
 
 router.get('/get_tropical', Aftereventreport.getTropicalCylone);
+router.get('/csv', Aftereventreport.csv);
 
 router.get('/', Aftereventreport.getAllData);
 router.get('/:id', Aftereventreport.getData);

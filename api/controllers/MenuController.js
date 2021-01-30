@@ -1,8 +1,16 @@
-const Model = require('../models/menu');
+const Model = require('../models/menu'),
+  ApiController = require('./ApiController');
 
 MenuController = {
   getAllData: async function (req, res) {
     let err, find, fields = [], data = [], sort_data = { order: 1 };
+                         
+    //CHECK HEADERS
+    let checkHeaders = await ApiController.checkHeaders(req.headers)
+    if (checkHeaders.status == 400) {
+      return response.error(400, `Error when check headers cyclonecitra`, res, checkHeaders.message);
+    }
+
     [err, find] = await flatry( Model.find({ is_delete: false }, `name route order is_admin is_super_admin sub_menu`).sort( sort_data ));
     if (err) {
       console.log(err.stack);
@@ -40,6 +48,13 @@ MenuController = {
 
   getData: async function (req, res) {
     let err, data, { id } = req.params;
+                         
+    //CHECK HEADERS
+    let checkHeaders = await ApiController.checkHeaders(req.headers)
+    if (checkHeaders.status == 400) {
+      return response.error(400, `Error when check headers cyclonecitra`, res, checkHeaders.message);
+    }
+
     [err, data] = await flatry( Model.findOne({ is_delete: false, _id: id }));
     if (err) {
       console.log(err.stack);

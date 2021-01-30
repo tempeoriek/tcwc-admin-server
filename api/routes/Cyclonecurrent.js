@@ -1,6 +1,7 @@
 const router = express.Router(),
 Cyclonecurrent = require('../controllers/CyclonecurrentController');
 
+router.get('/csv', Cyclonecurrent.csv);
 router.get('/get_tropical', Cyclonecurrent.getTropicalCylone);
 router.get('/count_by_year', Cyclonecurrent.countByYear);
 router.get('/count_by_month', Cyclonecurrent.countByMonth);

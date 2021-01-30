@@ -42,7 +42,7 @@ CyclogenesischecksheetController = {
           let n = str.indexOf(`pdf`);
           let path = str.substring(n-1, str.length)
           let obj = { name: name_pdf, path, type: `pdf`}
-          upload = await UploadController.createPDF(obj, file_path, id, `create`)
+          upload = await UploadController.createExternalFile(obj, file_path, id, `create`)
           if (upload.status == 400) {
             response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
           }
@@ -57,6 +57,13 @@ CyclogenesischecksheetController = {
 
   getAllData: async function (req, res) {
     let err, find, fields = [], data = [];
+    
+    //CHECK HEADERS
+    let checkHeaders = await ApiController.checkHeaders(req.headers)
+    if (checkHeaders.status == 400) {
+      return response.error(400, `Error when check headers cyclonecitra`, res, checkHeaders.message);
+    }
+
     [err, find] = await flatry( Model.find({ is_delete: false }));
     if (err) {
       console.log(err.stack);
@@ -66,9 +73,6 @@ CyclogenesischecksheetController = {
     if (find.length > 0) {
       fields.push(
         { key: 'kode_bibit', label: 'Kode Bibit', sortable: true },
-        // { key: 'date', label: 'Date Time', sortable: true },
-        { key: 'longitude', label: 'Longitude', sortable: true },
-        { key: 'latitude', label: 'Latitude', sortable: true}, 
         { key: 'actions', label: 'Actions' }
       );
 
@@ -77,12 +81,6 @@ CyclogenesischecksheetController = {
         data.push({
           _id: temp._id,
           kode_bibit: (temp.kode_bibit) ? temp.kode_bibit : `-`,
-          date: (temp.date) ? moment(temp.date).format(`DD-MM-YYYY`) : `-`,
-          time: (temp.time) ? temp.time : `-`,
-          latitude: (temp.latitude) ? temp.latitude : `-`,
-          longitude: (temp.longitude) ? temp.longitude : `-`,
-          latitude_dd: (temp.latitude_dd) ? temp.latitude_dd : `-`,
-          longitude_dd: (temp.longitude_dd) ? temp.longitude_dd : `-`,
         })
       }
       
@@ -94,6 +92,13 @@ CyclogenesischecksheetController = {
 
   getData: async function (req, res) {
     let err, data, { id } = req.params, child_fields = [], childs = [];
+    
+    //CHECK HEADERS
+    let checkHeaders = await ApiController.checkHeaders(req.headers)
+    if (checkHeaders.status == 400) {
+      return response.error(400, `Error when check headers cyclonecitra`, res, checkHeaders.message);
+    }
+
     [err, data] = await flatry( Model.findOne({ is_delete: false, _id: id }) );
     if (err) {
       console.log(err.stack);
@@ -132,11 +137,9 @@ CyclogenesischecksheetController = {
   },
 
   createData: async function (req, res) {
-    console.log(req.body)
     if (Object.entries(req.body).length > 0) {
-      let {  kode_bibit , date, time, latitude, longitude } = req.body, err, data;
-      let convert = await ApiController.convert(latitude, longitude, `dd`);
-      let new_data = { kode_bibit , date, time, latitude, longitude, latitude_dd: convert.data.lat, longitude_dd: convert.data.lng };
+      let { kode_bibit } = req.body, err, data;
+      let new_data = { kode_bibit };
     
       //CREATE DATA
       [err, data] = await flatry( Model.create( new_data ) );
@@ -148,19 +151,9 @@ CyclogenesischecksheetController = {
       //UPLOAD FILE FOR MULTIPLE AND SINGLE UPLOAD FILE
       if (req.files && data && file_path) {
         let upload;
-        if (req.files.files.length >= 2) {
-          for (let i = 0 ; i < req.files.files.length ; i ++) {
-            let temp = req.files.files[i]
-            upload = await UploadController.uploadData(temp, file_path, data._id, `create`)
-            if (upload.status == 400) {
-              response.error(400, `Error when upload data in createData tropicalcyclone`, res, err);
-            }  
-          }
-        } else if (req.files.files.length == undefined) {
-          upload = await UploadController.uploadData(req.files.files, file_path, data._id, `create`)
-          if (upload.status == 400) {
-            response.error(400, `Error when upload data in createData tropicalcyclone`, res, err);
-          }
+        upload = await UploadController.chooseUploadData(req.files, file_path, data._id, `create`)
+        if (upload.status == 400) {
+          response.error(400, `Error when upload data in ${file_path}`, res, err);
         }
       }
 
@@ -172,9 +165,8 @@ CyclogenesischecksheetController = {
 
   updateData: async function (req, res) {
     if (Object.entries(req.body).length > 0 && Object.entries(req.params).length > 0) {
-      let {  kode_bibit , date, time, latitude, longitude } = req.body, { id } = req.params;
-      let convert = await ApiController.convert(latitude, longitude, `dd`);
-      let new_data = { kode_bibit , date, time, latitude, longitude, latitude_dd: convert.data.lat, longitude_dd: convert.data.lng }, err, data, 
+      let {  kode_bibit  } = req.body, { id } = req.params;
+      let new_data = { kode_bibit }, err, data, 
       filter = { _id: id, is_delete: false };
 
       //UPDATE DATA
@@ -186,9 +178,15 @@ CyclogenesischecksheetController = {
       
       //UPLOAD FILE
       if (req.files && data && file_path) {
-        let upload = await UploadController.uploadData(req.files.files, file_path, data._id, `update`)
+        let upload;
+        upload = await UploadController.chooseUploadData(req.files, file_path, data._id, `update`)
         if (upload.status == 400) {
-          response.error(400, `Error when upload data in createData tropicalcyclone`, res, err);
+          response.error(400, `Error when upload data in ${file_path}`, res, err);
+        }
+      } else {
+        let upload = await UploadController.deleteFile(data._id, file_path)
+        if (upload.status == 400) {
+          return response.error(400, `Error when delete empty file ${file_path}`, res, err);
         }
       }
 

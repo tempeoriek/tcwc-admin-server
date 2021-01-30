@@ -5,6 +5,10 @@ let link_schema = new Schema({
     type: String,
     default: null
   },
+  category: {
+    type: String,
+    default: null
+  },
   url: {
     type: String,
     default: null

@@ -1,8 +1,17 @@
-const Model = require('../models/cyclogenesis_checksheet_detail');
+const Model = require('../models/cyclogenesis_checksheet_detail'),
+  ApiController = require('./ApiController');
+
 
 CyclogenesischecksheetdetaildetailController = {
   getAllData: async function (req, res) {
     let err, find, fields = [], data = [];
+    
+    //CHECK HEADERS
+    let checkHeaders = await ApiController.checkHeaders(req.headers)
+    if (checkHeaders.status == 400) {
+      return response.error(400, `Error when check headers cyclonecitra`, res, checkHeaders.message);
+    }
+
     [err, find] = await flatry( Model.find({ is_delete: false }).populate('cyclogenesis_checksheet_id') );
     if (err) {
       console.log(err.stack);
@@ -22,6 +31,13 @@ CyclogenesischecksheetdetaildetailController = {
 
   getData: async function (req, res) {
     let err, data, { id } = req.params;
+    
+    //CHECK HEADERS
+    let checkHeaders = await ApiController.checkHeaders(req.headers)
+    if (checkHeaders.status == 400) {
+      return response.error(400, `Error when check headers cyclonecitra`, res, checkHeaders.message);
+    }
+
     [err, data] = await flatry( Model.findOne({ is_delete: false, _id: id })
       .populate(`result_id`, ['result', 'suggestion'])
     );
@@ -40,7 +56,7 @@ CyclogenesischecksheetdetaildetailController = {
   createData: async function (req, res) {
     if (Object.entries(req.body).length > 0) {
       let { 
-        cyclogenesis_checksheet_id, date, time, 
+        cyclogenesis_checksheet_id, date, time, latitude, longitude, 
         suspect_area_1, suspect_area_2, suspect_area_3, location_suspect_area,
         bec_current_a, bec_current_b, bec_current_c, bec_current_d, bec_current_e, bec_current_f,
         bec_current_g, bec_current_h, bec_current_i, bec_current_j, bec_trend_k, bec_trend_l,
@@ -48,8 +64,10 @@ CyclogenesischecksheetdetaildetailController = {
         development_circulation_2, development_circulation_3, development_circulation_4, development_circulation_5, 
         ddc_6, ddc_7, ddc_8, mw_9, mw_10
        } = req.body, err, data;
+      let convert = await ApiController.convert(latitude, longitude, `dms`);
       let new_data = { 
         cyclogenesis_checksheet_id, date, time,
+        latitude: convert.data.lat, longitude: convert.data.lng, latitude_dd: latitude, longitude_dd: longitude,
         suspect_area_1, suspect_area_2, suspect_area_3, location_suspect_area,
         bec_current_a, bec_current_b, bec_current_c, bec_current_d, bec_current_e, bec_current_f,
         bec_current_g, bec_current_h, bec_current_i, bec_current_j, bec_trend_k, bec_trend_l,
@@ -80,7 +98,7 @@ CyclogenesischecksheetdetaildetailController = {
   updateData: async function (req, res) {
     if (Object.entries(req.body).length > 0 && Object.entries(req.params).length > 0) {
       let { 
-        cyclogenesis_checksheet_id, date, time,
+        cyclogenesis_checksheet_id, date, time, latitude, longitude,
         suspect_area_1, suspect_area_2, suspect_area_3, location_suspect_area,
         bec_current_a, bec_current_b, bec_current_c, bec_current_d, bec_current_e, bec_current_f,
         bec_current_g, bec_current_h, bec_current_i, bec_current_j, bec_trend_k, bec_trend_l,
@@ -88,8 +106,10 @@ CyclogenesischecksheetdetaildetailController = {
         development_circulation_2, development_circulation_3, development_circulation_4, development_circulation_5, 
         ddc_6, ddc_7, ddc_8, mw_9, mw_10
        } = req.body, { id } = req.params;
+      let convert = await ApiController.convert(latitude, longitude, `dms`);
       let new_data = { 
         cyclogenesis_checksheet_id, date, time,
+        latitude: convert.data.lat, longitude: convert.data.lng, latitude_dd: latitude, longitude_dd: longitude,
         suspect_area_1, suspect_area_2, suspect_area_3, location_suspect_area,
         bec_current_a, bec_current_b, bec_current_c, bec_current_d, bec_current_e, bec_current_f,
         bec_current_g, bec_current_h, bec_current_i, bec_current_j, bec_trend_k, bec_trend_l,

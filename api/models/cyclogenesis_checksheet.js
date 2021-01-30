@@ -6,30 +6,6 @@ let cyclogenesis_checksheet_schema = new Schema({
     type: String,
     default: null
   },
-  date: {
-    type: Date,
-    default: Date.now
-  },
-  time: {
-    type: String,
-    default: null
-  },
-  latitude: {
-    type: String,
-    default: null
-  },
-  longitude: {
-    type: String,
-    default: null
-  },
-  latitude_dd: {
-    type: Float,
-    default: null
-  },
-  longitude_dd: {
-    type: Float,
-    default: null
-  },
 
   /* config */
   created_at: {

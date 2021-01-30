@@ -1,8 +1,58 @@
-const Model = require('../models/publication');
+const Model = require('../models/publication'),
+  file_path = `publication`,
+  ApiController = require('./ApiController');
 
 PublicationController = {
+  csv: async function (req, res) {
+    let obj = [],
+    fields = [
+      { value: 'author', label: 'Author'},
+      { value: 'en_title', label: 'Title (ENG)'},
+      { value: 'id_title', label: 'Title (IND)'},
+      { value: 'is_posted', label: 'Posted'}
+    ];
+
+    let [err, find] = await flatry(Model.find({ is_delete: false }, `author en_title id_title is_posted`));
+    if (err) {
+      return response.error(400, `Error when find data in csv ${file_path}`, res, err);
+    }
+
+    if (find.length>0) {
+      for (let i = 0 ; i < find.length; i++) {
+        let temp = find[i];
+        obj.push({
+          id_title: (temp.id_title) ? temp.id_title : `-`,
+          en_title: (temp.en_title) ? temp.en_title : `-`,
+          year: (temp.year) ? temp.year : `-`,
+          is_posted: (temp.is_posted) ? temp.is_posted : `-`,
+        });
+      }
+
+      let create_csv = await ApiController.generateCSV(obj, fields, file_path)
+      if (create_csv.status == 400) {
+        return response.error(400, `Error when create csv`, res, create_csv.message);
+      }
+      
+      let obj_upload = { name: create_csv.data.name, path: create_csv.data.path, type: `csv`}
+      let upload = await UploadController.createExternalFile(obj_upload, null, null, `create`)
+      if (upload.status == 400) {
+        return response.error(400, `Error when upload data csv ${file_path}`, res, err);
+      }
+      return response.ok(upload.data, res, `Success Create CSV File`, null);
+    } else {
+      return response.success(null, res, `Empty data`, null);
+    }
+  },
+  
   getAllData: async function (req, res) {
     let err, find, fields = [], data = [];
+                             
+    //CHECK HEADERS
+    let checkHeaders = await ApiController.checkHeaders(req.headers)
+    if (checkHeaders.status == 400) {
+      return response.error(400, `Error when check headers cyclonecitra`, res, checkHeaders.message);
+    }
+
     [err, find] = await flatry( Model.find({ is_delete: false }, `id_title en_title en_paragraph id_paragraph path year author url is_posted`));
     if (err) {
       console.log(err.stack);
@@ -12,13 +62,21 @@ PublicationController = {
     if (find.length > 0) {
       fields.push(
         { key: 'author', label: 'Author', sortable: true },
-        { key: 'en_title', label: 'Title', sortable: true },
-        { key: 'is_posted', label: 'Posted' },
+        { key: 'en_title', label: 'Title (ENG)', sortable: true },
+        { key: 'id_title', label: 'Title (IND)', sortable: true },
+        { key: 'is_posted', label: 'Posted', sortable: true, formatter: true, sortByFormatted: true, filterByFormatted: true}, 
         { key: 'actions', label: 'Actions', class: 'text-center w-15' }
       );
 
       for (let i = 0; i < find.length; i++) {
         let temp = find[i];
+        
+        //FIND FILE UPLOAD
+        let upload = await UploadController.getFile(file_path, temp._id);
+        if (upload.status == 400) {
+          return response.error(400, `Error when get all file in citra controller`, res, upload.messages);
+        }
+
         data.push({
           _id: temp._id,
           id_title: (temp.id_title) ? temp.id_title : `-`,
@@ -29,6 +87,10 @@ PublicationController = {
           year: (temp.year) ? temp.year: `-`,
           author: (temp.author) ? temp.author: `-`,
           url: (temp.url) ? temp.url: `-`,
+          is_posted: (temp.is_posted) ? temp.is_posted: `-`,
+          file_name: (upload.data) ? upload.data.name : null,
+          file_path: (upload.data) ? upload.data.path : null,
+          file_type: (upload.data) ? upload.data.type : null
         })
       }
 
@@ -40,13 +102,32 @@ PublicationController = {
 
   getData: async function (req, res) {
     let err, data, { id } = req.params;
+                             
+    //CHECK HEADERS
+    let checkHeaders = await ApiController.checkHeaders(req.headers)
+    if (checkHeaders.status == 400) {
+      return response.error(400, `Error when check headers cyclonecitra`, res, checkHeaders.message);
+    }
+
     [err, data] = await flatry( Model.findOne({ is_delete: false, _id: id }));
     if (err) {
       console.log(err.stack);
       response.error(400, `Error when findOne data in getdata publication`, res, err);
     }
+    
+    //UPLOAD FILE
+    // let upload = await UploadController.getFile(file_path, id)
+    let upload = await UploadController.getMultipleFile(file_path, id)
+    if (upload.status == 400 && !upload.data) {
+      response.error(400, `Error when upload data in createData publication`, res, err);
+    }
 
     if (data) {
+      //UPLOAD FILE
+      data = {
+        content: data,
+        files : (upload.data.length > 0) ? upload.data : null
+      }
       response.ok(data, res, `success get all data`);
     } else {
       response.success(data, res, `success get all data but data is empty`);
@@ -64,6 +145,15 @@ PublicationController = {
       if (err) {
         console.log(err.stack);
         response.error(400, `Error when create data in createData publication`, res, err);
+      }
+
+      //UPLOAD FILE
+      if (req.files && data && file_path) {
+        let upload;
+        upload = await UploadController.chooseUploadData(req.files, file_path, data._id, `create`)
+        if (upload.status == 400) {
+          response.error(400, `Error when upload data in ${file_path}`, res, err);
+        }
       }
 
       response.ok(data, res, `success create data`);
@@ -86,6 +176,20 @@ PublicationController = {
         response.error(400, `Error when findoneandupdate data in updatedata publication`, res, err);
       }
 
+      //UPLOAD FILE SINGLE FILE ONLY
+      if (req.files && data && file_path) {
+        let upload;
+        upload = await UploadController.chooseUploadData(req.files, file_path, data._id, `update`)
+        if (upload.status == 400) {
+          response.error(400, `Error when upload data in ${file_path}`, res, err);
+        }
+      } else {
+        let upload = await UploadController.deleteFile(data._id, file_path)
+        if (upload.status == 400) {
+          return response.error(400, `Error when delete empty file ${file_path}`, res, err);
+        }
+      }
+
       response.ok(data, res, `success update data`);
     } else {
       response.error(400, `Data not completed`, res);
@@ -103,6 +207,14 @@ PublicationController = {
       if (err) {
         console.log(err.stack);
         response.error(400, `Error when findOneAndUpdate data in deleteData publication`, res, err);
+      }
+
+      //UPLOAD FILE
+      if (data) {
+        let upload = await UploadController.deleteFile(data._id, file_path)
+        if (upload.status == 400) {
+          response.error(400, `Error when upload data in createData publication`, res, err);
+        }
       }
 
       response.ok(data, res, `success delete data`);

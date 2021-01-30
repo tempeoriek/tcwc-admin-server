@@ -1,10 +1,18 @@
 const Model = require('../models/cyclone_citra'),
   UploadController = require('./UploadController'),
+  ApiController = require('./ApiController'),
   file_path = `cyclonecitra`;
 
 CyclonecitraController = {
   getAllData: async function (req, res) {
     let err, find, fields = [], data = [];
+    
+    //CHECK HEADERS
+    let checkHeaders = await ApiController.checkHeaders(req.headers)
+    if (checkHeaders.status == 400) {
+      return response.error(400, `Error when check headers cyclonecitra`, res, checkHeaders.message);
+    }
+
     [err, find] = await flatry( Model.find({ is_delete: false }));
     if (err) {
       console.log(err.stack);
@@ -47,6 +55,13 @@ CyclonecitraController = {
 
   getData: async function (req, res) {
     let err, data, { id } = req.params;
+    
+    //CHECK HEADERS
+    let checkHeaders = await ApiController.checkHeaders(req.headers)
+    if (checkHeaders.status == 400) {
+      return response.error(400, `Error when check headers cyclonecitra`, res, checkHeaders.message);
+    }
+
     [err, data] = await flatry( Model.findOne({ is_delete: false, _id: id }));
     if (err) {
       console.log(err.stack);
@@ -96,11 +111,12 @@ CyclonecitraController = {
         }
       }
 
-      //UPLOAD FILE
+      //UPLOAD FILE SINGLE FILE ONLY
       if (req.files && data && file_path) {
-        let upload = await UploadController.uploadData(req.files.files, file_path, data._id, `create`)
+        let upload;
+        upload = await UploadController.chooseUploadData(req.files, file_path, data._id, `create`)
         if (upload.status == 400) {
-          response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
+          response.error(400, `Error when upload data in ${file_path}`, res, err);
         }
       }
 
@@ -133,11 +149,17 @@ CyclonecitraController = {
         }
       }
 
-      //UPLOAD FILE
+      //UPLOAD FILE SINGLE FILE ONLY
       if (req.files && data && file_path) {
-        let upload = await UploadController.uploadData(req.files.files, file_path, data._id, `update`)
+        let upload;
+        upload = await UploadController.chooseUploadData(req.files, file_path, data._id, `update`)
         if (upload.status == 400) {
-          response.error(400, `Error when upload data in createData cyclonecitra`, res, err);
+          return response.error(400, `Error when upload data in ${file_path}`, res, err);
+        }
+      } else {
+        let upload = await UploadController.deleteFile(data._id, file_path)
+        if (upload.status == 400) {
+          return response.error(400, `Error when delete empty file ${file_path}`, res, err);
         }
       }
 

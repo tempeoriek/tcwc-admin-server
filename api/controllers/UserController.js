@@ -1,8 +1,17 @@
-const Model = require('../models/user');
+const Model = require('../models/user'),
+  ApiController = require('./ApiController');
+
 
 UserController = {
   getAllData: async function (req, res) {
     let err, find, fields = [], data = [];
+            
+    //CHECK HEADERS
+    let checkHeaders = await ApiController.checkHeaders(req.headers)
+    if (checkHeaders.status == 400) {
+      return response.error(400, `Error when check headers cyclonecitra`, res, checkHeaders.message);
+    }
+
     [err, find] = await flatry( Model.find({ is_delete: false }, `username is_view is_admin is_super_admin`));
     if (err) {
       console.log(err.stack);
@@ -37,6 +46,13 @@ UserController = {
 
   getData: async function (req, res) {
     let err, data, { id } = req.params;
+            
+    //CHECK HEADERS
+    let checkHeaders = await ApiController.checkHeaders(req.headers)
+    if (checkHeaders.status == 400) {
+      return response.error(400, `Error when check headers cyclonecitra`, res, checkHeaders.message);
+    }
+
     [err, data] = await flatry( Model.findOne({ is_delete: false, _id: id }));
     if (err) {
       console.log(err.stack);

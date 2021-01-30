@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    padding: 20px;
+  }
+
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    font-size: 11px;
+    width: 100%;
+  }
+
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+  .inside-table {
+    font-size: 8px;
+  }
+</style>
+</head>
+
+<body>
+  <h2>Tropical Cyclone</h2>
+
+  <table>
+    <tr>
+      <th>TC Name</th>
+      <th>Month</th>
+      <th>Year</th>
+      <th>Area</th>
+      <th>Coordinates</th>
+    </tr>
+    <% for(var i=0; i < data.length; i++) { %>
+      <tr>
+        <td><%= data[i].parent.tc_name %></td>
+        <td><%= data[i].parent.month %></td>
+        <td><%= data[i].parent.year %></td>
+        <td><%= data[i].parent.area %></td>
+        <td>
+          <ul>
+            <% if(data[i].child.length > 0){ %>
+              <table class="inside-table">
+                <tr>
+                  <th>Datetime</th>
+                  <th>Latitude</th>
+                  <th>Longitude</th>
+                  <th>Pressure</th>
+                  <th>Max Wind</th>
+                </tr>
+                <% for(var j=0; j < data[i].child.length; j++) { %>
+                  <tr>
+                    <td><%=data[i].child[j].datetime%></td>
+                    <td><%=data[i].child[j].latitude_dd%></td>
+                    <td><%=data[i].child[j].longitude_dd%></td>
+                    <td><%=data[i].child[j].pressure%></td>
+                    <td><%=data[i].child[j].max_wind_speed%></td>
+                    
+                  </tr>
+                <% } %>
+              </table>
+            <% } else{ %>  
+              <li>Coordinate empty</li>
+            <% } %>
+          </ul>  
+        </td>
+      </tr>
+    <% } %>
+  </table>
+</body>
+
+</html>

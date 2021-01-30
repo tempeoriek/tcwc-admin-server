@@ -1,8 +1,16 @@
-const Model = require('../models/cyclone_name');
+const Model = require('../models/cyclone_name'),
+  ApiController = require('./ApiController');
 
 CyclonenameController = {
   getAllData: async function (req, res) {
     let err, find, fields = [], data = [];
+         
+    //CHECK HEADERS
+    let checkHeaders = await ApiController.checkHeaders(req.headers)
+    if (checkHeaders.status == 400) {
+      return response.error(400, `Error when check headers cyclonecitra`, res, checkHeaders.message);
+    }
+
     [err, find] = await flatry( Model.find({ is_delete: false }, `list_a list_b`));
     if (err) {
       console.log(err.stack);
@@ -33,6 +41,13 @@ CyclonenameController = {
 
   getData: async function (req, res) {
     let err, data, { id } = req.params;
+         
+    //CHECK HEADERS
+    let checkHeaders = await ApiController.checkHeaders(req.headers)
+    if (checkHeaders.status == 400) {
+      return response.error(400, `Error when check headers cyclonecitra`, res, checkHeaders.message);
+    }
+
     [err, data] = await flatry( Model.findOne({ is_delete: false, _id: id }));
     if (err) {
       console.log(err.stack);

@@ -1,9 +1,13 @@
 const router = express.Router(),
 Tropicalcyclone = require('../controllers/TropicalcycloneController');
 
+router.get('/csv', Tropicalcyclone.csv);
 router.get('/read', Tropicalcyclone.read);
-router.post('/approve', Tropicalcyclone.approve);
 router.get('/remove', Tropicalcyclone.remove);
+router.get('/show', Tropicalcyclone.show);
+
+router.post('/pdf', Tropicalcyclone.pdf);
+router.post('/approve', Tropicalcyclone.approve);
 
 router.get('/', Tropicalcyclone.getAllData);
 router.get('/:id', Tropicalcyclone.getData);

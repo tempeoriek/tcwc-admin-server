@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "async": "^3.2.0",
@@ -22,6 +22,7 @@
     "fs-extra": "^9.0.1",
     "glob": "^7.1.6",
     "html-pdf": "^2.2.0",
+    "json2csv": "^5.0.5",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.31",

@@ -1,5 +1,5 @@
 Response_data = {
-	send: (values) => {
+	send: (values, res) => {
 		res.json(values);
 		res.end();
 	},
