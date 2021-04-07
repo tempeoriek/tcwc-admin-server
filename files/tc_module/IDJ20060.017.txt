@@ -1,0 +1,38 @@
+EGC:2:1:24:09S091E900:11:00 
+THIS WARNING IS PROVIDED BY TROPICAL CYCLONE WARNING CENTRE JAKARTA 
+AND ISSUED FOR THE CIRCULAR AREA OF METAREA XIXIXIPORBY JMA
+
+INDONESIAN AGENCY FOR METEOROLOGY CLIMATOLOGY AND GEOPHYSICS
+Tropical Cyclone Warning Centre (TCWC) Jakarta
+
+SECURITE
+
+            OCEAN GALE AND STORM WARNING
+
+OCEAN GALE AND STORM WARNING FOR AREA 0 - 10 S, 90 - 125 E
+Issued by JAKARTA TROPICAL CYCLONE WARNING CENTRE
+At: 08:42 UTC 28 April 2018
+
+SITUATION
+At 06:00 UTC Tropical Depression 1002 hPa at 8,7 S 91,0 E moving west southwest at 35 knots.
+
+This tropical depression may develop into a Tropical Cyclone in the next 6-12 hours.
+
+
+FORECAST
+Clockwise winds reaching 25 knots expected to increase to 35 knots in the next 24 hours.
+High seas may exceed Rough to Very Rough scale and rising swell.
+
+18:00 UTC 28 April:  Within 30 nautical miles of 9,9 S 88,7 E
+                        Central pressure 1001 hPa.
+                        Wind speed reaching 30 knots near centre.
+06:00 UTC 29 April: Within 60 nautical miles of 11,2 S 86,4 E
+                        Central pressure 1000 hPa.
+                        Wind speed reaching 35 knots near centre.
+
+REMARKS
+Ships please transmit 3-hourly weather reports.
+Next warning will be issued by 13:00 UTC 28 April 2018.
+
+
+Tropical Cyclone Warning Centre JAKARTA

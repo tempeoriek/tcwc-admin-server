@@ -1,0 +1,38 @@
+EGC:2:2:24:09S099E900:11:00 
+THIS WARNING IS PROVIDED BY TROPICAL CYCLONE WARNING CENTRE JAKARTA 
+AND ISSUED FOR THE CIRCULAR AREA OF METAREA XI (POR) BY JMA
+
+INDONESIAN AGENCY FOR METEOROLOGY CLIMATOLOGY AND GEOPHYSICS
+Tropical Cyclone Warning Centre (TCWC) Jakarta
+
+SECURITE
+
+            OCEAN GALE AND STORM WARNING
+
+OCEAN GALE AND STORM WARNING FOR AREA 0 - 10 S, 90 - 125 E
+Issued by JAKARTA TROPICAL CYCLONE WARNING CENTRE
+At: 00:22 UTC 07 May 2020
+
+SITUATION
+At 18:00 UTC BIBIT 96S 1004 hPa was within  nautical miles of 8.5 S 98.8 E moving northwest at 5 knots.
+
+This tropical depression may develop into a Tropical Cyclone in the next 6-12 hours.
+
+FORECAST
+Clockwise winds reaching 30 knots expected to decrease to 25 knots in the next 24 hours.
+High seas may exceed Rough to Very Rough scale and rising swell.
+
+06:00 UTC 07 May:  Within 30 nautical miles of 8.7 S 97.4 E
+                        Central pressure 1004 hPa.
+                        Wind speed reaching 30 knots near centre.
+18:00 UTC 07 May: Within 60 nautical miles of 8.7 S 96.1 E
+                        Central pressure 1006 hPa.
+                        Wind speed reaching 25 knots near centre.
+
+REMARKS
+Ships please transmit 3-hourly weather reports.
+Next warning will be issued by 07:00 UTC 07 May 2020.
+
+No further warnings will be issued unless the situation changes.
+
+Tropical Cyclone Warning Centre JAKARTA

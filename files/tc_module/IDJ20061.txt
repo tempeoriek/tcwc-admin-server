@@ -1,0 +1,36 @@
+EGC:2:1:24:08S101E900:11:00 
+THIS WARNING IS PROVIDED BY TROPICAL CYCLONE WARNING CENTRE JAKARTA 
+AND ISSUED FOR THE CIRCULAR AREA OF METAREA XI (POR) BY JMA
+
+INDONESIAN AGENCY FOR METEOROLOGY CLIMATOLOGY AND GEOPHYSICS
+Tropical Cyclone Warning Centre (TCWC) Jakarta
+
+SECURITE
+
+            OCEAN GALE AND STORM WARNING
+
+OCEAN GALE AND STORM WARNING FOR AREA 0 - 10 S, 90 - 125 E
+Issued by JAKARTA TROPICAL CYCLONE WARNING CENTRE
+At: 07:10 UTC 29 November 2017
+
+SITUATION
+At 06:00 UTC Tropical Depression TD96S 1003 hPa was within 30 nautical miles of 8,5 S 101,0 E moving east at 4 knots.
+
+This tropical depression may develop into a Tropical Cyclone in the next 6-12 hours.
+
+FORECAST
+Clockwise winds reaching 25 knots expected to decrease to 40 knots in the next 24 hours.
+High seas may exceed Rough to Very Rough scale and rising swell.
+
+18:00 UTC 29 November:  Within 60 nautical miles of 8,9 S 101,0 E
+                        Central pressure 1002 hPa.
+                        Wind speed reaching 35 knots near centre.
+06:00 UTC 30 November: Within 90 nautical miles of 9,5 S 102,8 E
+                        Central pressure 1000 hPa.
+                        Wind speed reaching 40 knots near centre.
+
+REMARKS
+Ships please transmit 3-hourly weather reports.
+Next warning will be issued by 13:00 UTC 29 November 2017.
+
+Tropical Cyclone Warning Centre JAKARTA

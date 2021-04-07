@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tc>
+	<NoSystem>2</NoSystem>
+	<Name>BULAN</Name>
+	<Time>11/07/2020 pukul 17:00 WIB</Time>
+	<Position>6.2LS, 124.5BT (sekitar 540 km timur timur laut from Kupang)</Position>
+	<Movement>barat baratdaya, kecepatan 2 knots (4 km/jam) bergerak menuju wilayah Indonesia</Movement>
+	<MaxWind>40 knots (55 km/jam)</MaxWind>
+	<Impact>Siklon Tropis BULAN memberikan dampak terhadap cuaca di Indonesia berupa:
+- Hujan dengan intensitas ringan - sedang berpeluang terjadi di wilayah Maluku dan Timor Leste.
+- Angin dengan kecepatan diatas 20 knot atau 37 km/jam berpeluang terjadi di Maluku bagian barat daya dan Timor Leste.
+- Gelombang dengan ketinggian 2.50 - 4.0 m berpeluang terjadi di Selat Bali - Selat Lombok - Selat Alas bagian selatan, Perairan selatan P.Sumba - P.Sawu, Laut Sawu, Samudra Hindia Selatan Jawa Timur hingga NTT, Laut Arafuru bagian tengah.
+</Impact>
+</tc>

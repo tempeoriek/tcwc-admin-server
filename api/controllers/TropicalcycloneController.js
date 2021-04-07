@@ -487,8 +487,8 @@ TropicalcycloneController = {
 
   createData: async function (req, res) {
     if (Object.entries(req.body).length > 0) {
-      let { tc_name, month, year, area, is_current, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning } = req.body, err, data;
-      let new_data = { tc_name, month, year, area, is_current, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning };
+      let { tc_name, month, year, area, description, is_current, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning } = req.body, err, data;
+      let new_data = { tc_name, month, year, area, description, is_current, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning };
       
       let filter = [ { att : `tc_name`, type: `string`, value: tc_name}, { att : `year`, type: `string`, value: year}, { att : `is_delete`, type: `boolean`, value: false}];
       let redundant = await ApiController.redundant(Model, filter, null, false, null, `create`, true);
@@ -521,8 +521,8 @@ TropicalcycloneController = {
 
   updateData: async function (req, res) {
     if (Object.entries(req.body).length > 0 && Object.entries(req.params).length > 0) {
-      let { tc_name, month, year, area, is_current, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning } = req.body, { id } = req.params;
-      let new_data = {tc_name, month, year, area, is_current, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning }, err, data,
+      let { tc_name, month, year, description, area, is_current, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning } = req.body, { id } = req.params;
+      let new_data = {tc_name, month, year, description, area, is_current, techincal_bulletin, public_info_bulletin, ocean_gale_storm_warn, track_impact, coastal_zone, extreme_weather, gale_warning }, err, data,
         filter = { _id: id, is_delete: false };
       let redundant_filter = [ { att : `_id`, type: `not-id`, value: id}, { att : `tc_name`, type: `string`, value: tc_name}, { att : `year`, type: `string`, value: year}, { att : `is_delete`, type: `boolean`, value: false}];
 
@@ -550,10 +550,13 @@ TropicalcycloneController = {
         }
         
         for (const [key, value] of Object.entries(req.body)) {
-          if (key.includes(`file`)) {
-            let upload = await UploadController.deleteFile(value, key)
-            if (upload.status == 400) {
-              return response.error(400, `Error when delete empty file ${file_path}`, res, err);
+          if (key.includes(`file`) || key.includes(file_path)) {
+            let attr = key.includes(`file`)  ? key : key.includes(file_path) ? file_path : null;
+            if (value != `null` && attr) {
+              let upload = await UploadController.deleteFile(value, attr)
+              if (upload.status == 400) {
+                return response.error(400, `Error when delete empty file ${file_path}`, res, err);
+              }
             }
           }
         }

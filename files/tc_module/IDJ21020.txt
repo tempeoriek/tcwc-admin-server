@@ -1,0 +1,65 @@
+IDJ21020
+BADAN METEOROLOGI KLIMATOLOGI DAN GEOFISIKA
+Tropical Cyclone Warning Centre (TCWC) Jakarta
+
+            BULETIN TEKNIS SIKLON TROPIS
+            
+Dikeluarkan oleh TROPICAL CYCLONE WARNING CENTRE JAKARTA
+Pada: 02:17 UTC 30/08/2020
+Digunakan hanya sebagai pertimbangan pembuatan prakiraan cuaca, tidak untuk disebarluaskan secara langsung kepada masyarakat.
+
+System: 1
+Storm ID: 10W
+
+SIKLON TROPIS: MAYSAK
+Data pada: 30/0000 UTC
+Lintang: 17.2LU
+Bujur: 129.0BT
+Akurasi Posisi: sekitar    
+Arah gerak: stasioner
+Kecepatan gerak: cenderung tidak bergerak
+Arah 1: Dari Tahuna
+   Pada  +0: 860 mil (1590 km) utara timur laut
+   Pada +12: 980 mil (1810 km) utara timur laut
+   Pada +24: 1130 mil (2080 km) utara
+Arah 2: Dari Manado
+   Pada  +0: 970 mil (1800 km) utara timur laut
+
+Angin Maksimum 10-Menit: 75 knots (140 km/jam)
+Gust Maksimum 3-detik: 105 knots (195 km/jam)
+Tekanan dipusat siklon: 965 hPa
+Intensitas: Typhoon
+24 jam Intensitas: Typhoon
+
+Radius angin 34-knot pada kuadran TL: 240 mil (445 km)
+Radius angin 34-knot pada kuadran Tg: 240 mil (445 km)
+Radius angin 34-knot pada kuadran BD: 240 mil (445 km)
+Radius angin 34-knot pada kuadran BL: 240 mil (445 km)
+
+Radius angin 48-knot pada kuadran TL: 50 mil (95 km)
+Radius angin 48-knot pada kuadran Tg: 50 mil (95 km)
+Radius angin 48-knot pada kuadran BD: 50 mil (95 km)
+Radius angin 48-knot pada kuadran BL: 50 mil (95 km)
+
+
+DATA PRAKIRAAN
+Tgl./Jam    : Posisi          :   Akurasi: Kec.Angin Max:Tekanan dipusat: Gust
+(UTC)       : derajat         :  mil (km): knots(km/jam):            hPa: knots(km/jam):
++12: 30/1200:  19.2LU  129.0BT:          :    085  (155):            950:    120  (220)
++24: 31/0000:  21.9LU  128.1BT:          :    095  (175):            935:    135  (250)
++48: 01/0000:  26.4LU  125.8BT:          :    100  (185):            925:    140  (260)
++72: 02/0000:  29.7LU  126.2BT:          :    090  (165):            940:    130  (240)
+
+Daerah Siaga Cuaca Buruk:  
+Daerah Waspada Cuaca Buruk:  
+Peringatan Dini Angin Kencang:  
+
+KETERANGAN TEKNIS
+KETERANGAN TEKNIS
+Untuk informasi lebih lanjut hubungi (021) 6546315/18
+
+
+DAMPAK
+Siklon Tropis MAYSAK  tidak memberikan dampak terhadap cuaca di Indonesia.
+
+Buletin berikutnya untuk sistem ini akan dikeluarkan pada: 30/0700 UTC oleh Jakarta TCWC.

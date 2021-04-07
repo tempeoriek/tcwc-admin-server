@@ -1,0 +1,36 @@
+EGC:2:1:24:08S132E900:11:00 
+THIS WARNING IS PROVIDED BY TROPICAL CYCLONE WARNING CENTRE JAKARTA 
+AND ISSUED FOR THE CIRCULAR AREA OF METAREA XI (POR) BY JMA
+
+INDONESIAN AGENCY FOR METEOROLOGY CLIMATOLOGY AND GEOPHYSICS
+Tropical Cyclone Warning Centre (TCWC) Jakarta
+
+SECURITE
+
+            OCEAN GALE AND STORM WARNING
+
+OCEAN GALE AND STORM WARNING FOR AREA 0 - 10 S, 90 - 125 E
+Issued by JAKARTA TROPICAL CYCLONE WARNING CENTRE
+At: 00:40 UTC 10 April 2017
+
+SITUATION
+At 18:00 UTC Tropical Depression 1004 hPa was within 40 nautical miles of 8,3 S 132,5 E moving east southeast at 7 knots.
+
+This tropical depression may develop into a Tropical Cyclone in the next 6-12 hours.
+
+AREA AFFECTED
+Within 182 nautical miles of the centre.
+
+
+FORECAST
+Clockwise winds reaching 25 knots expected to increas to 40 knots in the next 24 hours.
+High seas may exceed Rough to Very Rough scale and rising swell.
+
+06:00 UTC 10 April:  Within 70 nautical miles of 9,2 S 131,9 E
+18:00 UTC 10 April: Within 100 nautical miles of 10,2 S 130,0 E
+                        
+REMARKS
+Ships please transmit 3-hourly weather reports.
+Next warning will be issued by 07:00 UTC 10 April 2017.
+
+Tropical Cyclone Warning Centre JAKARTA

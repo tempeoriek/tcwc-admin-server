@@ -1,0 +1,62 @@
+IDJ21021
+BADAN METEOROLOGI KLIMATOLOGI DAN GEOFISIKA
+Tropical Cyclone Warning Centre (TCWC) Jakarta
+
+            BULETIN TEKNIS SIKLON TROPIS
+            
+Dikeluarkan oleh TROPICAL CYCLONE WARNING CENTRE JAKARTA
+Pada: 15:21 UTC 24/02/2020
+Digunakan hanya sebagai pertimbangan pembuatan prakiraan cuaca, tidak untuk disebarluaskan secara langsung kepada masyarakat.
+
+System: 2
+Storm ID: 08U
+
+SIKLON TROPIS: FERDINAND
+Data pada: 24/1200 UTC
+Lintang: 14.6LS
+Bujur: 117.4BT
+Akurasi Posisi: sekitar 30 mil (55 km)
+Arah gerak: selatan barat daya (206 derajat)
+Kecepatan gerak: 4 knots (8 km/jam)
+Arah 1: Dari Waingapu
+   Pada  +0: 340 mil (630 km) selatan barat daya
+   Pada +12: 390 mil (720 km) selatan barat daya
+   Pada +24: 420 mil (780 km) barat daya
+Arah 2: Dari Sabu
+   Pada  +0: 360 mil (660 km) barat daya
+
+Angin Maksimum 10-Menit: 45 knots (85 km/jam)
+Gust Maksimum 3-detik: 65 knots (120 km/jam)
+Tekanan dipusat siklon: 992 hPa
+Intensitas: Gale
+24 jam Intensitas: Hurricane
+
+Radius angin 34-knot pada kuadran TL: 60 mil (110 km)
+Radius angin 34-knot pada kuadran Tg: 60 mil (110 km)
+Radius angin 34-knot pada kuadran BD: 60 mil (110 km)
+Radius angin 34-knot pada kuadran BL: 60 mil (110 km)
+
+Radius angin Maksimum:    
+Dvorak Intensity: T3.0/3.0/D1.0/24HRS SST: D0.0/6HRS
+
+DATA PRAKIRAAN
+Tgl./Jam    : Posisi          :   Akurasi: Kec.Angin Max:Tekanan dipusat: Gust
+(UTC)       : derajat         :  mil (km): knots(km/jam):            hPa: knots(km/jam):
++12: 25/0000:  15.1LS  116.7BT: 055 (100):    060  (110):            981:    085  (155)
++24: 25/1200:  15.3LS  116.1BT: 080 (150):    070  (130):            973:    100  (185)
++36: 26/0000:  15.5LS  115.3BT: 100 (185):    080  (150):            965:    110  (205)
++48: 26/1200:  15.8LS  114.6BT: 120 (220):    075  (140):            969:    105  (195)
++60: 27/0000:  16.0LS  113.9BT: 140 (260):    055  (100):            985:    075  (140)
++72: 27/1200:  16.3LS  113.4BT: 155 (285):    045  (085):            991:    065  (120)
+
+
+KETERANGAN TEKNIS
+Untuk informasi lebih lanjut hubungi (021) 6546315/18
+
+DAMPAK
+Siklon Tropis FERDINAND memberikan dampak terhadap cuaca di Indonesia berupa :
+- Hujan dengan intensitas sedang - lebat di wilayah Jawa, Bali, Nusa Tenggara Barat dan Nusa Tenggara Timur.
+- Gelombang Laut dengan ketinggian 1.25 - 2.5 meter di Samudera Hindia selatan Kupang - P. Rote, Perairan selatan Kupang - P. Rote, Laut Sawu bagian utara, Laut Sawu bagian selatan, Selat Sumba bagian barat, Selat Sape bagian Selatan.
+- Gelombang Laut dengan ketinggian 2.5 - 4 meter di Perairan  Perairan selatan Jawa Timur, Samudera Hindia selatan Jawa Timur - selatan NTB, Samudera Hindia selatan P. Sumba - P. Sabu.
+
+Buletin berikutnya untuk sistem ini akan dikeluarkan pada: 25/0000 UTC oleh Jakarta TCWC.

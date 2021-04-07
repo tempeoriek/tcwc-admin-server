@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tc>
+	<NoSystem>1</NoSystem>
+	<Name>LILI</Name>
+	<Time>10/05/2019 pukul 19:00 WIB</Time>
+	<Position>9.2LS, 128.5BT (sekitar 540 km timur timur laut from Kupang)</Position>
+	<Movement>barat baratdaya, kecepatan 2 knots (4 km/jam) bergerak menuju wilayah Indonesia</Movement>
+	<MaxWind>30 knots (55 km/jam)</MaxWind>
+	<Impact>Siklon Tropis LILI memberikan dampak terhadap cuaca di Indonesia berupa:
+- Hujan dengan intensitas ringan - sedang berpeluang terjadi di wilayah Maluku dan Timor Leste.
+- Angin dengan kecepatan diatas 20 knot atau 37 km/jam berpeluang terjadi di Maluku bagian barat daya dan Timor Leste.
+- Gelombang dengan ketinggian 2.50 - 4.0 m berpeluang terjadi di Selat Bali - Selat Lombok - Selat Alas bagian selatan, Perairan selatan P.Sumba - P.Sawu, Laut Sawu, Samudra Hindia Selatan Jawa Timur hingga NTT, Laut Arafuru bagian tengah.
+</Impact>
+</tc>

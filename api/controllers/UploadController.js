@@ -283,7 +283,7 @@ UploadController = {
       if (upload.status == 400) {
         response.error(400, `Error when upload data in upload controller`, res, err);
       }
-      data = {url: `http://api.tcwc.tivedemo.com/markdown/${file_path}/${upload.data.name}`}
+      data = {url: `https://tcwcusercontent.bmkg.go.id/markdown/${file_path}/${upload.data.name}`}
     }
     response.send(data, res);
   },

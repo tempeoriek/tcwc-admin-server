@@ -183,12 +183,19 @@ AnnualreportController = {
         let upload;
         upload = await UploadController.chooseUploadData(req.files, file_path, data._id, `update`)
         if (upload.status == 400) {
-          response.error(400, `Error when upload data in ${file_path}`, res, err);
+          return response.error(400, `Error when upload data in ${file_path}`, res, err);
         }
-      } else {
-        let upload = await UploadController.deleteFile(data._id, file_path)
-        if (upload.status == 400) {
-          return response.error(400, `Error when delete empty file ${file_path}`, res, err);
+      }
+
+      for (const [key, value] of Object.entries(req.body)) {
+        if (key.includes(`file`) || key.includes(file_path)) {
+          let attr = key.includes(`file`)  ? key : key.includes(file_path) ? file_path : null;
+          if (value != `null` && attr) {
+            let upload = await UploadController.deleteFile(value, attr)
+            if (upload.status == 400) {
+              return response.error(400, `Error when delete empty file ${file_path}`, res, err);
+            }
+          }
         }
       }
 

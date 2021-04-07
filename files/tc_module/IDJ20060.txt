@@ -1,0 +1,41 @@
+EGC:2:2:24:10S093E900:11:00 
+THIS WARNING IS PROVIDED BY TROPICAL CYCLONE WARNING CENTRE JAKARTA 
+AND ISSUED FOR THE CIRCULAR AREA OF METAREA XI (POR) BY JMA
+
+INDONESIAN AGENCY FOR METEOROLOGY CLIMATOLOGY AND GEOPHYSICS
+Tropical Cyclone Warning Centre (TCWC) Jakarta
+
+SECURITE
+
+            OCEAN GALE AND STORM WARNING
+
+OCEAN GALE AND STORM WARNING FOR AREA 0 - 10 S, 90 - 125 E
+Issued by JAKARTA TROPICAL CYCLONE WARNING CENTRE
+At: 15:03 UTC 21 May 2020
+
+SITUATION
+At 12:00 UTC Tropical Cyclone TC MANGGA 998 hPa was within 50 nautical miles of 9.8 S 93.0 E moving southeast at 13 knots.
+
+This tropical depression may develop into a Tropical Cyclone in the next 6-12 hours.
+
+AREA AFFECTED
+Within 270 nautical miles in NE quadrant
+  and within 340 nautical miles in SE quadrant
+
+
+FORECAST
+Clockwise winds reaching 35 knots expected to increase to 50 knots in the next 24 hours.
+High seas may exceed Rough to Very Rough scale and rising swell.
+
+00:00 UTC 22 May:  Within 30 nautical miles of 11.2 S 93.7 E
+                        Central pressure 998 hPa.
+                        Wind speed reaching 45 knots near centre.
+12:00 UTC 22 May: Within 60 nautical miles of 13.0 S 94.9 E
+                        Central pressure 998 hPa.
+                        Wind speed reaching 50 knots near centre.
+
+REMARKS
+Ships please transmit 3-hourly weather reports.
+Next warning will be issued by 19:00 UTC 21 May 2020.
+
+Tropical Cyclone Warning Centre JAKARTA
